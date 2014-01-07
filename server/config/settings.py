@@ -138,11 +138,11 @@ INSTALLED_APPS = (
     'discover_runner',
 
     # Project specific apps go here
-    'apps.account',
     'apps.mobile',
     'apps.places',
     'apps.survey',
-    'apps.reports'
+    'apps.reports',
+    'apps.account',
 )
 
 # A sample logging configuration. The only tangible logging

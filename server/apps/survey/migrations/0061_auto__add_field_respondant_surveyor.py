@@ -9,7 +9,7 @@ class Migration(SchemaMigration):
 
     depends_on = (
         ('account', '0001_initial'),
-        ('account', '0002_api_keys'),
+        # ('account', '0002_api_keys'),
     )
 
     def forwards(self, orm):
