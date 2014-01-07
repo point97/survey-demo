@@ -4,8 +4,22 @@
 {% block stylesheets %}
 <link href="{{ STATIC_URL }}survey/lib/css/bootstrap.css" rel="stylesheet">
 <style>
+html, #grp-content-container {
+    background-color: #DFF2F4;
+}
 #grp-navigation, #grp-navigation h1, #grp-context-navigation {
     display: none;
+}
+.header {
+    background-image: -webkit-gradient(linear, right top, left top, color-stop(0, #91CDD7), color-stop(1, #00ABBA));
+    background-image: -o-linear-gradient(left, #91CDD7 0%, #00ABBA 100%);
+    background-image: -moz-linear-gradient(left, #91CDD7 0%, #00ABBA 100%);
+    background-image: -webkit-linear-gradient(left, #91CDD7 0%, #00ABBA 100%);
+    background-image: -ms-linear-gradient(left, #91CDD7 0%, #00ABBA 100%);
+    background-image: linear-gradient(to left, #91CDD7 0%, #00ABBA 100%);
+}
+.header p, .header .navbar-brand {
+    color: #fff !important;
 }
 img {
     margin-top: 2em;
@@ -25,6 +39,9 @@ h1 {
     clear: right;
 }
 #login-row {
+    padding-left: 10px;
+    padding-right: 10px;
+    background-color: #82B4C0;
     width: 392px;
     margin: 0 auto;
 }
@@ -41,9 +58,19 @@ h1 {
 
 {% block content %}
 
+<nav class="navbar navbar-default header">
+    <div class="navbar-header">
+        <a class="navbar-brand" href="#">[Point97 picture here]</a>
+    </div>
+    <div class="collapse navbar-collapse">
+        <ul class="nav navbar-nav">
+            <li><p class="navbar-text">SURVEY APP</p></li>
+        </ul>
+    </div>
+</nav>
 <div class="container">
+    <h1>DASHBOARD LOGIN</h1>
     <div id="login-row" class="row">
-        <img src="{{STATIC_URL}}survey/assets/img/hapifis.jpg"></img>
         {% block hapifis_content %}
         {% endblock %}
     </div>
