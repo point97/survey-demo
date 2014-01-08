@@ -1,12 +1,13 @@
-<nav id="global-navbar" class="navbar navbar-static-top" role="navigation" ng-controller="SurveyListMenuCtrl" ng-cloak>
-  <div class="container">
-    <div class="navbar-header">
-        <a href="#/"><img src="{{user.static_url}}survey/assets/img/hapifis-small.jpg"></img></a>
-        <h1 ng-show="getSurveyName()">{{getSurveyName()}}</h1>
+<nav class="navbar navbar-default header" role="navigation" ng-controller="SurveyListMenuCtrl" ng-cloak>
+    <div>
+        <ul class="nav navbar-nav navbar-left">
+            <li><a class="navbar-brand" href="#">[Point97 picture here]</a></li>
+            <li><h3 class="navbar-text">survey app</h3></li>
+        </ul>
+        <ul class="nav navbar-nav navbar-right">
+            <li><p class="navbar-text">SIGNED IN AS {{user.username | uppercase}}</p></li>
+            <li><a href="{{user.logout_url}}">SIGN OUT</a></li>
+            <li><a ng-show="user.is_superuser" href="{{user.admin_url}}">ADMIN</a></li>
+        </ul>
     </div>
-    <a class="navbar-btn navbar-right btn btn-default" href="{{user.logout_url}}">Sign Out</a>
-    <a ng-show="user.is_superuser" class="navbar-btn navbar-right btn btn-info" href="{{user.admin_url}}">Admin</a>
-    <p class="navbar-text navbar-right">Signed in as {{user.username}}</p>
-  </div>
 </nav>
-

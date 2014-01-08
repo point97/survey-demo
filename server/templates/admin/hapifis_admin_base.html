@@ -3,23 +3,13 @@
 
 {% block stylesheets %}
 <link href="{{ STATIC_URL }}survey/lib/css/bootstrap.css" rel="stylesheet">
+<link rel="stylesheet" media="screen" href="{{ STATIC_URL }}survey/lib/css/topNav.css">
 <style>
 html, #grp-content-container {
     background-color: #DFF2F4;
 }
 #grp-navigation, #grp-navigation h1, #grp-context-navigation {
     display: none;
-}
-.header {
-    background-image: -webkit-gradient(linear, right top, left top, color-stop(0, #91CDD7), color-stop(1, #00ABBA));
-    background-image: -o-linear-gradient(left, #91CDD7 0%, #00ABBA 100%);
-    background-image: -moz-linear-gradient(left, #91CDD7 0%, #00ABBA 100%);
-    background-image: -webkit-linear-gradient(left, #91CDD7 0%, #00ABBA 100%);
-    background-image: -ms-linear-gradient(left, #91CDD7 0%, #00ABBA 100%);
-    background-image: linear-gradient(to left, #91CDD7 0%, #00ABBA 100%);
-}
-.header p, .header .navbar-brand {
-    color: #fff !important;
 }
 img {
     margin-top: 2em;

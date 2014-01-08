@@ -1,0 +1,26 @@
+.header {
+    background-image: -webkit-gradient(linear, right top, left top, color-stop(0, #91CDD7), color-stop(1, #00ABBA));
+    background-image: -o-linear-gradient(left, #91CDD7 0%, #00ABBA 100%);
+    background-image: -moz-linear-gradient(left, #91CDD7 0%, #00ABBA 100%);
+    background-image: -webkit-linear-gradient(left, #91CDD7 0%, #00ABBA 100%);
+    background-image: -ms-linear-gradient(left, #91CDD7 0%, #00ABBA 100%);
+    background-image: linear-gradient(to left, #91CDD7 0%, #00ABBA 100%);
+    border-radius: 0px;
+    height: 6em;
+}
+.header p,
+.header a,
+.header h3,
+.header .navbar-brand {
+    color: #fff !important;
+}
+
+.header .navbar-left {
+    margin-left: 2em;
+    margin-top: 1em;
+}
+
+.header .navbar-right {
+    margin-top: 2.5em;
+    margin-right: 2em;
+}
