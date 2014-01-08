@@ -15,6 +15,9 @@
 .header .navbar-brand {
     color: #fff !important;
 }
+.header img {
+    margin-top: -1.5em;
+}
 
 .header .navbar-left {
     margin-left: 2em;

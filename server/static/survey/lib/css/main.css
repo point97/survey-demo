@@ -4,6 +4,23 @@
 .save_delete p {
     display: inline;
 }
+.color_me_survey .spacer {
+    height: 1em;
+}
+.color_me_survey tr {
+    border-left: solid 1em #195d65;
+    border-right: solid 1em #195d65;
+}
+.color_me_survey h2 {
+    color: #195d65;
+}
+.section_title {
+    border-bottom: solid 5px #195d65;
+    margin-bottom: 4em;
+}
+.section_title h2 {
+    color: #195d65;
+}
 .download_cog {
     position: absolute;
     z-index: 10;
