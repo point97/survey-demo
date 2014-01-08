@@ -8,6 +8,9 @@
 html, #grp-content-container {
     background-color: #DFF2F4;
 }
+.container {
+    margin-top: 10%;
+}
 #grp-navigation, #grp-navigation h1, #grp-context-navigation {
     display: none;
 }
@@ -27,8 +30,11 @@ h1 {
     list-style-type: none;
     padding: 22px;
 }
-.container h1 {
+#login_text {
     color: #82B4C0;
+    margin: 0 auto;
+    width: 16.5em;
+    text-align: center;
 }
 #login-form input[type=text], input[type=password] {
     clear: right;
@@ -72,7 +78,9 @@ h1 {
     </div>
 </nav>
 <div class="container">
-    <h1>DASHBOARD LOGIN</h1>
+    <div id="login_text">
+        <h1>DASHBOARD LOGIN</h1>
+    </div>
     <div id="login-row" class="row">
         {% block hapifis_content %}
         {% endblock %}

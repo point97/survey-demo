@@ -6,7 +6,8 @@
     background-image: -ms-linear-gradient(left, #91CDD7 0%, #00ABBA 100%);
     background-image: linear-gradient(to left, #91CDD7 0%, #00ABBA 100%);
     border-radius: 0px;
-    height: 6em;
+    height: 9.5em;
+    margin-bottom: 0px;
 }
 .header p,
 .header a,
@@ -17,10 +18,16 @@
 
 .header .navbar-left {
     margin-left: 2em;
-    margin-top: 1em;
+    margin-top: 3.5em;
 }
 
 .header .navbar-right {
-    margin-top: 2.5em;
+    margin-top: 5em;
     margin-right: 2em;
+}
+.header-border {
+    position: relative;
+    top: -1px;
+    border-bottom: solid 2.5em #195d65;
+    margin-bottom: 20px;
 }
