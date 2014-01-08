@@ -1,6 +1,18 @@
 //'use strict';
 
 angular.module('askApp')
+    .config(['$httpProvider', function($httpProvider) {
+        $httpProvider.defaults.headers.put = {
+            'Content-Type': 'application/json;charset=utf-8',
+            'X-CSRFToken': getCookie('csrftoken')
+        }
+        $httpProvider.defaults.headers.post = {
+            'X-CSRFToken': getCookie('csrftoken')
+        }
+        $httpProvider.defaults.headers['delete'] = {
+            'X-CSRFToken': getCookie('csrftoken')
+        }
+    }])
   .controller('AuthorCtrl', function ($scope, $http, $routeParams, $location) {
         $http.defaults.headers.post['Content-Type'] = 'application/json';
         $scope.survey = {};
