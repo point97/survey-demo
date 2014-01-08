@@ -1,6 +1,11 @@
 //'use strict';
 
 angular.module('askApp')
+    .config(['$httpProvider', function($httpProvider) {
+        $httpProvider.defaults.headers['post'] = {
+            'X-CSRFToken': getCookie('csrftoken')
+        }
+    }])
     .controller('SurveyListMenuCtrl', function($scope, $http, $routeParams, $location, surveyShared) {
 
     $scope.confirmDelete = false;
