@@ -7,22 +7,22 @@
     <div class="row" ng-cloak>
         <div class="col-md-12">
             <i ng-hide="loaded" class="icon-spinner icon-spin"></i>
-            <table ng-show="loaded" id="survey-landing-table" class="table table-striped color_me_survey">
+            <table ng-show="loaded" id="survey-landing-table" class="table color_me_survey">
                 <tbody>
                     <tr ng-repeat="survey in surveys">
                         <td>
                             <a href="#/RespondantList/{{survey.slug}}"><h2>{{survey.name | uppercase}}</h2></a>
                         </td>
-                        <td>
-                            <h2 class="survey-num">{{survey.survey_responses || 0}}</h2>
+                        <td id="total">
+                            <h1 class="survey-num">{{survey.survey_responses || 0}}</h1>
                             <p>TOTAL</p>
                         </td>
-                        <td>
-                            <h2 class="survey-num">{{survey.reviews_needed || 0}}</h2>
+                        <td id="review">
+                            <h1 class="survey-num">{{survey.reviews_needed || 0}}</h1>
                             <p>REVIEW</p>
                         </td>
-                        <td>
-                            <h2 class="survey-num">{{survey.flagged || 0}}</h2>
+                        <td id="flagged">
+                            <h1 class="survey-num">{{survey.flagged || 0}}</h1>
                             <p>FLAGGED</p>
                         </td>
                         <td ng-hide="confirmDelete">

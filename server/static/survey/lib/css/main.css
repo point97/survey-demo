@@ -8,11 +8,27 @@
     height: 1em;
 }
 .color_me_survey tr {
+    background-color: #DFF2F4;
     border-left: solid 1em #195d65;
     border-right: solid 1em #195d65;
 }
 .color_me_survey h2 {
     color: #195d65;
+}
+.color_me_survey h1, .color_me_survey p {
+    color: #FFF;
+}
+.color_me_survey p {
+    font-size: 12px;
+}
+.color_me_survey #flagged {
+    background-color: #ED7369;
+}
+.color_me_survey #total {
+    background-color: #68A1D6;
+}
+.color_me_survey #review {
+    background-color: #F6C43F;
 }
 .section_title {
     border-bottom: solid 5px #195d65;
