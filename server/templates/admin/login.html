@@ -26,18 +26,18 @@
   <input type="hidden" name="this_is_the_login_form" value="1" />
   <input type="hidden" name="next" id="next_url" />
 </div>
+{% endblock %}
+{% block hapifis_content_nobg %}
 <div class="submit-row">
-  <div>
-    <input type="submit" class="btn btn-default" value="{% trans 'Sign In' %}" />
-    <a href="{% url 'admin_password_reset' %}">{% trans 'Forgot password?' %}</a>
-  </div>
+    <input type="submit" class="btn" value="{% trans 'sign In' %}" />
+    {# <a href="{% url 'admin_password_reset' %}">{% trans 'Forgot password?' %}</a> #}
 </div>
 </form>
 
 <script type="text/javascript">
   document.getElementById('id_username').focus()
-  document.getElementById('id_username').setAttribute('placeholder', 'Username')
-  document.getElementById('id_password').setAttribute('placeholder', 'Password')
+  document.getElementById('id_username').setAttribute('placeholder', 'username')
+  document.getElementById('id_password').setAttribute('placeholder', 'password')
   document.getElementById('id_username').setAttribute('class', 'form-control')
   document.getElementById('id_password').setAttribute('class', 'form-control')
   document.getElementById('next_url').setAttribute('value', window.location.href)
