@@ -10,9 +10,9 @@ from django.test import TestCase
 
 from survey.models import (Question, Respondant, Response, Survey,
                            REVIEW_STATE_ACCEPTED, REVIEW_STATE_NEEDED)
-from ..views import (_get_crosstab, _grid_standard_deviation,
-                     _single_select_count, _gear_type_frequency,
+from ..views import (_get_crosstab, _single_select_count, _gear_type_frequency,
                      _vendor_resource_type_frequency)
+from ..new_views import GridStandardDeviationView
 
 
 class BaseSurveyorStatsCase(TestCase):
@@ -306,7 +306,8 @@ class TestGridStandardDeviation(TestCase, ResponseMixin):
         respondant.save()
 
     def request(self, interval, **kwargs):
-        return _grid_standard_deviation(interval, self.question_slug, **kwargs)
+        return (GridStandardDeviationView()
+                .get_rows(self.question_slug, interval, kwargs))
 
     def test_time_series(self):
         now = datetime.datetime.utcnow().replace(tzinfo=utc)
@@ -324,10 +325,12 @@ class TestGridStandardDeviation(TestCase, ResponseMixin):
         for row in rows:
             if row['row_label'] == 'air-transport-ticket':
                 # Replace is used to truncate to day.
-                if row['date'] == now.replace(hour=0, minute=0, second=0, microsecond=0):
+                if row['date'] == now.replace(hour=0, minute=0, second=0,
+                                              microsecond=0):
                     self.assertEqual(row['average'], 14)
                     count += 1
-                elif row['date'] == (now - week).replace(hour=0, minute=0, second=0, microsecond=0):
+                elif row['date'] == (now - week).replace(hour=0, minute=0,
+                                                         second=0, microsecond=0):
                     self.assertEqual(row['average'], 21)
                     count += 1
         self.assertEqual(count, expected)
@@ -346,10 +349,12 @@ class TestGridStandardDeviation(TestCase, ResponseMixin):
         for row in rows:
             if row['row_label'] == 'air-transport-ticket':
                 # Replace is used to truncate to day.
-                if row['date'] == now.replace(hour=0, minute=0, second=0, microsecond=0):
+                if row['date'] == now.replace(hour=0, minute=0, second=0,
+                                              microsecond=0):
                     self.assertEqual(row['average'], 7)
                     count += 1
-                elif row['date'] == (now - week).replace(hour=0, minute=0, second=0, microsecond=0):
+                elif row['date'] == (now - week).replace(hour=0, minute=0,
+                                                         second=0, microsecond=0):
                     self.assertEqual(row['average'], 21)
                     count += 1
         self.assertEqual(count, expected)
@@ -368,10 +373,12 @@ class TestGridStandardDeviation(TestCase, ResponseMixin):
         for row in rows:
             if row['row_label'] == 'air-transport-ticket':
                 # Replace is used to truncate to day.
-                if row['date'] == now.replace(hour=0, minute=0, second=0, microsecond=0):
+                if row['date'] == now.replace(hour=0, minute=0, second=0,
+                                              microsecond=0):
                     self.assertEqual(row['average'], 7)
                     count += 1
-                elif row['date'] == (now - week).replace(hour=0, minute=0, second=0, microsecond=0):
+                elif row['date'] == (now - week).replace(hour=0, minute=0,
+                                                         second=0, microsecond=0):
                     self.assertEqual(row['average'], 21)
                     count += 1
         self.assertEqual(count, expected)

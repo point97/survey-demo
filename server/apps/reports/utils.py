@@ -1,4 +1,7 @@
 import csv
+import datetime
+import json
+from decimal import Decimal
 
 
 class SlugCSVWriter(object):
@@ -39,3 +42,12 @@ class SlugCSVWriter(object):
         for rowdict in rowdicts:
             rows.append(self._dict_to_list(rowdict))
         return self.writer.writerows(rows)
+
+
+class CustomJSONEncoder(json.JSONEncoder):
+    def default(self, obj):
+        if isinstance(obj, datetime.datetime):
+            return obj.isoformat()
+        elif isinstance(obj, Decimal):
+            return str(obj)
+        return super(CustomJSONEncoder, self).default(obj)

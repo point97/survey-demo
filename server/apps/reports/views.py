@@ -3,10 +3,9 @@ import csv
 import datetime
 import json
 from collections import defaultdict
-from decimal import Decimal
 
 from django.core.serializers.json import DjangoJSONEncoder
-from django.db.models import Avg, Count, Min, Max, Sum
+from django.db.models import Avg, Count, Sum
 from django.http import HttpResponse, HttpResponseBadRequest
 from django.shortcuts import get_object_or_404
 
@@ -14,8 +13,8 @@ from ordereddict import OrderedDict
 
 from apps.survey.models import Survey, Question, Response, Respondant, LocationAnswer, GridAnswer, MultiAnswer
 from .decorators import api_user_passes_test
-from .forms import APIFilterForm, GridStandardDeviationForm, SurveyorStatsForm
-from .utils import SlugCSVWriter
+from .forms import APIFilterForm, SurveyorStatsForm
+from .utils import CustomJSONEncoder, SlugCSVWriter
 
 
 @api_user_passes_test(lambda u: u.is_staff or u.is_superuser)
@@ -249,15 +248,6 @@ def get_crosstab_json(request, survey_slug, question_a_slug, question_b_slug):
                         content_type='application/json')
 
 
-class CustomJSONEncoder(json.JSONEncoder):
-    def default(self, obj):
-        if isinstance(obj, datetime.datetime):
-            return obj.isoformat()
-        elif isinstance(obj, Decimal):
-            return str(obj)
-        return super(CustomJSONEncoder, self).default(obj)
-
-
 def _get_fullname(data):
     return ('{0} {1}'.format(data.pop('surveyor__first_name'),
                              data.pop('surveyor__last_name'))
@@ -341,84 +331,6 @@ def surveyor_stats_raw_data_csv(request, survey_slug):
         writer.writerow((row.surveyor.get_full_name() if row.surveyor else '',
                          row.survey_site, row.ts, row.review_status))
 
-    return response
-
-
-def _grid_standard_deviation(interval, question_slug, row=None, market=None,
-                             col=None, status=None, start_date=None, end_date=None):
-    rows = (GridAnswer.objects.filter(response__question__slug=question_slug)
-                              .extra(select={'date': "date_trunc(%s, survey_response.ts)"},
-                                     select_params=(interval,),
-                                     tables=('survey_response',)))
-    if row is not None:
-        rows = rows.filter(row_label=row)
-    if col is not None:
-        rows = rows.filter(col_label=col)
-    if market is not None:
-        rows = rows.filter(response__respondant__survey_site=market)
-    if status is not None:
-        rows = rows.filter(response__respondant__review_status=status)
-    if start_date is not None:
-        rows = rows.filter(response__respondant__ts__gte=start_date)
-    if end_date is not None:
-        rows = rows.filter(response__respondant__ts__lt=end_date)
-
-    labels = list(rows.values_list('row_label', flat=True).distinct())
-    rows = (rows.values('row_text', 'row_label', 'date')
-                .order_by('date')
-                .annotate(minimum=Min('answer_number'),
-                          average=Avg('answer_number'),
-                          maximum=Max('answer_number'),
-                          total=Sum('answer_number')))
-    return rows, labels
-
-
-@api_user_passes_test(lambda u: u.is_staff or u.is_superuser)
-def grid_standard_deviation_json(request, question_slug, interval):
-    form = GridStandardDeviationForm(request.GET)
-    if not form.is_valid():
-        return HttpResponseBadRequest(json.dumps(form.errors))
-    rows, labels = _grid_standard_deviation(interval, question_slug,
-                                            **form.cleaned_data)
-    graph_data = defaultdict(list)
-    for row in rows:
-        row['date'] = calendar.timegm(row['date'].utctimetuple()) * 1000
-        graph_data[row['row_text']].append(row)
-
-    return HttpResponse(json.dumps({
-        'success': True,
-        'graph_data': graph_data,
-        'labels': list(labels),
-    }, cls=CustomJSONEncoder), content_type='application/json')
-
-
-@api_user_passes_test(lambda u: u.is_staff or u.is_superuser)
-def grid_standard_deviation_csv(request, question_slug, interval):
-    form = GridStandardDeviationForm(request.GET)
-    if not form.is_valid():
-        return HttpResponseBadRequest(json.dumps(form.errors))
-    rows, labels = _grid_standard_deviation(interval, question_slug,
-                                            **form.cleaned_data)
-    response = _create_csv_response('grid_standard_deviation_{0}_{1}.csv'.format(
-                                    question_slug, interval))
-    rows, _ = _grid_standard_deviation(interval, question_slug,
-                                       **form.cleaned_data)
-
-    field_names = OrderedDict((
-        ('row_text', 'Type'),
-        ('date', 'Date'),
-        ('minimum', 'Minimum'),
-        ('average', 'Average'),
-        ('maximum', 'Maximum'),
-        ('total', 'Total')
-    ))
-
-    writer = SlugCSVWriter(response, field_names)
-    writer.writeheader()
-    for row in rows:
-        row.pop('row_label')
-        row['date'] = str(row['date'])
-        writer.writerow(row)
     return response
 
 
