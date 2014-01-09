@@ -76,9 +76,9 @@
     float: right;
     display: inline-block;
 }
-#filter_row > div {
+/* #filter_row > div {
     background-color: #dff2f4;
-}
+} */
 #responses_found {
     background-color: #bbcbcd !important;
     color: #FFF;

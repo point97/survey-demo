@@ -7,13 +7,21 @@ input {
 .controls {
     padding: 10px;
 }
+.controls .btn-yellow {
+}
+#make_me_a_border {
+    border-bottom: solid 5px #195d65;
+}
 .question-nav .nav-stacked {
     height: 500px;
     overflow: auto;
 }
-
-
-
+.title_header h2 {
+    color: #195D65;
+}
+.title_header .title_row {
+    border-bottom: solid 5px #195d65;
+}
 </style>
 <div class="container">
     <div class="row question-nav" ng-show="questionsToBeUpdated.length">
@@ -23,9 +31,10 @@ input {
         </div>
     </div>
     <div class="row" ng-hide="questionsToBeUpdated.length">
-        <div class="col-md-2">
+        <div class="col-md-3">
             <div class="row controls">
-                <button class="btn" ng-click="newQuestion()">New Question</button>
+                <button style="width: 100%;" class="btn btn-yellow" ng-click="newQuestion()"><i class="icon-plus"></i> NEW QUESTION</button>
+                <div id="make_me_a_border"></div>
             </div>
             <ul class="nav nav-pills nav-stacked" ng-model="survey.questions" ui-sortable="{axis: 'y'}">
                 <li title="{{question.title}}"
@@ -37,36 +46,42 @@ input {
             </ul>
             <p ng-hide="survey.questions.length">No Questions, yet.</p>
         </div>
-        <div class="col-md-10">
-            <div class="well" ng-show="newSurvey">
-                <h1>New Survey</h1>
-                <label>Name</label>
-                <input ng-model="survey.name" class="col-md-12" placeholder="Survey Name"/>
-                <div class="buttons pull-right">
-                    <button class="btn btn-primary btn-large" ng-click="createSurvey(survey)">
-                        save
-                    </button>
-                </div>
-                <div class="btn-group pull-right" ng-show="confirmDelete">
-                    <a class="btn btn-danger" target="_blank" ng-click="delete_question(activeQuestion)">delete</a>
-                    <a class="btn" target="_blank" ng-click="confirmDelete = false">cancel</a>
-                </div>
-                <div class="clearfix">
-                </div>
-            </div>
-            <div class="well" ng-hide="newSurvey">
-                <h1>
-                    {{ survey.name }}
-                    <div class="btn-group pull-right" ng-hide="confirmDelete">
-                        <a class="btn btn-default" target="_blank" href="/admin/survey/question/{{activeQuestion.id}}/">edit</a>
-                        <a class="btn btn-default" target="_blank" href="/static/survey/mobile.html#/survey/{{survey.slug}}/{{activeQuestion.slug}}/offline">survey</a>
-                        <a class="btn btn-danger" target="_blank" ng-click="confirmDelete = true">delete</a>
+        <div class="col-md-9">
+            <!-- <div class="row title_header" ng-show="newSurvey">
+                <div class="col-md-12">
+                    <h1>New Survey</h1>
+                    <label>Name</label>
+                    <input ng-model="survey.name" class="col-md-12" placeholder="Survey Name"/>
+                    <div class="buttons pull-right">
+                        <button class="btn btn-primary btn-large" ng-click="createSurvey(survey)">
+                            save
+                        </button>
                     </div>
                     <div class="btn-group pull-right" ng-show="confirmDelete">
-                        <a class="btn btn-danger" target="_blank" ng-click="delete(activeQuestion)">delete</a>
+                        <a class="btn btn-danger" target="_blank" ng-click="delete_question(activeQuestion)">delete</a>
                         <a class="btn" target="_blank" ng-click="confirmDelete = false">cancel</a>
                     </div>
-                </h1>
+                    <div class="clearfix">
+                    </div>
+                </div>
+            </div> -->
+            <div class="title_header" ng-hide="newSurvey">
+                <div class="title_row row">
+                    <div class="col-md-6">
+                        <h2>{{ survey.name | uppercase}}</h2>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="pull-right" ng-hide="confirmDelete">
+                            <a class="btn btn-default" target="_blank" href="/admin/survey/question/{{activeQuestion.id}}/">edit</a>
+                            <a class="btn btn-yellow" target="_blank" href="/static/survey/mobile.html#/survey/{{survey.slug}}/{{activeQuestion.slug}}/offline">TAKE SURVEY</a>
+                            <a class="btn btn-danger" target="_blank" ng-click="confirmDelete = true">delete</a>
+                        </div>
+                        <div class="pull-right" ng-show="confirmDelete">
+                            <a class="btn btn-danger" target="_blank" ng-click="delete(activeQuestion)">delete</a>
+                            <a class="btn" target="_blank" ng-click="confirmDelete = false">cancel</a>
+                        </div>
+                    </div>
+                </div>
                 <div class="row clearfix"></div>
                 <form ng-submit="saveQuestion(activeQuestion)">
                     <div class="row">
