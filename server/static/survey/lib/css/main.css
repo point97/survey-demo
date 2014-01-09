@@ -155,6 +155,12 @@
 .btn-pale-yellow:hover {
     background-color: #ede3c6;
 }
+.btn-teal {
+    background-color: #48bdc7;
+}
+.btn-teal:hover {
+    background-color: #58cdd7;
+}
 .btn-yellow .icon-plus {
     font-size: 2em;
     color: #195d65;
