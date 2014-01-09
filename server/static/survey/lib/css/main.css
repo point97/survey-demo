@@ -7,10 +7,12 @@
     color: #b3b3b3;
     border-bottom: solid 5px #195d65;
     margin-bottom: 0.45em;
+    height: 2.5em;
 }
 #sidenav_surveyname h2 {
     color: #195d65;
     border-bottom: solid 5px #195d65;
+    height: 2.5em;
 }
 #sidenav_surveyname {
     margin-bottom: 1em;
