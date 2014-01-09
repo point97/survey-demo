@@ -1,15 +1,13 @@
 <div class="container">
     <div ng-include="viewPath + 'views/sideNav.html'"></div>
     <div class="{{viewport_size}}">
-        <div class="col-md-10">
-            <h2>
-                {{ subtitle }}
-                <small class="print-show">{{ filter.startDate|validDate: 'dd-MM-yyyy'  }} to {{ filter.endDate|validDate: 'dd-MM-yyyy' }}</small>
-            </h2>
-        </div>
-        <div class="print-hide col-md-2">
+        <h2 id="page_subtitle">
+            {{ subtitle | uppercase }}
+            <small class="print-show">{{ filter.startDate|validDate: 'dd-MM-yyyy'  }} to {{ filter.endDate|validDate: 'dd-MM-yyyy' }}</small>
+        </h2>
+        <!-- <div class="print-hide col-md-2">
             <button print-button></button>
-        </div>
+        </div> -->
     </div>
     <div id="filter_row" class="{{viewport_size}} print-hide">
         <div  id="responses_found" class="center-text col-md-2">

@@ -1,10 +1,6 @@
 <div class="container main-container">
     <div ng-include="viewPath + 'views/sideNav.html'"></div>
-    <div class="{{viewport_size}}">
-        <div class="col-md-6">
-        </div>
-    </div>
-    <div class="col-md-10 print-show">
+    <div class="{{viewport_size}} print-show">
         <div class="col-md-10">
         <h2>
             {{ filter.startDate|validDate: 'dd-MM-yyyy'  }} to {{ filter.endDate|validDate: 'dd-MM-yyyy' }}
@@ -12,14 +8,12 @@
         </div>
     </div>
     <div class="{{viewport_size}} print-hide">
-        <div class="col-md-10">
-            <h2>
-                Overview
-            </h2>
-        </div>
-        <div class="print-hide col-md-2">
+        <h2 id="page_subtitle">
+            OVERVIEW
+        </h2>
+        <!-- <div class="print-hide col-md-2">
             <button print-button></button>
-        </div>
+        </div> -->
     </div>
     <div id="filter_row" class="{{viewport_size}} print-hide">
         <div id="responses_found" class="center-text col-md-2">

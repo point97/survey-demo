@@ -3,6 +3,10 @@
     width: 1240px;
   }
 }
+#page_subtitle {
+    color: #b3b3b3;
+    border-bottom: solid 5px #195d65;
+}
 #sidenav_surveyname h2 {
     color: #195d65;
     border-bottom: solid 5px #195d65;
