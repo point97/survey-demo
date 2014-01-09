@@ -3,6 +3,13 @@
     width: 1240px;
   }
 }
+#sidenav_surveyname h2 {
+    color: #195d65;
+    border-bottom: solid 5px #195d65;
+}
+#sidenav_surveyname {
+    margin-bottom: 1em;
+}
 .save_delete {
     margin-top: 0.5em;
 }
@@ -139,9 +146,11 @@
     margin-top: 20px;
     margin-bottom: 3em;
 }
+#sidenav_respondants a {
+    color: #195d65;
+}
 #sidenav_respondants a.active {
-    background-color: #5b9aa9;
-    color: #FFF;
+    background-color: #8bc9d2;
 }
 #sidenav_respondants {
     padding: inherit;
@@ -150,9 +159,13 @@
     text-align: center;
 }
 #sidenav_respondants #respondant_stats {
-    border-top: solid 5px #195d65;
-    border-bottom: solid 5px #195d65;
-    padding: 5px 0;
+    text-align: center;
+    margin-top: 1em;
+    border-top: solid 1em #466b71;
+    border-bottom: solid 1em #466b71;
+}
+#sidenav_respondants #respondant_stats a {
+    padding: 15px;
 }
 #side_total, #side_flagged, #side_reviews_needed{
     color: #FFF;
@@ -164,8 +177,8 @@
 }
 #side_total {
     background-color: #5b9aa9;
-    margin-left: 6.5%;
-    width: 87%;
+    margin-left: 4.5%;
+    width: 91.25%;
     padding-bottom: 10px;
     padding-top: 15px;
 }
@@ -174,13 +187,13 @@
     margin-bottom: 0px;
 }
 #side_flagged {
-    width: 43.5%;
+    width: 45.625%;
     background-color: #ED7369;
 }
 #side_reviews_needed {
     background-color: #F6C43F;
-    margin-left: 6.5%;
-    width: 43.5%;
+    margin-left: 4.5%;
+    width: 45.625%;
 }
 
 #market_status_filters select {
