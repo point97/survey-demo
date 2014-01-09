@@ -97,13 +97,13 @@ input {
                     </div>
                     <div class="col-md-6">
                         <div class="pull-right" ng-hide="confirmDelete">
-                            <a class="btn btn-default" target="_blank" href="/admin/survey/question/{{activeQuestion.id}}/">edit</a>
+                            <a class="btn btn-pale-yellow" target="_blank" href="/admin/survey/question/{{activeQuestion.id}}/">EDIT</a>
                             <a class="btn btn-yellow" target="_blank" href="/static/survey/mobile.html#/survey/{{survey.slug}}/{{activeQuestion.slug}}/offline">TAKE SURVEY</a>
-                            <a class="btn btn-danger" target="_blank" ng-click="confirmDelete = true">delete</a>
+                            <a class="btn btn-red" target="_blank" ng-click="confirmDelete = true">DELETE</a>
                         </div>
                         <div class="pull-right" ng-show="confirmDelete">
-                            <a class="btn btn-danger" target="_blank" ng-click="delete(activeQuestion)">delete</a>
-                            <a class="btn" target="_blank" ng-click="confirmDelete = false">cancel</a>
+                            <a class="btn btn-red" target="_blank" ng-click="delete(activeQuestion)">delete</a>
+                            <a class="btn btn-pale-yellow" target="_blank" ng-click="confirmDelete = false">cancel</a>
                         </div>
                     </div>
                 </div>
@@ -281,10 +281,10 @@ input {
                     Updated at {{ activeQuestion.updated_at |date: 'dd-MM-yyyy HH:mm'}}
                 </div>
                 <div class="buttons pull-right">
-                    <button class="btn btn-danger btn-large" ng-click="startEditingQuestion(questionBeingEdited)">
+                    <button class="btn btn-teal" ng-click="startEditingQuestion(questionBeingEdited)">
                         reset
                     </button>
-                    <button class="btn btn-primary btn-large" ng-click="saveQuestion(activeQuestion)" ng-enabled="activeQuestion.slug.length > 0">
+                    <button class="btn btn-blue" ng-click="saveQuestion(activeQuestion)" ng-enabled="activeQuestion.slug.length > 0">
                         save
                     </button>
                 </div>

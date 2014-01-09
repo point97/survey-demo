@@ -126,11 +126,34 @@
 #survey-landing-table .icon-edit {
     font-size: 24px;
 }
-.btn-yellow {
+.btn {
+    padding-left: 20px;
+    padding-right: 20px;
     color: #444;
-    background-color: #f6c431;
+    background-color: #8cb8c3;
     border-radius: 0px;
     line-height: 2em;
+}
+.btn:hover {
+    background-color: #acd8e3;
+}
+.btn-yellow {
+    background-color: #F6C431;
+}
+.btn-yellow:hover {
+    background-color: #F6D431;
+}
+.btn-red {
+    background-color: #fd7c6f;
+}
+.btn-red:hover {
+    background-color: #fd8c6f;
+}
+.btn-pale-yellow {
+    background-color: #ddd3b6;
+}
+.btn-pale-yellow:hover {
+    background-color: #ede3c6;
 }
 .btn-yellow .icon-plus {
     font-size: 2em;
