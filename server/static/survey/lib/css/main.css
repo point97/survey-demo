@@ -1,3 +1,8 @@
+@media (min-width: 1200px) {
+  .container {
+    width: 1240px;
+  }
+}
 .save_delete {
     margin-top: 0.5em;
 }
@@ -25,7 +30,7 @@
     background-color: #ED7369;
 }
 .color_me_survey #total {
-    background-color: #68A1D6;
+    background-color: #5b9aa9;
 }
 .color_me_survey #review {
     background-color: #F6C43F;
@@ -89,7 +94,7 @@
     padding-right: 10px;
 }
 .respondent-table .highlightable_row:hover {
-    background-color: #68A1D6;
+    background-color: #5b9aa9;
     color: #FFF;
     cursor: pointer;
 }
@@ -135,7 +140,7 @@
     margin-bottom: 3em;
 }
 #sidenav_respondants a.active {
-    background-color: #68A1D6;
+    background-color: #5b9aa9;
     color: #FFF;
 }
 #sidenav_respondants {
@@ -158,7 +163,7 @@
     font-size: 10px;
 }
 #side_total {
-    background-color: #68A1D6;
+    background-color: #5b9aa9;
     margin-left: 6.5%;
     width: 87%;
     padding-bottom: 10px;

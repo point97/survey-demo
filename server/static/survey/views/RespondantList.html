@@ -115,35 +115,5 @@
                 <a href="#/search" class="btn"><i class="icon-search"></i> Search</a>
             </div> -->
         </div>
-        <!-- <div class="row">
-            <div heatmap question="question.slug"></div>
-        </div> -->
-
-        <!--
-        <div class="row" ng-repeat="question in survey.questions">
-            <div  ui-if="question.visualize">
-                <div class="clearfix">
-                    <div ng-repeat="filterQuestion in question.filterQuestions">
-                        <select class="pull-right" placeholder="filter by {{ filterQuestion.slug }}" multiple=true ng-model="question.filters[filterQuestion.slug]" ui-select2 ng-hide="filterQuestion.slug == question.slug" style="width: 200px">
-                            <option value="{{answer.answer}}" ng-repeat="answer in filterQuestion.answer_domain">
-                                <strong>{{answer.answer}}</strong>
-                            </option>
-                        </select>
-                    </div>
-                    <dl ng-repeat="(slug, filter) in question.filters">
-                        <dt>{{ slug }}:</dt>
-                        <dd ng-show="filter.length" ng-repeat="filterItem in filter">{{filterItem}}</dd>
-                        <dd ng-hide="filter.length">all</dd>
-                    </dl>
-                </div>
-                <div ui-if="question.report_type == 'heatmap' || question.report_type == 'heatmap-distribution'">
-                    <div heatmap question="question" filteritems="question.filters" class="heatmap"></div>
-                </div>
-                <div ui-if="question.report_type == 'distribution' || question.report_type == 'heatmap-distribution'">
-                    <distribution filter="question.filters" question="question" survey-slug="survey.slug"></distribution>
-                </div>
-            </div>
-        </div>
-        -->
     </div>
 </div>
