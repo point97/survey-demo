@@ -6,6 +6,7 @@
 #page_subtitle {
     color: #b3b3b3;
     border-bottom: solid 5px #195d65;
+    margin-bottom: 0.45em;
 }
 #sidenav_surveyname h2 {
     color: #195d65;
@@ -73,11 +74,12 @@
     float: right;
     display: inline-block;
 }
-#filter_row {
-    margin-top: 2em;
+#filter_row > div {
+    background-color: #dff2f4;
 }
 #responses_found {
-    background-color: #ddd;
+    background-color: #bbcbcd !important;
+    color: #FFF;
 }
 #responses_found p {
     font-size: 10px;
