@@ -1,5 +1,5 @@
 
-angular.module('askApp').controller('ReportCtrl', function($scope, $http, $location, $routeParams, reportsCommon, surveyShared) {
+angular.module('askApp').controller('ReportCtrl', function($scope, $rootScope, $http, $location, $routeParams, reportsCommon, surveyShared) {
     function build_crosstab_url(sdate, edate, slug, qa, qb) {
         var url = ['/reports/crosstab', slug, qa, qb].join('/');
         url = url + '?startdate=' + sdate;

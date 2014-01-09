@@ -1,7 +1,7 @@
 //'use strict';
 
 angular.module('askApp')
-    .controller('RespondantListCtrl', function($scope, $http, $routeParams, $location, reportsCommon, surveyShared) {
+    .controller('RespondantListCtrl', function($scope, $rootScope, $http, $routeParams, $location, reportsCommon, surveyShared) {
 
     function build_survey_total_data(data) {
         var new_data = {};

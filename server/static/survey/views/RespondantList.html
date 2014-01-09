@@ -1,6 +1,6 @@
 <div class="container main-container">
     <div ng-include="viewPath + 'views/sideNav.html'"></div>
-    <div class="col-md-10">
+    <div class="{{viewport_size}}">
         <div class="col-md-6">
         </div>
     </div>
@@ -11,7 +11,7 @@
         </h2>
         </div>
     </div>
-    <div class="col-md-10 print-hide">
+    <div class="{{viewport_size}} print-hide">
         <div class="col-md-10">
             <h2>
                 Overview
@@ -21,7 +21,7 @@
             <button print-button></button>
         </div>
     </div>
-    <div id="filter_row" class="col-md-10 print-hide">
+    <div id="filter_row" class="{{viewport_size}} print-hide">
         <div id="responses_found" class="center-text col-md-2">
             <h2>{{meta.total_count}}</h2>
             <P >RESPONSES FOUND</P>
@@ -39,8 +39,8 @@
             </select>
         </div>
     </div>
-    <div class="col-md-2"></div>
-    <div class="col-md-10">
+    <div class="{{sidenav_size}}"></div>
+    <div class="{{viewport_size}}">
         <p ng-show="message">{{message}}</p>
         <div>
             <h2>Total Surveys Collected by Date</h2>

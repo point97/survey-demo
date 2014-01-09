@@ -1,6 +1,6 @@
 <div class="container">
     <div ng-include="viewPath + 'views/sideNav.html'"></div>
-    <div class="col-md-10">
+    <div class="{{viewport_size}}">
         <div class="col-md-10">
             <h2>
                 {{ subtitle }}
@@ -28,8 +28,8 @@
             </select>
         </div>
     </div>
-    <div class="col-md-2"></div>
-    <div class="col-md-10">
+    <div class="{{sidenav_size}}"></div>
+    <div class="{{viewport_size}}">
         <p ng-show="message">{{message}}</p>
         <div>
             <div class="btn-group print-hide">
@@ -53,8 +53,8 @@
             <i ng-show="respondentsLoading" class="icon-spinner icon-spin"></i>
         </div>
     </div>
-    <div class="col-md-2"></div>
-    <div class="col-md-10">
+    <div class="{{sidenav_size}}"></div>
+    <div class="{{viewport_size}}">
         <div ng-repeat="chart in charts" class="dash-chart">
             <h2>{{ chart.title }}</h2>
             <div class="error">{{ chart.message }}</div>

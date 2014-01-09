@@ -6,7 +6,7 @@ angular.module('askApp')
             'X-CSRFToken': getCookie('csrftoken')
         }
     }])
-    .controller('SurveyListMenuCtrl', function($scope, $http, $routeParams, $location, surveyShared) {
+    .controller('SurveyListMenuCtrl', function($scope, $http, $routeParams, $location, surveyShared, $rootScope) {
 
     $scope.confirmDelete = false;
     $scope.path = $location.path().slice(1,5);

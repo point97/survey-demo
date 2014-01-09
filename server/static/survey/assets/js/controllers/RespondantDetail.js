@@ -26,7 +26,7 @@ angular.module('askApp')
             'X-CSRFToken': getCookie('csrftoken')
         }
     }])
-    .controller('RespondantDetailCtrl', function($scope, $routeParams, $http, $location, $timeout) {
+    .controller('RespondantDetailCtrl', function($scope, $rootScope, $routeParams, $http, $location, $timeout) {
 
     $scope.statuses = [];
     // We don't want to show a non-functioning back button if we have no url to go back to:

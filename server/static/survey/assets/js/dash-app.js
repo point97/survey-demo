@@ -6,6 +6,10 @@ app.server = window.location.protocol + '//' + window.location.host;
 app.viewPath = app.server + '/static/survey/';
 
 angular.module('askApp', ['ui', 'ui.bootstrap', 'ngGrid'])
+    .run(function($rootScope) {
+        $rootScope.sidenav_size = "col-md-3";
+        $rootScope.viewport_size = "col-md-9 col-sm-9";
+    })
     .config(function($routeProvider, $httpProvider, $compileProvider) {
 
     $compileProvider.urlSanitizationWhitelist(/^\s*((https?|ftp|mailto):)|#/);
