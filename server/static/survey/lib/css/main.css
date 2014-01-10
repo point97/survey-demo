@@ -141,9 +141,12 @@
 }
 #survey-landing-table .icon-plus,
 #survey-landing-table .icon-mobile-phone,
-#survey-landing-table .icon-trash,
+#survey-landing-table .icon-remove,
 #survey-landing-table .icon-edit {
     font-size: 24px;
+}
+#survey-landing-table .icon-remove {
+    color: #466b71;
 }
 .btn {
     padding-left: 20px;
