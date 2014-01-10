@@ -16,6 +16,10 @@
 .survey_manage_icons a:hover {
     color: #FFF;
 }
+#subheader {
+    color: #195d65;
+    margin-bottom: 0.5em;
+}
 #page_subtitle {
     color: #b3b3b3;
     border-bottom: solid 5px #195d65;

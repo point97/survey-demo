@@ -1,20 +1,21 @@
 <div class="container">
     <div ng-include="viewPath + 'views/sideNav.html'"></div>
+    <!--
     <div class="{{viewport_size}}">
         <div class="col-md-6">
         </div>
         <div class="col-md-6">
             <div id="review_buttons">
                 <button ng-show="!!review_previous_uuid" ng-click="goToPrevious()" class="btn btn-default" type="button">&laquo; Previous</button>
-                <!-- <a ng-show="filtered_list_url" href="{{filtered_list_url}}" class="btn btn-default">Overview</a> -->
-                <!-- Look at this madness, fake that ternary operator. Thanks, StackOverflow! -->
                 <button ng-show="!!review_next_uuid" ng-click="goToNext()" class="btn btn-default" type="button">Next &raquo;</button>
             </div>
         </div>
     </div>
-    <div class="{{sidenav_size}}"></div>
+    -->
     <div class="{{viewport_size}}">
-        <h3>Respondent Details</h3>
+        <h2 id="page_subtitle">
+            RESPONDENT DETAILS
+        </h2>
         <div class="col-md-8">
             <dl class="dl-horizontal">
                 <dt>surveyor</dt>
@@ -33,9 +34,9 @@
             <textarea ng-model="review_comment" placeholder="Type any comments here" class="form-control"></textarea>
             <div class="save_delete">
                 <button ng-click="updateStatus()" class="btn btn-default" type="button">Save</button>
-                <button ng-show="!confirmDelete && user.is_superuser" class="btn btn-danger" ng-click="confirmDelete = true">Delete</button>
+                <button ng-show="!confirmDelete && user.is_superuser" class="btn btn-red" ng-click="confirmDelete = true">Delete</button>
                 <div ng-show="confirmDelete && user.is_superuser" class="btn-group">
-                    <a class="btn btn-default btn-danger" ng-click="delete_respondent()">Delete</a>
+                    <a class="btn btn-default btn-red" ng-click="delete_respondent()">Delete</a>
                     <a class="btn btn-default" ng-click="confirmDelete = false">Cancel</a>
                 </div>
                 <p ng-show="saved" ><i class="icon-ok-sign"></i> Saved!</p>
@@ -44,7 +45,8 @@
     </div>
     <div class="{{sidenav_size}}"></div>
     <div class="{{viewport_size}}">
-        <h3>Responses</h3>
+        <h3 id="subheader">RESPONSES</h3>
+        <div id="make_me_a_border"></div>
         <table class="table-striped table">
             <tbody>
                 <tr ng-repeat="response in respondent.responses">
