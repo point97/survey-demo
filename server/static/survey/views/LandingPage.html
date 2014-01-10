@@ -25,19 +25,15 @@
                             <h1 class="survey-num">{{survey.flagged || 0}}</h1>
                             <p>FLAGGED</p>
                         </td>
-                        <td ng-hide="confirmDelete">
-                            <div class="btn-group">
-                                <a target="_blank" class="btn btn-default icon-plus" href="/respond/{{survey.slug}}"></a>
-                                <a target="_blank" class="btn btn-default icon-mobile-phone" href="/static/survey/mobile.html#/survey/{{survey.slug}}/online"></a>
-                                <a ng-show="user.is_superuser" class="btn btn-default icon-edit" href="#/author/{{ survey.slug }}"></a>
-                                <a ng-show="user.is_staff" class="btn btn-default icon-trash" ng-click="confirmDelete = true"></a>
-                            </div>
+                        <td class="survey_manage_icons" ng-hide="confirmDelete">
+                            <a target="_blank" class="btn icon-plus" href="/respond/{{survey.slug}}"></a>
+                            <a target="_blank" class="btn icon-mobile-phone" href="/static/survey/mobile.html#/survey/{{survey.slug}}/online"></a>
+                            <a ng-show="user.is_superuser" class="btn icon-edit" href="#/author/{{ survey.slug }}"></a>
+                            <a ng-show="user.is_staff" class="btn icon-trash" ng-click="confirmDelete = true"></a>
                         </td>
                         <td ng-show="confirmDelete && user.is_staff">
-                            <div class="btn-group">
-                                <a class="btn btn-default btn-danger" ng-click="delete_survey(survey)">Delete</a>
-                                <a class="btn btn-default" ng-click="confirmDelete = false">Cancel</a>
-                            </div>
+                            <a class="btn btn-default btn-danger" ng-click="delete_survey(survey)">Delete</a>
+                            <a class="btn btn-default" ng-click="confirmDelete = false">Cancel</a>
                         </td>
                     </tr>
                 </tbody>
