@@ -26,10 +26,10 @@
                             <p>FLAGGED</p>
                         </td>
                         <td class="survey_manage_icons" ng-hide="confirmDelete">
-                            <a target="_blank" class="btn icon-plus" href="/respond/{{survey.slug}}"></a>
-                            <a target="_blank" class="btn icon-mobile-phone" href="/static/survey/mobile.html#/survey/{{survey.slug}}/online"></a>
-                            <a ng-show="user.is_superuser" class="btn icon-edit" href="#/author/{{ survey.slug }}"></a>
-                            <a ng-show="user.is_staff" class="btn icon-remove" ng-click="confirmDelete = true"></a>
+                            <a title="Take Survey" target="_blank" class="btn icon-plus" href="/respond/{{survey.slug}}"></a>
+                            <a title="Take Mobile Survey" target="_blank" class="btn icon-mobile-phone" href="/static/survey/mobile.html#/survey/{{survey.slug}}/online"></a>
+                            <a ng-show="user.is_superuser" title="Edit Survey" class="btn icon-edit" href="#/author/{{ survey.slug }}"></a>
+                            <a ng-show="user.is_staff" class="btn icon-remove" title="Delete Survey" ng-click="confirmDelete = true"></a>
                         </td>
                         <td ng-show="confirmDelete && user.is_staff">
                             <a class="btn btn-red" ng-click="delete_survey(survey)">Delete</a>
