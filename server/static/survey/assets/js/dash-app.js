@@ -22,6 +22,7 @@ angular.module('askApp', ['ui', 'ui.bootstrap', 'ngGrid'])
     })
         .when('/demo', {
         templateUrl: app.viewPath + 'views/DemoLandingPage.html',
+        controller: 'DemoCtrl',
     })
         .when('/author', {
         templateUrl: app.viewPath + 'views/author.html',

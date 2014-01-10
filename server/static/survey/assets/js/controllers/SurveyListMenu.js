@@ -8,6 +8,9 @@ angular.module('askApp')
     }])
     .controller('SurveyListMenuCtrl', function($scope, $http, $routeParams, $location, surveyShared, $rootScope) {
 
+    if (document.cookie.search("clicked_through_demo=true") == -1) {
+        $location.path("/demo");
+    }
     $scope.confirmDelete = false;
     $scope.path = $location.path().slice(1,5);
     $scope.loaded=false;
