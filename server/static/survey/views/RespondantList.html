@@ -69,7 +69,6 @@
             </div> -->
         </div>
         <div class="respondent-table print-hide">
-        <h2>Survey Responses</h2>
             <table class="table" ng-class="{ 'loading': respondentsLoading }">
                 <tbody>
                     <tr>
@@ -82,16 +81,11 @@
                         <td>{{ respondent.user.username }}</td>
                         <td>{{ respondent.ts|validDate: 'dd-MM-yyyy' }}</td>
                         <td>{{ respondent.ts|validDate: 'HH:mm' }}</td>
-                        <td>{{ respondent.survey_site }}</td>
-                        <td>{{ respondent.vendor }}</td>
-                        <td>{{ respondent.buy_or_catch }}</td>
-                        <td>{{ respondent.how_sold }}</td>
                         <td>
                             <span class="label" ng-class="{ 'label-success': respondent.review_status == 'accepted', 'label-danger': respondent.review_status == 'flagged', 'label-warning': respondent.review_status == 'needs review' }">
                                 {{ respondent.review_status }}
                             </span>
                         </td>
-                        <!-- <td><a href="#/RespondantDetail/{{survey.slug}}/{{ respondent.uuid }}?{{filtered_list_url}}">Responses ({{respondent.responses.length}})</a></td> -->
                     </tr>
                 </tbody>
             </table>
@@ -102,10 +96,8 @@
                 <span ng-show="(meta.offset+meta.limit) <= meta.total_count">{{meta.offset+meta.limit}}</span>
                 <span ng-hide="(meta.offset+meta.limit) <= meta.total_count">{{meta.total_count}}</span> of {{ meta.total_count }}
             </span>
-            <div class="btn-group">
-                <button class="btn" ng-disabled="! meta.previous" ng-click="getRespondents(meta.previous)">Previous</button>
-                <button class="btn" ng-disabled="! meta.next" ng-click="getRespondents(meta.next)">Next</button>
-            </div>
+            <button class="btn" ng-disabled="! meta.previous" ng-class="{ 'btn-pale-yellow': !meta.previous, 'btn-yellow': meta.previous }" ng-click="getRespondents(meta.previous)">PREVIOUS</button>
+            <button class="btn" ng-disabled="! meta.next" ng-class="{ 'btn-pale-yellow': !meta.next, 'btn-yellow': meta.next }" ng-click="getRespondents(meta.next)">NEXT</button>
             <!-- <div>
                 <a href="#/search" class="btn"><i class="icon-search"></i> Search</a>
             </div> -->

@@ -46,12 +46,7 @@ angular.module('askApp')
         $scope.columns = [ { name: 'Surveyor', field: 'user' }
                          , { name: 'Date', field: 'ts' }
                          , { name: 'Time', field: 'ts' }
-                         , { name: 'Market', field: 'survey_site' }
-                         , { name: 'Vendor Name', field: 'vendor' }
-                         , { name: 'Buyer/Fisher', field: 'buy_or_catch' }
-                         , { name: 'Sales Type', field: 'how_sold' }
                          , { name: 'Status', field: 'review_status' }
-                         //, { name: 'Detail', field: 'responses' }
                          ];
         var order_by = $location.search().order_by;
 
