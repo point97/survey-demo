@@ -216,7 +216,7 @@ angular.module('askApp')
             }).success(function (result, status) {
                 var index;
                 
-                if (status === 202) {
+                if (status === 200) {
                     if (! deferUpdatingList) {
                         result.grid_cols.sort(function(a, b) {return a.order - b.order});
                         console.log(result.grid_cols);

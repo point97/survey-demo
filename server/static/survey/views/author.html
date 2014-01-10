@@ -88,8 +88,7 @@
                                 Visualize
                             </label>
                             <label ng-show="activeQuestion.visualize">Report Type</label>
-                            <select class="form-control" ng-model="activeQuestion.report_type"  ng-show="activeQuestion.visualize">
-                                <option ng-repeat="(key, val) in activeQuestion.report_types" value="{{key}}" ng-selected="activeQuestion.report_type == key">{{val}}</option>
+                            <select class="form-control" ng-model="activeQuestion.report_type" ng-options="select as label for (key, val) in activeQuestion.report_types" ng-show="activeQuestion.visualize">
                             </select>
 
                             <!-- <label>
