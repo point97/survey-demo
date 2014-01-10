@@ -1,55 +1,3 @@
-<style type="text/css">
-input {
-    padding: 10px;
-    font-size: 16px;
-}
-
-.controls {
-    padding: 10px;
-}
-.controls .btn-yellow {
-}
-#make_me_a_border {
-    border-bottom: solid 5px #195d65;
-    margin-bottom: 2em;
-}
-.question-nav .nav-stacked {
-    height: 500px;
-    overflow: auto;
-}
-.title_header h2 {
-    color: #195D65;
-}
-.title_header .title_row {
-    border-bottom: solid 5px #195d65;
-}
-.title_header form input, .title_header form select {
-    border-radius: 0px;
-    padding: 15px;
-    height: auto !important;
-    border: none;
-    background-color: #dff2f4;
-    font-size: 16px;
-}
-.nav.nav-pills li {
-    margin-bottom: 1em;
-}
-.nav.nav-pills li a {
-    background-color: #eff8f9;
-    color: #195D65;
-    border-radius: 0px;
-}
-.nav.nav-pills li a:hover {
-    background-color: #aed9df;
-}
-.nav.nav-pills li.active a, .nav.nav-pills li.active a:hover {
-    background-color: #5b9aa9;
-    color: #195D65;
-}
-.nav.nav-pills li a:hover {
-    border-radius: 0px;
-}
-</style>
 <div class="container">
     <div class="row question-nav" ng-show="questionsToBeUpdated.length">
         <h1>Updating Question Order</h1>
@@ -59,7 +7,7 @@ input {
     </div>
     <div class="row" ng-hide="questionsToBeUpdated.length">
         <div class="col-md-3">
-            <button style="width: 100%;" class="btn btn-yellow" ng-click="newQuestion()"><i class="icon-plus"></i> NEW QUESTION</button>
+            <button class="controls btn btn-yellow" ng-click="newQuestion()"><i class="icon-plus"></i> NEW QUESTION</button>
             <div id="make_me_a_border"></div>
             <ul class="nav nav-pills nav-stacked" ng-model="survey.questions" ui-sortable="{axis: 'y'}">
                 <li title="{{question.title}}"
@@ -132,11 +80,11 @@ input {
                                 <option ng-repeat="(key, val) in activeQuestion.question_types" value="{{key}}" ng-selected="activeQuestion.type == key">{{val}}</option>
                             </select>
                             <label>
-                                <input class="form-control" type="checkbox" ng-model="activeQuestion.required"/>
+                                <input type="checkbox" ng-model="activeQuestion.required"/>
                                 Required
                             </label>
                             <label>
-                                <input class="form-control" type="checkbox" ng-model="activeQuestion.visualize"/>
+                                <input type="checkbox" ng-model="activeQuestion.visualize"/>
                                 Visualize
                             </label>
                             <label ng-show="activeQuestion.visualize">Report Type</label>
