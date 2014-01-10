@@ -4,14 +4,14 @@ from collections import defaultdict
 
 from django.http.response import (HttpResponse, HttpResponseBadRequest,
                                   HttpResponseForbidden)
-from django.db.models import Avg, Min, Max, Sum
+from django.db.models import Avg, Count, Min, Max, Sum
 from django.views.generic.base import View
 
 from ordereddict import OrderedDict
 
-from apps.survey.models import GridAnswer
+from apps.survey.models import GridAnswer, Question, Response
 
-from .forms import GridStandardDeviationForm
+from .forms import APIFilterForm, GridStandardDeviationForm
 from .utils import CustomJSONEncoder, SlugCSVWriter
 
 
@@ -29,8 +29,8 @@ class BaseGraphView(View):
         if not self.form.is_valid():
             return self.error(self.form.errors)
 
-        self.rows, self.labels = self.get_rows(form_data=self.form.cleaned_data,
-                                               **kwargs)
+        self.rows, self.meta = self.get_rows(form_data=self.form.cleaned_data,
+                                             **kwargs)
         self.filename = self.filename_template.format(**kwargs)
         return renderer()
 
@@ -52,7 +52,7 @@ class BaseGraphView(View):
         return HttpResponse(json.dumps({
             'success': True,
             'graph_data': self.rows,
-            'labels': self.labels,
+            'meta': self.meta,
         }, cls=CustomJSONEncoder), content_type='application/json')
 
     def process_data_for_csv(self):
@@ -103,7 +103,7 @@ class GridStandardDeviationView(BaseGraphView):
                               average=Avg('answer_number'),
                               maximum=Max('answer_number'),
                               total=Sum('answer_number')))
-        return rows, labels
+        return rows, {'labels': list(labels)}
 
     def process_data_for_json(self):
         graph_data = defaultdict(list)
@@ -111,9 +111,39 @@ class GridStandardDeviationView(BaseGraphView):
             row['date'] = calendar.timegm(row['date'].utctimetuple()) * 1000
             graph_data[row['row_text']].append(row)
         self.rows = graph_data
-        self.labels = list(self.labels)
 
     def process_data_for_csv(self):
         for row in self.rows:
             row.pop('row_label')
             row['date'] = str(row['date'])
+
+
+class SingleSelectCountView(BaseGraphView):
+    form = APIFilterForm
+    model_filter = {
+        'market': 'respondant__survey_site',
+        'status': 'respondant__review_status',
+        'start_date': 'respondant__ts__gte',
+        'end_date': 'respondant__ts__lt'
+    }
+    field_names = OrderedDict((
+        ('answer', None),
+        ('count', 'Count')
+    ))
+    filename_template = 'single_select_{question_slug}.csv'
+
+    def get_rows(self, question_slug, form_data):
+        question = Question.objects.get(slug=question_slug)
+        rows = Response.objects.filter(question=question,
+                                       **self.build_filter(form_data))
+        labels = None
+        if question.rows:
+            labels = question.rows.splitlines()
+            rows = rows.filter(answer__in=labels)
+
+        if labels is None:
+            labels = rows.distinct().values_list('answer', flat=True)
+
+        rows = (rows.values('answer')
+                    .annotate(count=Count('answer')))
+        return rows, {'labels': list(labels)}

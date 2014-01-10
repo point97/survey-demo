@@ -3,13 +3,12 @@ from reports.views import (full_data_dump_csv, get_crosstab_json,
                            get_crosstab_csv, get_distribution, get_geojson,
                            surveyor_stats_csv, surveyor_stats_json,
                            surveyor_stats_raw_data_csv,
-                           single_select_count_csv,
-                           single_select_count_json,
                            gear_type_frequency_csv,
                            gear_type_frequency_json,
                            vendor_resource_type_frequency_csv,
                            vendor_resource_type_frequency_json)
-from reports.new_views import (GridStandardDeviationView)
+from reports.new_views import (GridStandardDeviationView,
+                               SingleSelectCountView)
 
 
 urlpatterns = patterns('',
@@ -55,11 +54,11 @@ urlpatterns = patterns('',
         name='gear_type_frequency_json'),
 
     url(r'/single-select-count/(?P<question_slug>[\w\d-]+).csv',
-        single_select_count_csv,
+        SingleSelectCountView.as_view(output='csv'),
         name='single_select_count_csv'),
 
     url(r'/single-select-count/(?P<question_slug>[\w\d-]+)',
-        single_select_count_json,
+        SingleSelectCountView.as_view(output='json'),
         name='single_select_count_json'),
 
     url(r'/full-survey-data/(?P<survey_slug>[\w\d-]+)',

@@ -10,9 +10,9 @@ from django.test import TestCase
 
 from survey.models import (Question, Respondant, Response, Survey,
                            REVIEW_STATE_ACCEPTED, REVIEW_STATE_NEEDED)
-from ..views import (_get_crosstab, _single_select_count, _gear_type_frequency,
+from ..views import (_get_crosstab, _gear_type_frequency,
                      _vendor_resource_type_frequency)
-from ..new_views import GridStandardDeviationView
+from ..new_views import GridStandardDeviationView, SingleSelectCountView
 
 
 class BaseSurveyorStatsCase(TestCase):
@@ -400,7 +400,8 @@ class TestGridStandardDeviation(TestCase, ResponseMixin):
                                               'interval': 'day'}))
         self.assertEqual(res.status_code, 200)
         body = json.loads(res.content)
-        self.assertIn('labels', body)
+        self.assertIn('meta', body)
+        self.assertIn('labels', body['meta'])
         self.assertIn('graph_data', body)
 
     def test_json_view_ts_filter(self):
@@ -429,7 +430,8 @@ class TestGridStandardDeviation(TestCase, ResponseMixin):
                               })
         self.assertEqual(res.status_code, 200)
         body = json.loads(res.content)
-        self.assertIn('labels', body)
+        self.assertIn('meta', body)
+        self.assertIn('labels', body['meta'])
         self.assertIn('graph_data', body)
         air_text = 'Air transport (ticket)'
         self.assertIn(air_text, body['graph_data'])
@@ -565,7 +567,7 @@ class TestSingleSelectCount(TestCase, ResponseMixin):
         self.create_respondant(self.market_a)
         self.create_respondant(self.market_b)
 
-        rows, labels = _single_select_count('survey-site')
+        rows, labels = SingleSelectCountView().get_rows('survey-site', {})
         for row in rows:
             if row['answer'] == self.market_a:
                 self.assertEqual(row['count'], 2)
