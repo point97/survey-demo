@@ -99,9 +99,17 @@
     float: right;
     display: inline-block;
 }
-/* #filter_row > div {
+#filter_row:after {
     background-color: #dff2f4;
-} */
+    content: '';
+    display: block;
+    position: absolute;
+    z-index: -1;
+    top: 0px;
+    left: 1em;
+    bottom: 0px;
+    right: 1em;
+}
 #responses_found {
     background-color: #bbcbcd !important;
     color: #FFF;

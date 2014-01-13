@@ -221,7 +221,8 @@ angular.module('askApp')
                         }
                         element.find(".chart").highcharts({
                             chart: {
-                                type: 'line'
+                                type: 'line',
+                                backgroundColor: scope.chart.background_color || "#FFF"
                             },
                             title: scope.chart.displayTitle ? { text: scope.chart.title } : false,
                             subtitle: false,
