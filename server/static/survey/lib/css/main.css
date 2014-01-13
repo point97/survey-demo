@@ -110,6 +110,9 @@
     bottom: 0px;
     right: 1em;
 }
+#total_surveys_chart {
+    margin-bottom: 2em;
+}
 #responses_found {
     background-color: #bbcbcd !important;
     color: #FFF;
