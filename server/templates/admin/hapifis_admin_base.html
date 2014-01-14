@@ -1,6 +1,7 @@
 {% extends "admin/base_site.html" %}
 {% load i18n admin_static %}
 
+{%block title %}Dashboard Log in{% endblock %}
 {% block stylesheets %}
 <link href="{{ STATIC_URL }}survey/lib/css/bootstrap.css" rel="stylesheet">
 <link rel="stylesheet" media="screen" href="{{ STATIC_URL }}survey/lib/css/topNav.css">
@@ -46,7 +47,7 @@ h1 {
     margin: 0 auto;
     text-align: center;
 }
-.submit-row input {
+.submit-row input, #login_btn {
     color: #000;
     background-color: #f6c431;
     border-radius: 0px;
