@@ -161,7 +161,7 @@ angular.module('askApp')
 
         $scope.startEditingQuestion = function (question) {
             if (question.grid_cols && question.grid_cols.length) {
-                question.grid_cols.sort(function(a, b) {return a.order - b.order});    
+                question.grid_cols.sort(function(a, b) {return a.order - b.order});
             }
             $scope.newBlock = false;
             $scope.confirmDelete = false;
