@@ -314,3 +314,28 @@ input.datepicker {
     padding-left: 0;
     padding-right: 0;
 }
+#question_bg {
+    background-color: #e4f1f3;
+}
+#question_bg a.btn, #question_bg button.btn {
+    border: 0px;
+    color: #424143;
+}
+#question_bg h2 {
+    color: #424143;
+}
+#question_bg button:disabled {
+    background-color: #DDD;
+    color: #666;
+}
+#question_bg input,
+#question_bg li {
+    border-radius: 0px;
+    float: right;
+    margin-bottom: 1em;
+    list-style-type: none;
+    padding: 22px;
+}
+header.bar-title {
+    background-color: #b9d7dd;
+}
