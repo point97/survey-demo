@@ -2,9 +2,11 @@
 
 angular.module('askApp')
     .config(['$httpProvider', function($httpProvider) {
-        $httpProvider.defaults.headers.post = {
-            'X-CSRFToken': getCookie('csrftoken')
+            $httpProvider.defaults.headers.post = {
+                'X-CSRFToken': getCookie('csrftoken')
+            }
         }
+    ])
   .controller('CompleteCtrl', function ($scope, $routeParams, $http) {
     try {
         var url = '/respond/complete/' + [$routeParams.surveySlug, $routeParams.uuidSlug].join('/');
