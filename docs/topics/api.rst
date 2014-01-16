@@ -1,6 +1,9 @@
 Data API
 ========
 
+For all endpoints listed, you can add ``.csv`` to the end of it and get a CSV
+download of the data.
+
 Single Select Count
 -------------------
 
@@ -91,3 +94,51 @@ Grid Standard Deviation
                      like: ``%Y-%m-%d``
     :query row: string that matches a ``row_label`` in the question
     :query col: string that matches a ``col_label`` in the question
+
+Surveyor Stats
+--------------
+
+This endpoint also includes the ability to get a more raw form of the data by omiting ``/<interval>`` and adding ``.csv``.
+
+.. http:get:: /reports/surveyor-stats/<survey_slug>/<interval>
+
+    Gives the stats for each surveyor who has gathered data for ``survey_slug``,
+    aggregated by the provided ``interval``.
+
+    **Example request**:
+
+    .. sourcecode:: http
+
+        GET /reports/surveyor-stats/market-survey/month
+
+    **Example response**:
+
+    .. sourcecode:: http
+
+        HTTP/1.1 200 OK
+        Vary: Accept
+        Content-Type: application/json
+
+        {
+            "success": true,
+            "data": [
+                {
+                    "surveyor": "John Doe",
+                    "count": 2,
+                    "timestamp": 1385884800000
+                }, {
+                    "surveyor": "Jane Doe",
+                    "count": 4,
+                    "timestamp": 1385884800000
+                },
+            ],
+            "meta": null
+        }
+
+    :query status: one of ``accepted``, ``rejected``, or ``flagged``
+    :query start_date: filter results to on or after ``start_date`` formated
+                       like: ``%Y-%m-%d``
+    :query end_date: filter results to on or before ``end_date`` formatted
+                     like: ``%Y-%m-%d``
+    :query surveyor: filter results to only include a specific surveyor by
+                     their ID
