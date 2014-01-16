@@ -337,13 +337,39 @@ input.datepicker {
     padding: 22px;
 }
 header.bar-title, header .button {
-    background-color: #b9d7dd !important;
+    background-color: #b9d7dd;
 }
-header #menu_btn {
+#menu_btn {
+    background-color: #b9d7dd;
     box-shadow: 0 0 0 0;
     padding-right: 20px !important;
     font-size: 18px;
 }
+#menu_btn.active {
+    background-color: #FFF;
+    color: #444;
+}
 .mobile_bg {
     background-color: #E4F1F3;
+}
+#mobile_menu {
+    position: fixed;
+    top: 34px;
+    left: 0px;
+    z-index: 50;
+    font-size: 16px;
+    background-color: #FFF;
+}
+#mobile_menu ul {
+    list-style-type: none;
+}
+#mobile_menu li {
+    padding: 0px;
+}
+#mobile_menu li a {
+    display: block;
+    width: 100%;
+    height: 100%;
+    padding: 30px 35px 30px 35px;
+    border-bottom: solid 1px #DDD;
 }
