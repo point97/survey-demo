@@ -1,14 +1,9 @@
 from django.conf.urls import patterns, url
 from reports.views import (full_data_dump_csv, get_crosstab_json,
-                           get_crosstab_csv, get_distribution, get_geojson,
-                           surveyor_stats_csv, surveyor_stats_json,
-                           surveyor_stats_raw_data_csv,
-                           gear_type_frequency_csv,
-                           gear_type_frequency_json,
-                           vendor_resource_type_frequency_csv,
-                           vendor_resource_type_frequency_json)
+                           get_crosstab_csv, get_distribution, get_geojson)
 from reports.new_views import (GridStandardDeviationView,
-                               SingleSelectCountView)
+                               SingleSelectCountView,
+                               SurveyorStatsView)
 
 
 urlpatterns = patterns('',
@@ -18,15 +13,15 @@ urlpatterns = patterns('',
     (r'/geojson/(?P<survey_slug>[\w\d-]+)/(?P<question_slug>[\w\d-]+)', get_geojson),
 
     url(r'/surveyor-stats/(?P<survey_slug>[\w\d-]+).csv',
-        surveyor_stats_raw_data_csv,
+        SurveyorStatsView.as_view(output='raw_csv'),
         name='reports_surveyor_stats_raw_data_csv'),
 
     url(r'/surveyor-stats/(?P<survey_slug>[\w\d-]+)/(?P<interval>[\w]+).csv',
-        surveyor_stats_csv,
+        SurveyorStatsView.as_view(output='csv'),
         name='reports_surveyor_stats_csv'),
 
     url(r'/surveyor-stats/(?P<survey_slug>[\w\d-]+)/(?P<interval>[\w]+)',
-        surveyor_stats_json,
+        SurveyorStatsView.as_view(output='json'),
         name='reports_surveyor_stats_json'),
 
     url(r'/grid-standard-deviation/(?P<question_slug>[\w\d-]+)/(?P<interval>[\w]+).csv',
@@ -36,22 +31,6 @@ urlpatterns = patterns('',
     url(r'/grid-standard-deviation/(?P<question_slug>[\w\d-]+)/(?P<interval>[\w]+)',
         GridStandardDeviationView.as_view(output='json'),
         name='reports_grid_standard_deviation_json'),
-
-    url(r'/vendor-resource-frequency.csv',
-        vendor_resource_type_frequency_csv,
-        name='vendor_resource_type_frequency_csv'),
-
-    url(r'/vendor-resource-frequency',
-        vendor_resource_type_frequency_json,
-        name='vendor_resource_type_frequency_json'),
-
-    url(r'/gear-type-frequency.csv',
-        gear_type_frequency_csv,
-        name='gear_type_frequency_csv'),
-
-    url(r'/gear-type-frequency',
-        gear_type_frequency_json,
-        name='gear_type_frequency_json'),
 
     url(r'/single-select-count/(?P<question_slug>[\w\d-]+).csv',
         SingleSelectCountView.as_view(output='csv'),

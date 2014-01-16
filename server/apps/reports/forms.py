@@ -6,7 +6,6 @@ from survey.models import REVIEW_STATE_CHOICES
 
 
 class APIFilterForm(forms.Form):
-    market = forms.CharField(required=False)
     status = forms.ChoiceField(choices=REVIEW_STATE_CHOICES, required=False)
     start_date = forms.DateTimeField(input_formats=('%Y-%m-%d',),
                                      required=False)

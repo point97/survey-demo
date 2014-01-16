@@ -9,9 +9,9 @@ from django.views.generic.base import View
 
 from ordereddict import OrderedDict
 
-from apps.survey.models import GridAnswer, Question, Response
+from apps.survey.models import GridAnswer, Question, Respondant, Response
 
-from .forms import APIFilterForm, GridStandardDeviationForm
+from .forms import APIFilterForm, GridStandardDeviationForm, SurveyorStatsForm
 from .utils import CustomJSONEncoder, SlugCSVWriter
 
 
@@ -31,7 +31,7 @@ class BaseGraphView(View):
 
         self.rows, self.meta = self.get_rows(form_data=self.form.cleaned_data,
                                              **kwargs)
-        self.filename = self.filename_template.format(**kwargs)
+        self.kwargs = kwargs
         return renderer()
 
     def build_filter(self, form_data):
@@ -51,7 +51,7 @@ class BaseGraphView(View):
         self.process_data_for_json()
         return HttpResponse(json.dumps({
             'success': True,
-            'graph_data': self.rows,
+            'data': self.rows,
             'meta': self.meta,
         }, cls=CustomJSONEncoder), content_type='application/json')
 
@@ -59,10 +59,11 @@ class BaseGraphView(View):
         pass
 
     def render_to_csv(self):
+        filename = self.filename_template.format(**self.kwargs)
         self.process_data_for_csv()
         response = HttpResponse(content_type='text/csv')
         response['Content-Disposition'] = ('attachment; filename="{0}"'
-                                           .format(self.csv_filename))
+                                           .format(filename))
         writer = SlugCSVWriter(response, self.field_names)
         writer.writeheader()
         writer.writerows(self.rows)
@@ -74,7 +75,6 @@ class GridStandardDeviationView(BaseGraphView):
     model_filter = {
         'row': 'row_label',
         'col': 'col_label',
-        'market': 'response__respondant__survey_site',
         'status': 'response__respondant__review_status',
         'start_date': 'response__respondant__ts__gte',
         'end_date': 'response__respondant__ts__lt'
@@ -121,7 +121,6 @@ class GridStandardDeviationView(BaseGraphView):
 class SingleSelectCountView(BaseGraphView):
     form = APIFilterForm
     model_filter = {
-        'market': 'respondant__survey_site',
         'status': 'respondant__review_status',
         'start_date': 'respondant__ts__gte',
         'end_date': 'respondant__ts__lt'
@@ -147,3 +146,77 @@ class SingleSelectCountView(BaseGraphView):
         rows = (rows.values('answer')
                     .annotate(count=Count('answer')))
         return rows, {'labels': list(labels)}
+
+
+class SurveyorStatsView(BaseGraphView):
+    form = SurveyorStatsForm
+    model_filter = {
+        'status': 'review_status',
+        'start_date': 'ts__gte',
+        'end_date': 'ts__lt',
+        'surveyor': 'surveyor__id'
+    }
+    field_names = OrderedDict((
+        ('surveyor', 'Surveyor'),
+        ('timestamp', 'When'),
+        ('count', 'Count')
+    ))
+    filename_template = '{survey_slug}_surveyor_stats_{interval}.csv'
+    raw_field_names = OrderedDict((
+        ('surveyor', 'Surveyor'),
+        ('timestamp', 'When'),
+        ('status', 'Status')
+    ))
+    raw_filename_template = '{survey_slug}_raw_surveyor_stats.csv'
+
+    def get_queryset(self, form_data):
+        return Respondant.objects.filter(**self.build_filter(form_data))
+
+    def get_rows(self, survey_slug, form_data, interval=None):
+        rows = self.get_queryset(form_data)
+        if self.output == 'raw_csv':
+            return rows.select_related('surveyor'), None
+        rows = (rows.extra(select={'timestamp': "date_trunc(%s, ts)"},
+                           select_params=(interval,))
+                    .values('surveyor__first_name',
+                            'surveyor__last_name',
+                            'timestamp')
+                    .annotate(count=Count('pk'))
+                    .order_by('timestamp'))
+        return rows, None
+
+    def _get_fullname(data):
+        return ('{0} {1}'.format(data.pop('surveyor__first_name'),
+                                 data.pop('surveyor__last_name'))
+                .strip())
+
+    def process_data_for_json(self):
+        grouped_data = defaultdict(list)
+        for row in self.rows:
+            grouped_data[self._get_fullname(row)].append(
+                (calendar.timegm(row['timestamp'].utctimetuple()) * 1000,
+                 row['count'])
+            )
+
+        self.rows = []
+        for name, data in grouped_data.iteritems():
+            self.rows.append({'data': data, 'name': name})
+
+    def process_data_for_csv(self):
+        for row in self.rows:
+            row['surveyor'] = self._get_fullname(row)
+
+    def render_to_raw_csv(self):
+        filename = self.raw_filename_template.format(**self.kwargs)
+        response = HttpResponse(content_type='text/csv')
+        response['Content-Disposition'] = ('attachment; filename="{0}"'
+                                           .format(filename))
+        writer = SlugCSVWriter(response, self.raw_field_names)
+        writer.writeheader()
+        for row in self.rows:
+            writer.writerow({
+                'surveyor': row.surveyor.get_full_name() if row.surveyor else '',
+                'timestamp': row.ts,
+                'status': row.review_status
+            })
+        return response
