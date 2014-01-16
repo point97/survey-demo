@@ -340,7 +340,7 @@ header.bar-title, header .button {
     background-color: #b9d7dd !important;
 }
 header #menu_btn {
-    box-shadow: 0px;
+    box-shadow: 0 0 0 0;
     padding-right: 20px !important;
     font-size: 18px;
 }
