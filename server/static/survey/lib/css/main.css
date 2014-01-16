@@ -324,12 +324,11 @@ input.datepicker {
 #question_bg h2 {
     color: #424143;
 }
-#question_bg button:disabled {
+#question_bg button:disabled, #question_bg button.disabled {
     background-color: #DDD;
     color: #666;
 }
-#question_bg input,
-#question_bg li {
+#question_bg input {
     border-radius: 0px;
     float: right;
     margin-bottom: 1em;
@@ -372,4 +371,7 @@ header.bar-title, header .button {
     height: 100%;
     padding: 30px 35px 30px 35px;
     border-bottom: solid 1px #DDD;
+}
+.nav-pills ul li.todo-content {
+    
 }

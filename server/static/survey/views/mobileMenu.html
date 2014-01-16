@@ -1,6 +1,5 @@
 <nav id="mobile_menu">
-    {{app.the_menu_is_open}}
-    <ul ng-show="!!the_menu_is_open" ng-cloak >
+    <ul ng-show="!!$parent.menu_open" ng-cloak >
         <li ng-class="{'active': path == 'home'}">
             <a href="#/SurveyList"><i class="icon-home"></i> Home</a>
         </li>

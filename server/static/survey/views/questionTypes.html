@@ -5,7 +5,7 @@
     <div ng-switch-when="info">
 
         <div class="info-content" ng-include="viewPath + infoView"></div>
-        <button class="btn btn-primary btn-block button-block btn-large" ng-tap="gotoNextQuestion()">continue</button>
+        <button class="btn btn-primary btn-block  " ng-tap="gotoNextQuestion()">continue</button>
     </div>
     <div ng-switch-when="integer">
         <form class="question" ng-show="survey.questions.length" ng-submit="answerQuestion(answer)">
@@ -21,7 +21,7 @@
                 ui-event="{ keypress : 'onlyDigits($event)' }"
                 autofocus
                 ng-required="{{question.required}}"/>
-            <button type="submit" class="btn btn-primary btn-large btn-block button-block" ng-disabled="question.required && ! answer && answer != 0">continue</button>
+            <button type="submit" class="btn btn-primary  btn-block " ng-disabled="question.required && ! answer && answer != 0">continue</button>
         </form>
     </div>
     <div ng-switch-when="number">
@@ -38,7 +38,7 @@
                 ui-event="{ keypress : 'onlyDigits($event)' }"
                 autofocus
                 ng-required="{{question.required}}"/>
-            <button type="submit" class="btn btn-primary btn-large btn-block button-block" ng-disabled="question.required && ! answer && answer != 0">continue</button>
+            <button type="submit" class="btn btn-primary  btn-block " ng-disabled="question.required && ! answer && answer != 0">continue</button>
         </form>
     </div>
     <div ng-switch-when="auto-single-select">
@@ -59,13 +59,13 @@
                 <option selected value="other">Other</option>
             </select>
             <input class="form-control input-block-level" type="text" placeholder="{{ question.label }}" ng-show="answer == 'other'" ng-model="otherAnswer" autofocus/>   
-            <button type="submit" class="btn btn-primary btn-large btn-block button-block">continue</button>
+            <button type="submit" class="btn btn-primary  btn-block ">continue</button>
         </form>
     </div>
     <div ng-switch-when="text">
         <form class="question" ng-show="survey.questions.length" ng-submit="answerQuestion(answer)">
             <input class="form-control input-block-level" type="text" placeholder="{{ question.label }}" ng-model="answer" autofocus />
-            <button type="submit" class="btn btn-primary btn-large btn-block button-block" ng-disabled="question.required && ! answer">continue</button>
+            <button type="submit" class="btn btn-primary btn-block" ng-disabled="question.required && ! answer">continue</button>
         </form>
     </div>
     <div ng-switch-when="currency">
@@ -76,8 +76,7 @@
               <input class="input-block-level" type="number" step="any" placeholder="{{ question.label }}" ng-model="answer" autofocus/>
             </div>
 
-            <!-- <button type="submit" class="btn btn-primary btn-large btn-block button-block" ng-disabled="question.required && ! answer">continue</button> -->
-            <button type="submit" class="btn btn-primary btn-large btn-block button-block" ng-disabled="question.required && ! answer && answer != 0">continue</button>
+            <button type="submit" class="btn btn-primary  btn-block " ng-disabled="question.required && ! answer && answer != 0">continue</button>
         </form>
     </div>
     <div ng-switch-when="datepicker">
@@ -98,27 +97,27 @@
             <!-- <input class="form-control input-block-level datepicker" placeholder="pick a date" type="date" answer="answer"/> -->
             <!-- <input class="form-control input-block-level" type="date" placeholder="{{ question.label }}" ng-model="answer"/> -->
             <input class="form-control input-block-level" date-picker placeholder="enter a date" answer="answer"/>
-            <button type="submit" class="btn btn-primary btn-large btn-block button-block">continue</button>
+            <button type="submit" class="btn btn-primary  btn-block ">continue</button>
         </form>
     </div>
     <div ng-switch-when="timepicker">
         <form class="question" ng-show="survey.questions.length" ng-submit="answerQuestion(answer)">
             <!-- <input class="form-control input-block-level" step="1" type="time" ng-model="answer"/>  -->
             <input class="form-control input-block-level" placeholder="enter a time" time-picker answer="answer"/>
-            <button type="submit" class="btn btn-primary btn-large btn-block button-block">continue</button>
+            <button type="submit" class="btn btn-primary  btn-block ">continue</button>
         </form>
     </div>
     <div ng-switch-when="datetimepicker">
         <form class="question" ng-show="survey.questions.length" ng-submit="answerQuestion(answer)" novalidate>
             <input class="form-control input-block-level" type="datetime" placeholder="{{ question.label }}" ng-model="answer"/> 
-            <button type="submit" class="btn btn-primary btn-large btn-block button-block">continue</button>
+            <button type="submit" class="btn btn-primary  btn-block ">continue</button>
         </form>
     </div>
 
     <div ng-switch-when="textarea">
         <form class="question" ng-show="survey.questions.length" ng-submit="answerQuestion(answer)">
             <textarea rows="5" placeholder="{{ question.label }}" ng-model="answer"></textarea>
-            <button type="submit" class="btn btn-primary btn-large btn-block button-block" ng-disabled="question.required && ! answer">continue</button>
+            <button type="submit" class="btn btn-primary  btn-block " ng-disabled="question.required && ! answer">continue</button>
         </form>
     </div>
     <div ng-switch-when="single-select">
@@ -140,7 +139,7 @@
                 </ul>
             </div>
             <input class="form-control input-block-level" type="text" placeholder="Other Option" ng-show="question.otherOption.checked" ng-model="question.otherAnswer" autofocus/>             
-            <button type="submit" class="btn btn-large btn-block button-block" ng-class="{'btn-primary': isAnswerValid, disabled: !isAnswerValid }">continue</button>
+            <button type="submit" class="btn  btn-block " ng-class="{'btn-primary': isAnswerValid, disabled: !isAnswerValid }">continue</button>
         </form>
     </div>
     <div ng-switch-when="yes-no">
@@ -154,7 +153,7 @@
               </li>
             </ul>
             <input class="form-control input-block-level" type="text" placeholder="Other Option" ng-show="question.otherOption.checked" ng-model="question.otherAnswer" autofocus/>             
-            <button type="submit" class="btn btn-large btn-block button-block" ng-class="{'btn-primary': isAnswerValid, disabled: !isAnswerValid }">continue</button>
+            <button type="submit" class="btn  btn-block " ng-class="{'btn-primary': isAnswerValid, disabled: !isAnswerValid }">continue</button>
         </form>
     </div>
     <!-- Multi-Select -->
@@ -240,7 +239,7 @@
               </div>
             </div>
             <input class="form-control input-block-level" type="text" placeholder="Other Option" ng-show="question.allow_other && question.otherOption.checked" ng-model="question.otherAnswer" autofocus/> 
-            <button type="submit" class="btn btn-large btn-block button-block" ng-hide="dialog" ng-class="{'btn-primary': isAnswerValid, 'disabled': !isAnswerValid }">continue</button>
+            <button type="submit" class="btn btn-block" ng-hide="dialog" ng-class="{'btn-primary': isAnswerValid, 'disabled': !isAnswerValid }">continue</button>
         </form>
     </div>
     <div ng-switch-when="map-multipoint">
