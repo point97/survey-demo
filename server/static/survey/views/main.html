@@ -3,20 +3,12 @@
 <div class="content">
   <div class="content-padded">
     <div class="main">
-      <img src="assets/img/hapifis.jpg" />
+      <img src="assets/img/point97.png" />
       <div ng-show="user">
         <h2>
           You are logged in as {{ user.username }}.
         </h2>
-        <a class="btn btn-block btn-large btn-primary" ng-click="logout()">
-      logout
-    </a>
-        <div class="row upgrades">
-       <!--    <a class="btn btn-block btn-large" href="https://simarketsurvey.herokuapp.com/static/simarket.apk">Update Prod</a>
-          <a class="btn btn-block btn-large" href="https://simarketsurvey-test.herokuapp.com/static/simarket-test.apk">Update Test</a> -->
-          </br>
-          APP_SERVER
-        </div>
+        <a class="btn btn-block" ng-click="logout()">logout</a>
       </div>
       <ul class="segmented-controller" ng-hide="user">
         <li ng-class="{'active': showForm == 'login'}">
