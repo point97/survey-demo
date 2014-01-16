@@ -1,6 +1,9 @@
 Welcome to Point 97 Survey Demo's documentation!
 ================================================
 
+These are docs for the team doing development on the survey-demo code base by
+Point 97.
+
 Contents:
 
 .. toctree::

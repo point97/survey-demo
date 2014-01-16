@@ -1,8 +1,12 @@
 Data API
 ========
 
-For all endpoints listed, you can add ``.csv`` to the end of it and get a CSV
-download of the data.
+These API endpoints are documented solely for the purpose of Point 97
+developers. They are subject to change without notice.
+
+.. note::
+    For all endpoints listed, you can add ``.csv`` to the end of it and get a
+    CSV download of the data.
 
 Single Select Count
 -------------------
@@ -98,7 +102,9 @@ Grid Standard Deviation
 Surveyor Stats
 --------------
 
-This endpoint also includes the ability to get a more raw form of the data by omiting ``/<interval>`` and adding ``.csv``.
+.. note::
+    This endpoint also includes the ability to get a more raw form of the data
+    by omiting ``/<interval>`` and adding ``.csv``.
 
 .. http:get:: /reports/surveyor-stats/<survey_slug>/<interval>
 
