@@ -136,6 +136,7 @@ INSTALLED_APPS = (
     'django_extensions',
     'compressor',
     'discover_runner',
+    'registration',
 
     # Project specific apps go here
     'apps.mobile',

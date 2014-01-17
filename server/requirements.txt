@@ -12,6 +12,7 @@ django-discover-runner==1.0
 django-extensions==1.1.1
 django-grappelli==2.4.5
 django-redis-cache==0.9.7
+django-registration==1.0
 django-storages==1.1.8
 -e git+https://github.com/point97/django-tastypie.git@v0.11.0-patch#egg=django_tastypie
 gunicorn==0.17.4
