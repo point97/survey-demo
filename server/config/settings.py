@@ -201,3 +201,5 @@ SHOW_ACTIVITY_POINTS = False
 TEST_RUNNER = 'discover_runner.DiscoverRunner'
 
 SERVER_ADMIN = 'edwin@pointnineseven.com'
+
+ACCOUNT_ACTIVATION_DAYS = 30
