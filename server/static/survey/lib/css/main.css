@@ -390,3 +390,15 @@ header.bar-title, header .button {
     padding: 30px 35px 30px 35px;
     border-bottom: solid 1px #DDD;
 }
+#mobile_navigator {
+    position: fixed;
+    background-color: #EADD9A;
+    height: 70px;
+    bottom: 0px;
+    left: 0px;
+    right: 0px;
+}
+#mobile_navigator img {
+    margin: 0 auto;
+    display: block;
+}
