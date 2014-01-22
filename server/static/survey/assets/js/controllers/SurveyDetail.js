@@ -208,6 +208,21 @@ angular.module('askApp')
                 $location.path(nextUrl);
             }
         };
+        $scope.gotoPreviousQuestion = function() {
+            var prevUrl = null;
+            var foundQuestion = false;
+
+            var index = _.indexOf($scope.survey.questions, $scope.question) - 1;
+            foundQuestion = $scope.survey.questions[index] || false;
+
+            if (foundQuestion) {
+                prevUrl = ['survey', $scope.survey.slug, foundQuestion.slug, $routeParams.uuidSlug, $routeParams.action].join('/');
+            }
+
+            if (prevUrl) {
+                $location.path(prevUrl);
+            }
+        };
 
         $scope.gotoQuestion = function(questionSlug) {
             $location.path(['survey', $scope.survey.slug, questionSlug, $routeParams.uuidSlug, $routeParams.action].join('/'));

@@ -407,3 +407,6 @@ header.bar-title, header .button {
     margin: 0 auto;
     margin-top: 20px;
 }
+#mobile_navigator .clickable {
+    cursor: pointer;
+}
