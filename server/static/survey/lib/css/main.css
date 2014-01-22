@@ -401,4 +401,9 @@ header.bar-title, header .button {
 #mobile_navigator img {
     margin: 0 auto;
     display: block;
+    vertical-align: middle;
+}
+#mobile_navigator .arrow {
+    margin: 0 auto;
+    margin-top: 20px;
 }

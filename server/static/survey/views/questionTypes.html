@@ -1,4 +1,3 @@
-<div ng-include="viewPath + 'views/mobileNavigator.html'"></div>
 <div id="question_bg" ng-switch on="question.type">
     <div ng-switch-when="pennies">
         <div ng-include="viewPath + 'views/pennies.html'"></div>
@@ -248,5 +247,22 @@
     </div>
     <div ng-switch-when="grid">
         <div ng-include="viewPath + 'views/gridQuestion.html'"></div>
+    </div>
+</div>
+<div id="mobile_navigator">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4">
+                <!--<img ng-show="!isAnswerValid" class="arrow" src="assets/img/larrow_disabled.png" />-->
+                <img ng-hide="" class="arrow" src="assets/img/larrow.png" />
+            </div>
+            <div class="col-md-4">
+                <img src="assets/img/point97.png" />
+            </div>
+            <div class="col-md-4">
+                <img ng-show="!isAnswerValid" class="arrow" src="assets/img/rarrow_disabled.png" />
+                <img ng-hide="!isAnswerValid" class="arrow" src="assets/img/rarrow.png" />
+            </div>
+        </div>
     </div>
 </div>
