@@ -1,0 +1,8 @@
+Hey there, new user!
+
+You have precisely {{expiration_days}} to activate your account, so hurry up! To
+get started, all you have to do is click the following link:
+
+https://{{site.domain}}{% url 'registration_activate' activation_key %}
+
+Happy surveying.

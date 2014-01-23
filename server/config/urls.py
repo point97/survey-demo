@@ -67,6 +67,11 @@ urlpatterns = patterns('',
     # (r'^register', survey_urls.register),
     #(r'^survey/(?P<path>.*)$', 'django.views.static.serve', {'document_root': settings.SURVEY_ROOT}),
     # (r'^static/(?P<path>.*)$', 'django.views.static.serve', {'document_root': settings.STATIC_ROOT}),
+
+    # django-registration urls
+    (r'^accounts/', include('registration.backends.default.urls')),
+
+
 )
 
 if settings.DEBUG:
