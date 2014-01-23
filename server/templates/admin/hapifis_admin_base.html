@@ -68,7 +68,6 @@ h1 {
 {% block breadcrumbs %}{% endblock %}
 
 {% block content %}
-
 <nav class="navbar navbar-default header" role="navigation" ng-controller="SurveyListMenuCtrl" ng-cloak>
     <div>
         <ul class="nav navbar-nav navbar-left">
@@ -78,6 +77,7 @@ h1 {
     </div>
 </nav>
 <div class="container">
+    {% block container %}
     <div id="login_text">
         <h1>DASHBOARD LOGIN</h1>
     </div>
@@ -89,5 +89,6 @@ h1 {
         {% block hapifis_content_nobg%}
         {% endblock %}
     </div>
+    {% endblock %}
 </div>
 {% endblock %}
