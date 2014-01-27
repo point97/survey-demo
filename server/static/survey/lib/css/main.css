@@ -316,6 +316,10 @@ input.datepicker {
 }
 #question_bg {
     background-color: #C5E6EB;
+}
+#question_bg:after {
+    content: ' ';
+    display: block;
     margin-bottom: 70px; /* The height of the #mobile_navigator */
 }
 #question_bg a.btn, #question_bg button.btn {
