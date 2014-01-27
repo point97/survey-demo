@@ -316,6 +316,7 @@ input.datepicker {
 }
 #question_bg {
     background-color: #C5E6EB;
+    margin-bottom: 70px; /* The height of the #mobile_navigator */
 }
 #question_bg a.btn, #question_bg button.btn {
     border: 0px;
