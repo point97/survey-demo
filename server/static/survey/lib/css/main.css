@@ -340,6 +340,9 @@ input.datepicker {
     list-style-type: none;
     padding: 22px;
 }
+#question_bg .no_pad input, #question_bg input.no_pad{
+    padding: 0px;
+}
 #question_bg .nav-pills > li {
     padding-left: 20px;
     padding-right: 20px;
