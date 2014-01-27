@@ -317,7 +317,7 @@ input.datepicker {
 #question_bg {
     background-color: #C5E6EB;
 }
-#question_bg:after {
+#survey_container:after {
     content: ' ';
     display: block;
     margin-bottom: 70px; /* The height of the #mobile_navigator */
