@@ -93,7 +93,8 @@ angular.module('askApp')
 
                 if (attrs.marker) {
                     var crosshairIcon = L.icon({
-                        iconUrl: '/static/survey/img/' + scope.marker.icon,
+                        //iconUrl: '/static/survey/img/' + scope.marker.icon,
+                        iconUrl: '/static/survey/components/leaflet/dist/images/marker-icon.png',
                         shadowUrl: false,
 
                         iconSize: [50, 50], // size of the icon
@@ -102,9 +103,16 @@ angular.module('askApp')
                         shadowAnchor: [4, 4], // the same for the shadow
                         popupAnchor: [0, -25] // point from which the popup should open relative to the iconAnchor
                     });
-                    var marker = new L.marker([scope.center.lat, scope.center.lng], {
-                        icon: crosshairIcon
-                    });
+                    var marker;
+                    if (scope.center) {
+                        marker = new L.marker([scope.center.lat, scope.center.lng], {
+                            icon: crosshairIcon
+                        });
+                    } else {
+                        marker = new L.marker([0, 0], {
+                            icon: crosshairIcon
+                        });
+                    }
                     var draggingMarker = false;
 
 

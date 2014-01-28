@@ -122,7 +122,7 @@
 }
 #overview_map div[leaflet] {
     height: 512px;
-    position: absolute;
+    position: relative;
 }
 #responses_found {
     background-color: #bbcbcd !important;
