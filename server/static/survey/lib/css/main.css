@@ -1,3 +1,6 @@
+* {
+    font-family: 'FF_DIN_GROUP', Arial, Verdana, sans-serif;
+}
 @media (min-width: 1200px) {
   .container {
     width: 1240px;
