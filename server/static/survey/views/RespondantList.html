@@ -59,6 +59,18 @@
             </div> -->
             <i ng-show="respondentsLoading" class="icon-spinner icon-spin"></i>
             <div id="total_surveys_chart">
+                <div leaflet
+                    center="map.center"
+                    zoom="map.zoom"
+                    requiredzoom="question.min_zoom"
+                    marker="map.marker"
+                    multimarkers="locations"
+                    popupfield="'answers'"
+                    iscrosshairalerting="isCrosshairAlerting"
+                    multimarkersedit="true"
+                    editmarker="editMarker"
+                    deletemarker="removeLocation"
+                    zoomtoresult="zoomModel.zoomToResult"></div>
                 <!-- <div time-series chart="total_surveys"></div> -->
             </div>
             <!-- <div id="surveyor_total_chart">

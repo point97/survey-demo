@@ -2,11 +2,8 @@
 
 //'use strict';
 
-(function() {
-
-    var leafletDirective = angular.module('leaflet.directive', []);
-
-    leafletDirective.directive('leaflet', function($http, $log, $compile, $timeout, $dialog) {
+angular.module('askApp')
+    .directive('leaflet', function($http, $log, $compile, $timeout, $dialog) {
         return {
             restrict: 'EA',
             replace: true,
@@ -356,5 +353,3 @@
             } // end of link function
         };
     });
-
-}());
