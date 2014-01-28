@@ -30,6 +30,9 @@
     color: #195d65;
     border-bottom: solid 5px #195d65;
     height: 2.5em;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
 }
 #sidenav_surveyname {
     margin-bottom: 1em;
@@ -180,6 +183,14 @@
     color: #222;
     background-color: #8cb8c3;
     border-radius: 0px;
+    line-height: 2em;
+}
+.bs_btn {
+    padding-left: 12px;
+    padding-right: 12px;
+    color: #222;
+    background-color: #8cb8c3;
+    border-radius: 4px;
     line-height: 2em;
 }
 .btn:hover {
