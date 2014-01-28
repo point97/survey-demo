@@ -116,11 +116,11 @@
     bottom: 0px;
     right: 1em;
 }
-#overview_map {
+#overview_map, .map-multipoint {
     height: 512px;
     position: relative;
 }
-#overview_map div[leaflet] {
+#overview_map div[leaflet], .map-multipoint div[leaflet] {
     height: 512px;
     position: relative;
 }
