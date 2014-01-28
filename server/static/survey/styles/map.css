@@ -20,13 +20,6 @@
 /**
  * The Map
  */
-div[leaflet] {
-    position: absolute !important;
-    top: 0 !important;
-    bottom: 0 !important;
-    left: 0 !important;
-    right: 0 !important;
-    }
 .leaflet-container .leaflet-control-attribution {
     font-size: 9px;
     background: white\9;

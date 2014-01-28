@@ -116,8 +116,13 @@
     bottom: 0px;
     right: 1em;
 }
-#total_surveys_chart {
-    margin-bottom: 2em;
+#overview_map {
+    height: 512px;
+    position: relative;
+}
+#overview_map div[leaflet] {
+    height: 512px;
+    position: absolute;
 }
 #responses_found {
     background-color: #bbcbcd !important;
