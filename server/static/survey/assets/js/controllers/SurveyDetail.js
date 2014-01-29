@@ -1103,9 +1103,10 @@ angular.module('askApp')
                 };
 
 
-                $http.get("data/marco_dd.json").success(function(data) {
-                    $scope.boundaryLayer = L.geoJson(data);
-                });
+                // TODO: Make this load in from a field or something
+                //$http.get("data/marco_dd.json").success(function(data) {
+                //    $scope.boundaryLayer = L.geoJson(data);
+                //});
 
                 $scope.isOutOfBounds = function() {
                     var point, results;
@@ -1120,13 +1121,15 @@ angular.module('askApp')
 
                 $scope.addMarker = function() {
                     if ($scope.activeMarker) {
-                        scope.activeMarker.marker.closePopup();
+                        $scope.activeMarker.marker.closePopup();
                     }
                     if (!$scope.isZoomedIn()) {
+                        $scope.isAnswerValid = false;
                         $scope.isCrosshairAlerting = true;
                         $scope.showZoomAlert();
-                    } else if ($scope.isOutOfBounds()) {
+                    } else if ($scope.boundaryLayer && $scope.isOutOfBounds()) {
                         $scope.showOutOfBoundsAlert();
+                        $scope.isAnswerValid = false;
                     } else {
                         // Add location
                         $scope.activeMarker = {
@@ -1135,10 +1138,14 @@ angular.module('askApp')
                             color: $scope.getNextColor()
                         };
                         $scope.locations.push($scope.activeMarker);
-                        $timeout(function() {
-                            $scope.showAddLocationDialog();
-                        }, 400);
+                        //$timeout(function() {
+                        //    $scope.showAddLocationDialog();
+                        //}, 400);
+                        $scope.answerMultiSelect($scope.question);
+                        $scope.answerMapQuestion($scope.locations);
+                        $scope.activeMarker = false;
                         $scope.isCrosshairAlerting = false;
+                        $scope.isAnswerValid = true;
                     }
                     $scope.updateCrosshair();
                 };
@@ -1182,8 +1189,6 @@ angular.module('askApp')
                 $scope.showLocation = function(location) {
                     $scope.zoomModel.zoomToResult = location;
                 };
-
-
 
                 $scope.showAddLocationDialog = function(question) {
                     if (_.isUndefined(question)) {
