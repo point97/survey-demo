@@ -1,5 +1,7 @@
 //'use strict';
 
+
+/*
 var map = {
     center: {
         lat: 47,
@@ -14,6 +16,7 @@ var map = {
     },
     msg: null
 };
+*/
 
 function ZoomAlertCtrl($scope, dialog, $location) {
     $scope.loaded = false;
@@ -1029,6 +1032,12 @@ angular.module('askApp')
             }
 
             if ($scope.question) {
+                var marker =  {
+                    visibility: true,
+                    lat: 47,
+                    lng: -124,
+                    icon: 'crosshair_white.png'
+                };
                 if ($routeParams.surveySlug == 'fish-market-survey') {
                     /* Fijian islands */
                     $scope.map = {
@@ -1037,6 +1046,7 @@ angular.module('askApp')
                             lng: 179.2583049
                         },
                         zoom: 8,
+                        marker: marker,
                         msg: null
                     };
                 } else if ($routeParams.surveySlug == 'general-applicationmulti-use-survey') {
@@ -1047,6 +1057,7 @@ angular.module('askApp')
                             lng: -123.8025571
                         },
                         zoom: 9,
+                        marker: marker,
                         msg: null
                     };
                 }
