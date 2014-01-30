@@ -1,3 +1,4 @@
+from decimal import Decimal
 from django.contrib.auth.models import User
 from django.db import models
 from django.db.models import Max, Min, Count, Sum
@@ -440,7 +441,7 @@ class Response(caching.base.CachingMixin, models.Model):
         if self.answer_raw:
             if self.question.type in ('info', 'text', 'textarea', 'yes-no',
                                       'single-select', 'auto-single-select',
-                                      'timepicker', 'multi-select'):
+                                      'map-multipoint', 'timepicker', 'multi-select'):
                 flat[self.question.slug] = self.answer
             elif self.question.type in ('currency', 'integer', 'number'):
                 flat[self.question.slug] = str(self.answer_number)
@@ -491,7 +492,7 @@ class Response(caching.base.CachingMixin, models.Model):
                 self.location_set.all().delete()
                 for point in simplejson.loads(simplejson.loads(self.answer_raw)):
                         answers.append("%s,%s: %s" % (point['lat'], point['lng'], point['answers']))
-                        location = Location(lat=point['lat'], lng=point['lng'], response=self, respondant=self.respondant)
+                        location = Location(lat=Decimal(str(point['lat'])), lng=Decimal(str(point['lng'])), response=self, respondant=self.respondant)
                         location.save()
                         for answer in point['answers']:
                             answer = LocationAnswer(answer=answer['text'], label=answer['label'], location=location)

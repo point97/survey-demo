@@ -482,7 +482,6 @@ angular.module('askApp')
 
                 if ($scope.locations && $scope.locations.length) {
                     answer = angular.toJson(_.map($scope.locations,
-
                         function(location) {
                             var returnValue = {
                                 lat: location.lat,
@@ -1119,6 +1118,29 @@ angular.module('askApp')
                     return true; // not using a boundary layer
                 };
 
+                $scope.finishMapQuestion = function() {
+                    var question = $scope.question;
+                        answer = { "text": "User", "label": "" };
+                    if (question.update) {
+                        $scope.locations[_.indexOf($scope.locations, $scope.activeMarker)].answers = [answer];
+                    } else {
+                        $scope.addLocation({
+                            lat: $scope.activeMarker.lat,
+                            lng: $scope.activeMarker.lng,
+                            color: $scope.activeMarker.color,
+                            question: question,
+                            answers: [answer]
+                        });
+                    }
+                    $scope.activeMarker = false;
+                    //$scope.answerMultiSelect($scope.question);
+                    $scope.answerMapQuestion($scope.locations);
+
+                    question.update = false;
+                    $scope.activeMarker = false;
+                    $scope.isCrosshairAlerting = false;
+                    $scope.isAnswerValid = true;
+                };
                 $scope.addMarker = function() {
                     if ($scope.activeMarker) {
                         $scope.activeMarker.marker.closePopup();
@@ -1141,11 +1163,7 @@ angular.module('askApp')
                         //$timeout(function() {
                         //    $scope.showAddLocationDialog();
                         //}, 400);
-                        $scope.answerMultiSelect($scope.question);
-                        $scope.answerMapQuestion($scope.locations);
-                        $scope.activeMarker = false;
-                        $scope.isCrosshairAlerting = false;
-                        $scope.isAnswerValid = true;
+                        $scope.finishMapQuestion();
                     }
                     $scope.updateCrosshair();
                 };
@@ -1355,7 +1373,7 @@ angular.module('askApp')
                  * yet mapped.
                  */
                 $scope.getRemainingActivities = function() {
-                    var selectedActivities = $scope.getAnswer($scope.question.modalQuestion.hoist_answers.slug);
+                    var selectedActivities = $scope.getAnswer($scope.question.slug);
                     // Filter out activities that have already been mapped.
                     var remainingActivities = _.difference(
                         _.pluck(selectedActivities, 'text'),
