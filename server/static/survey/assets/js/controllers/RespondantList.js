@@ -3,10 +3,7 @@
 angular.module('askApp')
     .controller('RespondantListCtrl', function($scope, $rootScope, $http, $routeParams, $location, reportsCommon, surveyShared) {
 
-    function filters_changed(surveySlug) {
-        reportsCommon.getRespondents(null, $scope);
-        var url = "/report/distribution/" + $routeParams.surveySlug + "/dfdfasdf"
-
+    function build_map(url) {
         $http.get(url).success(function(data) {
             $scope.locations = _.map(data.answer_domain, function(x) {
                 return {
@@ -17,6 +14,18 @@ angular.module('askApp')
                 }
             });
         });
+    }
+    function filters_changed(surveySlug) {
+        reportsCommon.getRespondents(null, $scope);
+        var url = null;
+        if ($routeParams.surveySlug == 'fish-market-survey') {
+            url = "/report/distribution/" + $routeParams.surveySlug + "/catch-location";
+        } else if ($routeParams.surveySlug == 'general-applicationmulti-use-survey') {
+            url = "/report/distribution/" + $routeParams.surveySlug + "/survey-location";
+        }
+
+        if (url)
+            build_map(url);
     }
 
     function setup_columns() {
