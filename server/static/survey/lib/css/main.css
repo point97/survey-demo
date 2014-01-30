@@ -201,6 +201,13 @@
     border-radius: 4px;
     line-height: 2em;
 }
+#time_units {
+    margin-top: 1.5em;
+}
+#time_units button {
+    padding-top: 1px;
+    padding-bottom: 1px;
+}
 .btn:hover {
     background-color: #acd8e3;
 }
