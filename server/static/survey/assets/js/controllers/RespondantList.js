@@ -3,43 +3,19 @@
 angular.module('askApp')
     .controller('RespondantListCtrl', function($scope, $rootScope, $http, $routeParams, $location, reportsCommon, surveyShared) {
 
-    function build_survey_total_data(data) {
-        var new_data = {};
-        for (var i in data.graph_data) {
-            for (var j in data.graph_data[i].data) {
-                var current_date = data.graph_data[i].data[j][0];
-                var surveys_taken = data.graph_data[i].data[j][1];
-                if (!new_data[current_date]) {
-                    new_data[current_date] = {
-                        name: current_date,
-                        data: surveys_taken
-                    }
-                } else {
-                    new_data[current_date].data += surveys_taken;
-                }
-            }
-        }
-        var tuples = _.map(new_data, function(x) { return [parseInt(x.name, 10), x.data]; }).sort();
-        return [
-            {
-                name: "Surveys Taken",
-                data: tuples
-            }
-        ]
-    }
     function filters_changed(surveySlug) {
         reportsCommon.getRespondents(null, $scope);
-        var url = reportsCommon.build_survey_stats_url($scope);
+        var url = "/report/distribution/" + $routeParams.surveySlug + "/dfdfasdf"
 
         $http.get(url).success(function(data) {
-            var new_data = build_survey_total_data(data);
-            $scope.total_surveys = {
-                yLabel: 'Surveys Collected',
-                background_color: "#dff2f4",
-                raw_data: new_data,
-                download_url: url.replace($scope.surveyorTimeFilter, $scope.surveyorTimeFilter + '.csv'),
-                unit: "surveys"
-            }
+            $scope.locations = _.map(data.answer_domain, function(x) {
+                return {
+                    visibility: true,
+                    lat: parseFloat(x.location__lat),
+                    lng: parseFloat(x.location__lng),
+                    icon: 'crosshair_white.png'
+                }
+            });
         });
     }
 
