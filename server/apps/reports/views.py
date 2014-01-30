@@ -66,7 +66,8 @@ def get_distribution(request, survey_slug, question_slug):
     filter_list = []
 
     answer_domain = question.get_answer_domain(survey, filter_list)
-    return HttpResponse(json.dumps({'success': "true", "answer_domain": list(answer_domain)}))
+    return HttpResponse(json.dumps({'success': "true", "answer_domain": list(answer_domain)},
+                        cls=CustomJSONEncoder), content_type='application/json')
 
 
 def _error(message='An error occurred.', **kwargs):
