@@ -83,24 +83,27 @@ angular.module('askApp')
     $scope.activePage = 'overview';
     $scope.statuses = [];
     $scope.status_single = $location.search().status || "";
-    /* Fijian islans */
-    $scope.map = {
-        center: {
-            lat: -17.4624892,
-            lng: 179.2583049
-        },
-        zoom: 8,
-        msg: null
-    };
-    /* Newport up to Astoria */
-    //$scope.map = {
-    //    center: {
-    //        lat: 45.382076,
-    //        lng: -123.8025571
-    //    },
-    //    zoom: 9,
-    //    msg: null
-    //};
+    if ($routeParams.surveySlug == 'fish-market-survey') {
+        /* Fijian islands */
+        $scope.map = {
+            center: {
+                lat: -17.4624892,
+                lng: 179.2583049
+            },
+            zoom: 8,
+            msg: null
+        };
+    } else if ($routeParams.surveySlug == 'general-applicationmulti-use-survey') {
+        /* Newport up to Astoria */
+        $scope.map = {
+            center: {
+                lat: 45.382076,
+                lng: -123.8025571
+            },
+            zoom: 9,
+            msg: null
+        };
+    }
     setup_columns();
 
     $scope.$watch('filter', function (newValue) {

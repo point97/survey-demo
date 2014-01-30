@@ -11,7 +11,6 @@ var map = {
         lat: 47,
         lng: -124,
         icon: 'crosshair_white.png'
-
     },
     msg: null
 };
@@ -1030,10 +1029,31 @@ angular.module('askApp')
             }
 
             if ($scope.question) {
-                $scope.map = map;
-                $scope.map.center.lat = $scope.question.lat || map.center.lat;
-                $scope.map.center.lng = $scope.question.lng || map.center.lng;
-                $scope.map.zoom = $scope.question.zoom || map.zoom;
+                if ($routeParams.surveySlug == 'fish-market-survey') {
+                    /* Fijian islands */
+                    $scope.map = {
+                        center: {
+                            lat: -17.4624892,
+                            lng: 179.2583049
+                        },
+                        zoom: 8,
+                        msg: null
+                    };
+                } else if ($routeParams.surveySlug == 'general-applicationmulti-use-survey') {
+                    /* Newport up to Astoria */
+                    $scope.map = {
+                        center: {
+                            lat: 45.382076,
+                            lng: -123.8025571
+                        },
+                        zoom: 9,
+                        msg: null
+                    };
+                }
+                //$scope.map = map;
+                //$scope.map.center.lat = $scope.question.lat || map.center.lat;
+                //$scope.map.center.lng = $scope.question.lng || map.center.lng;
+                //$scope.map.zoom = $scope.question.zoom || map.zoom;
             }
 
             // penny question controller
