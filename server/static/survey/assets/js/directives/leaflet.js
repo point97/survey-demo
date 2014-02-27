@@ -1,5 +1,4 @@
 /* adapted from https://github.com/tombatossals/angular-leaflet-directive */
-// peacock
 //'use strict';
 
 angular.module('askApp')
