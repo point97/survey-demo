@@ -1032,12 +1032,6 @@ angular.module('askApp')
             }
 
             if ($scope.question) {
-                var marker =  {
-                    visibility: true,
-                    lat: 47,
-                    lng: -124,
-                    icon: 'crosshair_white.png'
-                };
                 // Not-really-sensible defaults
                 $scope.map = {
                     center: {
