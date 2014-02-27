@@ -161,12 +161,10 @@ a {
 -------------------------------------------------- */
 
 [class*="bar-"] {
-  position: fixed;
   right: 0;
   left: 0;
   z-index: 10;
   height: 44px;
-  padding: 5px;
   box-sizing: border-box;
 }
 
