@@ -2,30 +2,46 @@
 
 angular.module('askApp')
     .controller('RespondantListCtrl', function($scope, $rootScope, $http, $routeParams, $location, reportsCommon, surveyShared) {
-
+$scope.getThisVar = 3;
     function build_map(url) {
         $http.get(url).success(function(data) {
             $scope.locations = _.map(data.answer_domain, function(x) {
+				var assoc_respondant = _.find($scope.respondents, function(y) {
+		        	return x.location__response__respondant == y.uuid; 
+                });
+
+				if (typeof assoc_respondant == 'undefined')
+					return null;
                 return {
                     visibility: true,
                     lat: parseFloat(x.location__lat),
                     lng: parseFloat(x.location__lng),
-                    icon: 'crosshair_white.png'
+                    icon: 'crosshair_white.png',
+                    date: x.location__response__ts,
+                    respondant_url:  $scope.build_url_for_respondant(assoc_respondant)
                 }
             });
+			$scope.locations = _.filter($scope.locations, function(whatever) {
+				return whatever != null;
+			});
         });
     }
     function filters_changed(surveySlug) {
-        reportsCommon.getRespondents(null, $scope);
+        var promise = reportsCommon.getRespondents(null, $scope);
         var url = null;
+        // Depending on what survey we're at the dashboard for, we need to switch
+        // which question we pull the data for.
         if ($routeParams.surveySlug == 'fish-market-survey') {
             url = "/report/distribution/" + $routeParams.surveySlug + "/catch-location";
         } else if ($routeParams.surveySlug == 'general-applicationmulti-use-survey') {
             url = "/report/distribution/" + $routeParams.surveySlug + "/survey-location";
         }
 
-        if (url)
-            build_map(url);
+        if (url) {
+            promise.success(function() {
+                build_map(url);
+            });
+        }  
     }
 
     function setup_columns() {
@@ -57,9 +73,13 @@ angular.module('askApp')
         };
     }
 
-    $scope.goToResponse = function(respondent) {
-        window.location = "#/RespondantDetail/" + $scope.survey.slug +
-            "/" + respondent.uuid + "?" + $scope.filtered_list_url;
+    $scope.build_url_for_respondant = function(respondant) {
+	    return "#/RespondantDetail/" + $scope.survey.slug +
+            "/" + respondant.uuid + "?" + $scope.filtered_list_url;
+    } 
+
+    $scope.goToResponse = function(respondant) {
+        window.location = $scope.build_url_for_respondant(respondant);
     }
     $scope.market = $location.search().survey_site || "";
     $scope.filter = null;

@@ -2,7 +2,7 @@
 //'use strict';
 
 angular.module('askApp')
-    .directive('leaflet', function($http, $log, $compile, $timeout, $dialog) {
+    .directive('leaflet', function($http, $log, $compile, $timeout, $dialog, $routeParams) {
         return {
             restrict: 'EA',
             replace: true,
@@ -335,11 +335,23 @@ angular.module('askApp')
                                         popup = '<h1 class="marker-popup-heading">Activities</h1>';
                                         popup += '<ul class="unstyled marker-popup-list"><li ng-repeat="item in popupText"><i class="icon-ok-circle"></i>&nbsp;{{ item.text }}</li></ul>';
                                     }
+				    popup += "some word";
                                     if (scope.multiMarkersEdit) {
                                         popup += '<button class="btn pull-right" ng-click="editMarkerWrapper(activeMarker)"><i class="icon-edit"></i>&nbsp;Edit</button>';
                                         popup += '<button class="btn btn-danger pull-right" ng-click="deleteMarkerWrapper(activeMarker)"><i class="icon-trash"></i>&nbsp;Remove</button>';
                                         popup += '<div class="clearfix"></div>';
                                     }
+
+                                    popup += markDat.respondant_url;
+				    popup += "<p>" + markDat.date + "</p>";
+				    if ($routeParams.surveySlug == "fishers-logbook") {
+				    	popup += "<p>Logbook " + scope + "</p>";
+				    } else if ($routeParams.surveySlug == "fish-market-survey") {
+                                        popup += "<p>Market Survey Results</p>"; 
+				    } else if ($routeParams.surveySlug == "general-applicationmulti-use-survey") {
+				    	popup += "<p>Basics " + scope + "</p>";
+				    }
+                                    console.log(mkey);
                                     marker.bindPopup(popup, { closeButton: true });
                                     marker.on('click', function(e) {
                                         scope.activeMarker = {
