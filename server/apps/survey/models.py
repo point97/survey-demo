@@ -46,6 +46,7 @@ class Respondant(caching.base.CachingMixin, models.Model):
     survey_site = models.CharField(max_length=240, null=True, blank=True)
     buy_or_catch = models.CharField(max_length=240, null=True, blank=True)
     how_sold = models.CharField(max_length=240, null=True, blank=True)
+    logbook = models.CharField(max_length=240, null=True, blank=True)
 
     locations = models.IntegerField(null=True, blank=True)
 

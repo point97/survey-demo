@@ -331,26 +331,35 @@ angular.module('askApp')
                                     }, true);
                                     
                                     var popup;
-                                    if (scope.popupField) {    
-                                        popup = '<h1 class="marker-popup-heading">Activities</h1>';
-                                        popup += '<ul class="unstyled marker-popup-list"><li ng-repeat="item in popupText"><i class="icon-ok-circle"></i>&nbsp;{{ item.text }}</li></ul>';
-                                    }
-				    popup += "some word";
-                                    if (scope.multiMarkersEdit) {
-                                        popup += '<button class="btn pull-right" ng-click="editMarkerWrapper(activeMarker)"><i class="icon-edit"></i>&nbsp;Edit</button>';
-                                        popup += '<button class="btn btn-danger pull-right" ng-click="deleteMarkerWrapper(activeMarker)"><i class="icon-trash"></i>&nbsp;Remove</button>';
-                                        popup += '<div class="clearfix"></div>';
-                                    }
-
-                                    popup += markDat.respondant_url;
-				    popup += "<p>" + markDat.date + "</p>";
 				    if ($routeParams.surveySlug == "fishers-logbook") {
-				    	popup += "<p>Logbook " + scope + "</p>";
+				    	popup = "<h1>Logbook</h1>";
 				    } else if ($routeParams.surveySlug == "fish-market-survey") {
-                                        popup += "<p>Market Survey Results</p>"; 
+                                        popup = "<h1>Market Survey Results</h1>"; 
 				    } else if ($routeParams.surveySlug == "general-applicationmulti-use-survey") {
-				    	popup += "<p>Basics " + scope + "</p>";
+				    	popup = "<h1>Basics</h1>";
 				    }
+				    
+                                    popup += "<p>" + markDat.date + "</p>";
+
+                                    if($routeParams.surveySlug == "fish-market-survey")
+                                            popup += "<p>Total pounds caught: " + markDat.respondant.total_catch + "</p>";
+                                    if($routeParams.surveySlug == "fishers-logbook")
+					    popup += "<p>Logbook: " + markDat.respondant.logbook + "</p>";
+                                    if($routeParams.surveySlug == "fish-market-survey" || $routeParams.surveySlug == "fishers-logbook")
+					    popup += '<a href="' + markDat.respondant_url + '">Details</a>';
+
+				    if (scope.popupField) {    
+					    //popup = '<h1 class="marker-popup-heading">Activities</h1>';
+					    popup += '<ul class="unstyled marker-popup-list"><li ng-repeat="item in popupText"><i class="icon-ok-circle"></i>&nbsp;{{ item.text }}</li></ul>';
+				    }
+				    if (scope.multiMarkersEdit) {
+					    popup += '<button class="btn pull-right" ng-click="editMarkerWrapper(activeMarker)"><i class="icon-edit"></i>&nbsp;Edit</button>';
+					    popup += '<button class="btn btn-danger pull-right" ng-click="deleteMarkerWrapper(activeMarker)"><i class="icon-trash"></i>&nbsp;Remove</button>';
+					    popup += '<div class="clearfix"></div>';
+				    }
+
+
+
                                     console.log(mkey);
                                     marker.bindPopup(popup, { closeButton: true });
                                     marker.on('click', function(e) {
