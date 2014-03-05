@@ -200,7 +200,7 @@ angular.module('askApp')
                             s.center.lat = map.getCenter().lat;
                             s.center.lng = map.getCenter().lng;
 
-                            if (marker) {
+                            if (s.marker) {
                                 s.marker.lat = map.getCenter().lat;
                                 s.marker.lng = map.getCenter().lng;
                                 marker.setLatLng(new L.LatLng(map.getCenter().lat, map.getCenter().lng));
@@ -216,7 +216,7 @@ angular.module('askApp')
                             s.center.lat = map.getCenter().lat;
                             s.center.lng = map.getCenter().lng;
 
-                            if (marker) {
+                            if (s.marker) {
                                 s.marker.lat = map.getCenter().lat;
                                 s.marker.lng = map.getCenter().lng;
                                 marker.setLatLng(new L.LatLng(map.getCenter().lat, map.getCenter().lng));
@@ -262,17 +262,19 @@ angular.module('askApp')
                 });
 
                 scope.updateCrosshair = function() {
-                    if (scope.confirmingLocation) {
-                        scope.marker.icon = "crosshair_blank.png";
+                    if(scope.marker) {
+                        if (scope.confirmingLocation) {
+                            scope.marker.icon = "crosshair_blank.png";
 
-                    } else if (scope.isCrosshairAlerting && !scope.isZoomedIn()) {
-                        scope.marker.icon = "crosshair_red.png";
+                        } else if (scope.isCrosshairAlerting && !scope.isZoomedIn()) {
+                            scope.marker.icon = "crosshair_red.png";
 
-                    } else if (scope.isCrosshairAlerting && scope.isZoomedIn()) {
-                        scope.marker.icon = "crosshair_green.png";
+                        } else if (scope.isCrosshairAlerting && scope.isZoomedIn()) {
+                            scope.marker.icon = "crosshair_green.png";
 
-                    } else {
-                        scope.marker.icon = "crosshair_white.png";
+                        } else {
+                            scope.marker.icon = "crosshair_white.png";
+                        }
                     }
                 };
 
@@ -306,7 +308,7 @@ angular.module('askApp')
                         for (var mkey in scope.multiMarkers) {
                             (function(mkey) {
                                 var markDat = scope.multiMarkers[mkey];
-                                if (markDat.lat && markDat.lat) {
+                                if (markDat.lat && markDat.lng) {
 
                                     var color = markDat.color;
                                     var marker = new L.marker(
@@ -324,62 +326,59 @@ angular.module('askApp')
                                     scope.$watch('multiMarkers.' + mkey, function() {
                                         if (scope.multiMarkers[mkey]) {
                                             marker.setLatLng(scope.multiMarkers[mkey]);
-                                        } else {
+                                        } else { 
                                             map.removeLayer(marker);
                                         }
 
                                     }, true);
-                                    
-                                    var popup;
-				    if ($routeParams.surveySlug == "fishers-logbook") {
-				    	popup = "<h1>Logbook</h1>";
-				    } else if ($routeParams.surveySlug == "fish-market-survey") {
-                                        popup = "<h1>Market Survey Results</h1>"; 
-				    } else if ($routeParams.surveySlug == "general-applicationmulti-use-survey") {
-				    	popup = "<h1>Basics</h1>";
-				    }
-				    
-                                    popup += "<p>" + markDat.date + "</p>";
 
-                                    if($routeParams.surveySlug == "fish-market-survey")
-                                            popup += "<p>Total pounds caught: " + markDat.respondant.total_catch + "</p>";
-                                    if($routeParams.surveySlug == "fishers-logbook")
-					    popup += "<p>Logbook: " + markDat.respondant.logbook + "</p>";
-                                    if($routeParams.surveySlug == "fish-market-survey" || $routeParams.surveySlug == "fishers-logbook")
-					    popup += '<a href="' + markDat.respondant_url + '">Details</a>';
-
-				    if (scope.popupField) {    
-					    //popup = '<h1 class="marker-popup-heading">Activities</h1>';
-					    popup += '<ul class="unstyled marker-popup-list"><li ng-repeat="item in popupText"><i class="icon-ok-circle"></i>&nbsp;{{ item.text }}</li></ul>';
-				    }
-				    if (scope.multiMarkersEdit) {
-					    popup += '<button class="btn pull-right" ng-click="editMarkerWrapper(activeMarker)"><i class="icon-edit"></i>&nbsp;Edit</button>';
-					    popup += '<button class="btn btn-danger pull-right" ng-click="deleteMarkerWrapper(activeMarker)"><i class="icon-trash"></i>&nbsp;Remove</button>';
-					    popup += '<div class="clearfix"></div>';
-				    }
-
-
-
-                                    console.log(mkey);
-                                    marker.bindPopup(popup, { closeButton: true });
-                                    marker.on('click', function(e) {
-                                        scope.activeMarker = {
-                                            data: scope.multiMarkers[mkey],
-                                            marker: marker
-                                        };
-                                        scope.popupText = scope.multiMarkers[mkey][scope.popupField];
-                                        $compile(angular.element(map._popup._contentNode))(scope);
-                                        scope.$digest();
-                                    });
-
-                                    map.addLayer(marker);
-                                    markersDict[mkey] = marker;    
+                                var popup;
+                                if ($routeParams.surveySlug == "fishers-logbook") {
+                                        popup = "<h1>Logbook</h1>";
+                                } else if ($routeParams.surveySlug == "fish-market-survey") {
+                                    popup = "<h1>Market Survey Results</h1>";
+                                } else if ($routeParams.surveySlug == "general-applicationmulti-use-survey") {
+                                    popup = "<h1>Basics</h1>";
                                 }
-                                
-                            })(mkey);
-                        } // for mkey in multiMarkers
-                    }); // watch multiMarkers
-                } // if attrs.multiMarkers
-            } // end of link function
-        };
-    });
+
+                                popup += "<p>" + markDat.date + "</p>";
+
+                                if($routeParams.surveySlug == "fish-market-survey")
+                                    popup += "<p>Total pounds caught: " + markDat.respondant.total_catch + "</p>";
+                                if($routeParams.surveySlug == "fishers-logbook")
+                                    popup += "<p>Logbook: " + markDat.respondant.logbook + "</p>";
+                                if($routeParams.surveySlug == "fish-market-survey" || $routeParams.surveySlug == "fishers-logbook")
+                                    popup += '<a href="' + markDat.respondant_url + '">Details</a>';
+
+                                if (scope.popupField) {
+                                    //popup = '<h1 class="marker-popup-heading">Activities</h1>';
+                                    popup += '<ul class="unstyled marker-popup-list"><li ng-repeat="item in popupText"><i class="icon-ok-circle"></i>&nbsp;{{ item.text }}</li></ul>';
+                                }
+                                if (scope.multiMarkersEdit) {
+                                    popup += '<button class="btn pull-right" ng-click="editMarkerWrapper(activeMarker)"><i class="icon-edit"></i>&nbsp;Edit</button>';
+                                    popup += '<button class="btn btn-danger pull-right" ng-click="deleteMarkerWrapper(activeMarker)"><i class="icon-trash"></i>&nbsp;Remove</button>';
+                                    popup += '<div class="clearfix"></div>';
+                                }
+
+                                marker.bindPopup(popup, { closeButton: true });
+                                marker.on('click', function(e) {
+                                    scope.activeMarker = {
+                                        data: scope.multiMarkers[mkey],
+                                        marker: marker
+                                    };
+                                    scope.popupText = scope.multiMarkers[mkey][scope.popupField];
+                                    $compile(angular.element(map._popup._contentNode))(scope);
+                                    scope.$digest();
+                                });
+
+                                map.addLayer(marker);
+                                markersDict[mkey] = marker;
+                            }
+
+                        })(mkey);
+                    } // for mkey in multiMarkers
+                }); // watch multiMarkers
+            } // if attrs.multiMarkers
+        } // end of link function
+    };
+});

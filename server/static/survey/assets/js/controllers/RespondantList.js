@@ -19,8 +19,8 @@ angular.module('askApp')
                     icon: 'crosshair_white.png',
                     date: x.location__response__ts,
                     respondant_url:  $scope.build_url_for_respondant(assoc_respondant),
-		    respondant: assoc_respondant
-                }
+                    respondant: assoc_respondant
+                };
 
                 if($routeParams.surveySlug == "fishers-market-survey") {
                     loc_data.catch_load = 25;
@@ -105,6 +105,7 @@ angular.module('askApp')
                 lat: -17.4624892,
                 lng: 179.2583049
             },
+            marker: {},
             zoom: 8,
             msg: null
         };
@@ -115,6 +116,7 @@ angular.module('askApp')
                 lat: 45.382076,
                 lng: -123.8025571
             },
+            marker: {},
             zoom: 9,
             msg: null
         };

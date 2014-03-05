@@ -1038,6 +1038,7 @@ angular.module('askApp')
                         lat: -17.4624892,
                         lng: 179.2583049
                     },
+                    marker: {},
                     zoom: 8,
                     msg: null
                 };
@@ -1048,6 +1049,7 @@ angular.module('askApp')
                             lat: -17.4624892,
                             lng: 179.2583049
                         },
+                        marker: {},
                         zoom: 8,
                         msg: null
                     };
@@ -1058,10 +1060,17 @@ angular.module('askApp')
                             lat: 45.382076,
                             lng: -123.8025571
                         },
+                        marker: {},
                         zoom: 9,
                         msg: null
                     };
                 }
+/*
+                $scope.map.getCenter = function() {
+                    return {
+                        lat: center.lat,
+                        lng: center.lng };
+                };*/
                 //$scope.map = map;
                 //$scope.map.center.lat = $scope.question.lat || map.center.lat;
                 //$scope.map.center.lng = $scope.question.lng || map.center.lng;
@@ -1142,7 +1151,7 @@ angular.module('askApp')
                 $scope.isOutOfBounds = function() {
                     var point, results;
                     if ($scope.boundaryLayer) {
-                        point = new L.LatLng($scope.map.marker.lat, $scope.map.marker.lng);
+                        point = new L.LatLng($scope.map.center.lat, $scope.map.center.lng);
                         results = leafletPip.pointInLayer(point, $scope.boundaryLayer, true);
                         // results is an array of L.Polygon objects containing that point
                         return results.length < 1;
@@ -1187,8 +1196,8 @@ angular.module('askApp')
                     } else {
                         // Add location
                         $scope.activeMarker = {
-                            lat: $scope.map.marker.lat,
-                            lng: $scope.map.marker.lng,
+                            lat: $scope.map.center.lat,
+                            lng: $scope.map.center.lng,
                             color: $scope.getNextColor()
                         };
                         $scope.locations.push($scope.activeMarker);
