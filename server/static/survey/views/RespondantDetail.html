@@ -55,6 +55,12 @@
                         <span ng-switch on="response.question.type">
                             <span ng-switch-default>{{response.answer}}</span>
                             <span ng-switch-when="yes-no">{{response.answer_parsed.text}}</span>
+                            <div ng-switch-when="map-multipoint">
+                                <div ng-repeat="loc in map_coordinates">
+                                    <div>Lat {{loc.lat}}</div>
+                                    <div>Lng {{loc.lng}}</div>
+                                </div>
+                            </div>
                             <ul class="unstyled" ng-switch-when="multi-select">
                                 <li ng-repeat="answer in response.answer_parsed">{{answer.text}}</li>
                             </ul>
