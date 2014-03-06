@@ -71,7 +71,7 @@ angular.module('askApp')
                 });
                 */
 
-                scope.activeMarker = null;
+                scope.activeMarker = false;
 
                 scope.$watch('zoomToResult', function (place) {
                     if (place) {
@@ -94,8 +94,8 @@ angular.module('askApp')
 
                 if (attrs.marker) {
                     var crosshairIcon = L.icon({
-                        //iconUrl: '/static/survey/img/' + scope.marker.icon,
-                        iconUrl: '/static/survey/components/leaflet/dist/images/marker-icon.png',
+                        iconUrl: '/static/survey/img/' + scope.marker.icon,
+                        //iconUrl: '/static/survey/components/leaflet/dist/images/marker-icon.png',
                         shadowUrl: false,
 
                         iconSize: [50, 50], // size of the icon
@@ -200,10 +200,11 @@ angular.module('askApp')
                             s.center.lat = map.getCenter().lat;
                             s.center.lng = map.getCenter().lng;
 
-                            if (s.marker) {
+                            if (marker) {
                                 s.marker.lat = map.getCenter().lat;
                                 s.marker.lng = map.getCenter().lng;
-                                marker.setLatLng(new L.LatLng(map.getCenter().lat, map.getCenter().lng));
+                                marker.setLatLng(new L.LatLng(s.marker.lat, s.marker.lng));
+                                //marker.setLatLng(new L.LatLng(map.getCenter().lat, map.getCenter().lng));
                             }
 
                             s.updateCrosshair();
@@ -216,10 +217,11 @@ angular.module('askApp')
                             s.center.lat = map.getCenter().lat;
                             s.center.lng = map.getCenter().lng;
 
-                            if (s.marker) {
+                            if (marker) {
                                 s.marker.lat = map.getCenter().lat;
                                 s.marker.lng = map.getCenter().lng;
-                                marker.setLatLng(new L.LatLng(map.getCenter().lat, map.getCenter().lng));
+                                marker.setLatLng(new L.LatLng(s.marker.lat, s.marker.lng));
+                                //marker.setLatLng(new L.LatLng(map.getCenter().lat, map.getCenter().lng));
                             }
                         });
                     });

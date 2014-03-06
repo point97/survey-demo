@@ -192,7 +192,7 @@ angular.module('askApp')
                             return {
                                 text: answer.text + ": " + gridAnswer,
                                 label: _.string.slugify(answer.text + ": " + gridAnswer)
-                            }
+                            };
                         });
                     }));
                 } else {
@@ -228,7 +228,7 @@ angular.module('askApp')
 
         $scope.gotoQuestion = function(questionSlug) {
             $location.path(['survey', $scope.survey.slug, questionSlug, $routeParams.uuidSlug, $routeParams.action].join('/'));
-        }
+        };
 
         $scope.getNextQuestionPath = function(numQsToSkips) {
             var nextQuestion = $scope.getNextQuestion(numQsToSkips);
@@ -247,7 +247,7 @@ angular.module('askApp')
                     delete $scope.answers[question.slug];
                 }
                 _.each(app.currentRespondent.responses, function(response, i) {
-                    console.log(question.slug)
+                    console.log(question.slug);
                     if (response.question.slug === question.slug) {
                         index = i;
                     }
@@ -259,7 +259,7 @@ angular.module('askApp')
                 $scope.saveState(app);
             }
 
-        }
+        };
 
         $scope.getLastQuestion = function(numQsToSkips) {
             var index = _.indexOf($scope.survey.questions, $scope.question),
@@ -267,11 +267,11 @@ angular.module('askApp')
             while (index >= 0 && !lastQuestion) {
                 index--;
                 if ($scope.survey.questions[index] && _.has($scope.answers, $scope.survey.questions[index].slug)) {
-                    lastQuestion = $scope.survey.questions[index]
+                    lastQuestion = $scope.survey.questions[index];
                 }
             }
             return lastQuestion;
-        }
+        };
 
         $scope.getNextQuestionWithSkip = function(numQsToSkips) {
             var index = _.indexOf($scope.survey.questions, $scope.question) + 1 + (numQsToSkips || 0);
@@ -749,7 +749,7 @@ angular.module('askApp')
             });
             console.log(gridValidated);
             return gridValidated;
-        }
+        };
 
         $scope.loadSurvey = function(data) {
             $scope.survey = data.survey;
@@ -966,7 +966,7 @@ angular.module('askApp')
                         'text': 'No',
                         'label': "No",
                         checked: $scope.answer[0].text === 'No'
-                    }]
+                    }];
                 } else if ($scope.answer && !_.isArray($scope.answer)) {
                     $scope.question.options = [{
                         'text': 'Yes',
@@ -976,7 +976,7 @@ angular.module('askApp')
                         'text': 'No',
                         'label': "No",
                         checked: $scope.answer.text === 'No'
-                    }]
+                    }];
                 } else {
                     $scope.question.options = [{
                         'text': 'Yes',
@@ -986,7 +986,7 @@ angular.module('askApp')
                         'text': 'No',
                         'label': "No",
                         checked: false
-                    }]
+                    }];
                 }
 
             }
@@ -1038,7 +1038,6 @@ angular.module('askApp')
                         lat: -17.4624892,
                         lng: 179.2583049
                     },
-                    marker: {},
                     zoom: 8,
                     msg: null
                 };
@@ -1049,7 +1048,6 @@ angular.module('askApp')
                             lat: -17.4624892,
                             lng: 179.2583049
                         },
-                        marker: {},
                         zoom: 8,
                         msg: null
                     };
@@ -1060,17 +1058,25 @@ angular.module('askApp')
                             lat: 45.382076,
                             lng: -123.8025571
                         },
-                        marker: {},
                         zoom: 9,
                         msg: null
                     };
                 }
-/*
+
+                $scope.map.marker = {
+                    visibility: true,
+                    icon: "crosshair_white.png",
+                    lat: $scope.map.center.lat,
+                    lng: $scope.map.center.lng
+                };
+
                 $scope.map.getCenter = function() {
                     return {
                         lat: center.lat,
                         lng: center.lng };
-                };*/
+                        //lat: map.center.lat,
+                        //lng: map.center.lng };
+                };
                 //$scope.map = map;
                 //$scope.map.center.lat = $scope.question.lat || map.center.lat;
                 //$scope.map.center.lng = $scope.question.lng || map.center.lng;
@@ -1161,10 +1167,12 @@ angular.module('askApp')
 
                 $scope.finishMapQuestion = function() {
                     var question = $scope.question;
-                        answer = { "text": "User", "label": "" };
+                    answer = { "text": "User", "label": "" };
+
                     if (question.update) {
                         $scope.locations[_.indexOf($scope.locations, $scope.activeMarker)].answers = [answer];
-                    } else {
+                    }
+                    else {
                         $scope.addLocation({
                             lat: $scope.activeMarker.lat,
                             lng: $scope.activeMarker.lng,
@@ -1211,7 +1219,7 @@ angular.module('askApp')
 
                 $scope.addLocation = function(location) {
                     // var locations = _.without($scope.locations, $scope.activeMarker);
-                    location.color = $scope.activeMarker.color;
+                    //location.color = $scope.activeMarker.color;
                     $scope.locations[_.indexOf($scope.locations, $scope.activeMarker)] = location;
                     // $scope.locations = locations;
                     // $scope.locations.push(location);
@@ -1226,7 +1234,7 @@ angular.module('askApp')
                         $scope.removeLocation($scope.activeMarker);
                         $scope.activeMarker = false;
                     }
-                }
+                };
 
                 $scope.editMarker = function(location) {
                     if (!location.question) {
@@ -1498,7 +1506,7 @@ angular.module('askApp')
                             text: row,
                             label: _.string.slugify(row),
                             checked: matches.length ? true : false
-                        })
+                        });
                     }
                 });
             }
@@ -1595,7 +1603,7 @@ angular.module('askApp')
                     } else {
                         template = nameTemplate;
                     }
-                    col.cellTemplate = template
+                    col.cellTemplate = template;
                     $scope.gridOptions.columnDefs.push(col);
                 });
             }
@@ -1660,14 +1668,14 @@ angular.module('askApp')
                     survey: $routeParams.surveySlug,
                     ts: ts,
                     responses: []
-                }
+                };
                 $scope.saveState(app);
             }
             app.currentRespondent = JSON.parse(localStorage.getItem('hapifish-' + $routeParams.uuidSlug));
             if (!app.currentRespondent) {
                 app.currentRespondent = {
                     responses: []
-                }
+                };
             }
 
             $scope.loadSurvey({
