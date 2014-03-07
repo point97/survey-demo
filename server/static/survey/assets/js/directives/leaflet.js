@@ -335,22 +335,24 @@ angular.module('askApp')
                                     }, true);
 
                                 var popup;
-                                if ($routeParams.surveySlug == "fishers-logbook") {
+                                if(!$routeParams.questionSlug) {
+                                    if ($routeParams.surveySlug == "fishers-logbook") {
                                         popup = "<h1>Logbook</h1>";
-                                } else if ($routeParams.surveySlug == "fish-market-survey") {
-                                    popup = "<h1>Market Survey Results</h1>";
-                                } else if ($routeParams.surveySlug == "general-applicationmulti-use-survey") {
-                                    popup = "<h1>Basics</h1>";
+                                    } else if ($routeParams.surveySlug == "fish-market-survey") {
+                                        popup = "<h1>Market Survey Results</h1>";
+                                    } else if ($routeParams.surveySlug == "general-applicationmulti-use-survey") {
+                                        popup = "<h1>Basics</h1>";
+                                    }
+
+                                    popup += "<p>" + markDat.date + "</p>";
+
+                                    if($routeParams.surveySlug == "fish-market-survey")
+                                        popup += "<p>Total pounds caught: " + markDat.respondant.total_catch + "</p>";
+                                    if($routeParams.surveySlug == "fishers-logbook")
+                                        popup += "<p>Logbook: " + markDat.respondant.logbook + "</p>";
+                                    if($routeParams.surveySlug == "fish-market-survey" || $routeParams.surveySlug == "fishers-logbook")
+                                        popup += '<a href="' + markDat.respondant_url + '">Details</a>';
                                 }
-
-                                popup += "<p>" + markDat.date + "</p>";
-
-                                if($routeParams.surveySlug == "fish-market-survey")
-                                    popup += "<p>Total pounds caught: " + markDat.respondant.total_catch + "</p>";
-                                if($routeParams.surveySlug == "fishers-logbook")
-                                    popup += "<p>Logbook: " + markDat.respondant.logbook + "</p>";
-                                if($routeParams.surveySlug == "fish-market-survey" || $routeParams.surveySlug == "fishers-logbook")
-                                    popup += '<a href="' + markDat.respondant_url + '">Details</a>';
 
                                 if (scope.popupField) {
                                     //popup = '<h1 class="marker-popup-heading">Activities</h1>';

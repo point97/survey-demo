@@ -1074,8 +1074,6 @@ angular.module('askApp')
                     return {
                         lat: center.lat,
                         lng: center.lng };
-                        //lat: map.center.lat,
-                        //lng: map.center.lng };
                 };
                 //$scope.map = map;
                 //$scope.map.center.lat = $scope.question.lat || map.center.lat;
@@ -1169,6 +1167,7 @@ angular.module('askApp')
                     var question = $scope.question;
                     answer = { "text": "User", "label": "" };
 
+                    /*
                     if (question.update) {
                         $scope.locations[_.indexOf($scope.locations, $scope.activeMarker)].answers = [answer];
                     }
@@ -1180,7 +1179,7 @@ angular.module('askApp')
                             question: question,
                             answers: [answer]
                         });
-                    }
+                    }*/
                     $scope.activeMarker = false;
                     //$scope.answerMultiSelect($scope.question);
                     $scope.answerMapQuestion($scope.locations);
@@ -1189,10 +1188,13 @@ angular.module('askApp')
                     $scope.activeMarker = false;
                     $scope.isCrosshairAlerting = false;
                     $scope.isAnswerValid = true;
+                    console.log($scope.answers);
                 };
                 $scope.addMarker = function() {
+                    answer = { "text": "User", "label": "" };
                     if ($scope.activeMarker) {
-                        $scope.activeMarker.marker.closePopup();
+                        //activeMarker.marker does not exit
+                        //$scope.activeMarker.marker.closePopup();
                     }
                     if (!$scope.isZoomedIn()) {
                         $scope.isAnswerValid = false;
@@ -1206,13 +1208,19 @@ angular.module('askApp')
                         $scope.activeMarker = {
                             lat: $scope.map.center.lat,
                             lng: $scope.map.center.lng,
-                            color: $scope.getNextColor()
+                            color: $scope.getNextColor(),
+                            question: $scope.question,
+                            answers: [answer]
                         };
                         $scope.locations.push($scope.activeMarker);
+                        $scope.activeMarker = false;
                         //$timeout(function() {
                         //    $scope.showAddLocationDialog();
                         //}, 400);
-                        $scope.finishMapQuestion();
+
+                        /*if($scope.mapFinish) {
+                            $scope.finishMapQuestion();
+                        }*/
                     }
                     $scope.updateCrosshair();
                 };
@@ -1423,6 +1431,9 @@ angular.module('askApp')
                  */
                 $scope.getRemainingActivities = function() {
                     var selectedActivities = $scope.getAnswer($scope.question.slug);
+                    if(!selectedActivities)
+                        return false;
+
                     // Filter out activities that have already been mapped.
                     var remainingActivities = _.difference(
                         _.pluck(selectedActivities, 'text'),
