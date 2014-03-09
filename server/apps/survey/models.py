@@ -147,6 +147,14 @@ class Page(caching.base.CachingMixin, models.Model):
         ordering = ['survey', 'question__order']
 
 
+class SurveySubpage(models.Model):
+    name = models.CharField(max_length=254, null=False)
+    survey = models.ForeignKey('survey.Survey', null=False)
+    controller = models.CharField(max_length=254, null=False)
+
+    def __str__(self):
+        return "{0} page on {1}".format(self.name, self.survey.name)
+
 class Survey(caching.base.CachingMixin, models.Model):
     name = models.CharField(max_length=254)
     slug = models.SlugField(max_length=254, unique=True)

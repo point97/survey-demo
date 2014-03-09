@@ -5,7 +5,7 @@ from tastypie.authorization import Authorization
 from tastypie.authentication import SessionAuthentication, ApiKeyAuthentication, MultiAuthentication
 from tastypie.resources import ModelResource, ALL, ALL_WITH_RELATIONS
 
-from survey.models import (Survey, Question, Option, Respondant, Response,
+from survey.models import (Survey, SurveySubpage, Question, Option, Respondant, Response,
                            Page, Block, REVIEW_STATE_CHOICES, REVIEW_STATE_NEEDED,
                            REVIEW_STATE_FLAGGED, REVIEW_STATE_ACCEPTED)
 
@@ -47,6 +47,9 @@ class AuthSurveyModelResource(SurveyModelResource):
         authorization = StaffUserOnlyAuthorization()
         authentication = MultiAuthentication(ApiKeyAuthentication(), SessionAuthentication())
 
+class SurveySubpageResource(SurveyModelResource):
+    class Meta:
+        queryset = SurveySubpage.objects.all()
 
 class ResponseResource(SurveyModelResource):
     question = fields.ToOneField('apps.survey.api.QuestionResource', 'question', full=True)
@@ -163,6 +166,7 @@ class RespondantResource(AuthSurveyModelResource):
     responses = fields.ToManyField(ResponseResource, 'response_set', full=True, null=True, blank=True)
     survey = fields.ToOneField('apps.survey.api.SurveyResource', 'survey', null=True, blank=True, full=True, readonly=True)
     user = fields.ToOneField('apps.account.api.UserResource', 'surveyor', null=True, blank=True, full=True, readonly=True)
+    subpages = fields.ToManyField(SurveySubpageResource, 'survey__surveysubpage_set', full=True, null=True, blank=True, readonly=True)
 
     class Meta(AuthSurveyModelResource.Meta):
         queryset = Respondant.objects.all().order_by('-ts')

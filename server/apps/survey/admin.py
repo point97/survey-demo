@@ -1,10 +1,11 @@
 from django.contrib import admin
-from survey.models import Survey, Question, Option, Response, Respondant, Page, Location, LocationAnswer, MultiAnswer, GridAnswer, Block
+from survey.models import Survey, SurveySubpage, Question, Option, Response,\
+        Respondant, Page, Location, LocationAnswer, MultiAnswer, GridAnswer,\
+        Block
 
 
 class ResponseAdmin(admin.ModelAdmin):
     list_display = ('__unicode__', 'ts',)
-
 
 class RespondantAdmin(admin.ModelAdmin):
     readonly_fields = ('uuid',)
@@ -42,6 +43,7 @@ class OptionAdmin(admin.ModelAdmin):
 admin.site.register(Respondant, RespondantAdmin)
 admin.site.register(Question, QuestionAdmin)
 admin.site.register(Survey, SurveyAdmin)
+admin.site.register(SurveySubpage)
 admin.site.register(Option, OptionAdmin)
 admin.site.register(Response, ResponseAdmin)
 admin.site.register(Page)
