@@ -257,6 +257,7 @@ class SurveyDashResource(BaseSurveyResource):
     reviews_needed = fields.IntegerField(attribute='reviews_needed', readonly=True)
     flagged = fields.IntegerField(attribute='flagged', readonly=True)
     today = fields.IntegerField(attribute='today', readonly=True, null=True, blank=True)
+    subpages = fields.ToManyField(SurveySubpageResource, 'surveysubpage_set', full=True, null=True, blank=True, readonly=True)
 
 
 class SurveyReportResource(SurveyDashResource):

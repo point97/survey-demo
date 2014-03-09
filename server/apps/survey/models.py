@@ -3,6 +3,7 @@ from django.contrib.auth.models import User
 from django.db import models
 from django.db.models import Max, Min, Count, Sum
 from django.db.models import signals
+from django_extensions.db.fields import AutoSlugField
 from django.utils.timezone import utc
 
 import datetime
@@ -149,6 +150,7 @@ class Page(caching.base.CachingMixin, models.Model):
 
 class SurveySubpage(models.Model):
     name = models.CharField(max_length=254, null=False)
+    slug = AutoSlugField(populate_from='name')
     survey = models.ForeignKey('survey.Survey', null=False)
     controller = models.CharField(max_length=254, null=False)
 
