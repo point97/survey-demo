@@ -150,7 +150,7 @@ class Page(caching.base.CachingMixin, models.Model):
 
 class SurveySubpage(models.Model):
     name = models.CharField(max_length=254, null=False)
-    slug = AutoSlugField(populate_from='name', overwrite=True)
+    slug = AutoSlugField(populate_from='name', unique=True, overwrite=True)
     survey = models.ForeignKey('survey.Survey', null=False)
     controller = models.CharField(max_length=254, null=False)
 

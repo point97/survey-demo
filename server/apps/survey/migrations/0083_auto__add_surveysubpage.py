@@ -12,6 +12,7 @@ class Migration(SchemaMigration):
         db.create_table(u'survey_surveysubpage', (
             (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
             ('name', self.gf('django.db.models.fields.CharField')(max_length=254)),
+            ('slug', self.gf('django_extensions.db.fields.AutoSlugField')(allow_duplicates=False, max_length=50, separator=u'-', blank=True, unique=True, populate_from='name', overwrite=True)),
             ('survey', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['survey.Survey'])),
             ('controller', self.gf('django.db.models.fields.CharField')(max_length=254)),
         ))
@@ -178,7 +179,7 @@ class Migration(SchemaMigration):
             'test_data': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
             'ts': ('django.db.models.fields.DateTimeField', [], {}),
             'updated_at': ('django.db.models.fields.DateTimeField', [], {'auto_now': 'True', 'null': 'True', 'blank': 'True'}),
-            'uuid': ('django.db.models.fields.CharField', [], {'default': "'bb3a6807-fa21-467e-85bc-0fc5777acf74'", 'max_length': '36', 'primary_key': 'True'}),
+            'uuid': ('django.db.models.fields.CharField', [], {'default': "'441355d7-78dd-46c9-972e-e5dfbbe2f1d3'", 'max_length': '36', 'primary_key': 'True'}),
             'vendor': ('django.db.models.fields.CharField', [], {'max_length': '240', 'null': 'True', 'blank': 'True'})
         },
         u'survey.response': {
@@ -208,6 +209,7 @@ class Migration(SchemaMigration):
             'controller': ('django.db.models.fields.CharField', [], {'max_length': '254'}),
             u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'name': ('django.db.models.fields.CharField', [], {'max_length': '254'}),
+            'slug': ('django_extensions.db.fields.AutoSlugField', [], {'allow_duplicates': 'False', 'max_length': '50', 'separator': "u'-'", 'blank': 'True', 'unique': 'True', 'populate_from': "'name'", 'overwrite': 'True'}),
             'survey': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['survey.Survey']"})
         }
     }
