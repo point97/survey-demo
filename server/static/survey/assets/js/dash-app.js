@@ -61,7 +61,7 @@ angular.module('askApp', ['ui', 'ui.bootstrap', 'ngGrid'])
         reloadOnSearch: false
     })
         .when('/RespondantList/:surveySlug/:subpageSlug', {
-        templateUrl: app.viewPath + 'views/Subpage.html',
+        templateUrl: app.viewPath + 'views/Reports.html',
         controller: 'SubpageCtrl',
         reloadOnSearch: false
     })

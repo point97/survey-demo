@@ -50,7 +50,10 @@ class AuthSurveyModelResource(SurveyModelResource):
 class SurveySubpageResource(SurveyModelResource):
     class Meta:
         queryset = SurveySubpage.objects.all()
-        fields = ('name', 'slug')
+        fields = ('name', 'slug', 'controller')
+        filtering = {
+            'slug': ALL
+        }
 
 class ResponseResource(SurveyModelResource):
     question = fields.ToOneField('apps.survey.api.QuestionResource', 'question', full=True)
