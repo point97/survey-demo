@@ -57,6 +57,42 @@ angular.module('askApp')
         };
     }
 
+    // BLACK MAGIC
+    $scope.getSubpages = function() {
+        // Synchronously get the name of the controller form the database
+        $.ajax({
+            async: false,
+            url: "/api/v1/surveysubpage/?format=json"
+        }).success(function(data) {
+            var objects = data['objects'];
+            var head = document.getElementsByTagName('head')[0];
+            var needSubpage = function(page) {
+                var need = false;
+                $scope.survey.subpages.some(function(value, index) {
+                    if(page['controller'] == value['controller']) {
+                        need = true;
+                    }
+                });
+                return need;
+            };
+
+            var subpages = _.filter(objects, function(obj) {
+                return needSubpage(obj);
+            });
+            subpages.forEach( function(value, index) {
+                var full_path = app.user.static_url+"survey/assets/js/controllers/SurveySubpages/" + value['controller'];
+                if($("script[src=\""+full_path+"\"]").length == 0) {
+                    var script = document.createElement('script');
+                    script.type = "text/javascript";
+                    script.src = full_path;
+                    /* BOOM */
+                    head.appendChild(script);
+                }
+            });
+        });
+    };
+
+
     $scope.goToResponse = function(respondent) {
         window.location = "#/RespondantDetail/" + $scope.survey.slug +
             "/" + respondent.uuid + "?" + $scope.filtered_list_url;
@@ -143,8 +179,8 @@ angular.module('askApp')
 
             }
         });
+        $scope.getSubpages();
     });
-
 
     $scope.getQuestionByUri = function (uri) {
         return _.findWhere($scope.survey.questions, {'resource_uri': uri});

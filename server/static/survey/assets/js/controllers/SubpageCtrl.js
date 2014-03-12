@@ -1,7 +1,7 @@
 angular.module('askApp').controller('SubpageCtrl', function($scope, $rootScope, $http, $location, $routeParams, reportsCommon, surveyShared) {
     // BLACK MAGIC
     // Synchronously get the name of the controller form the database
-    newControllerName = null;
+    /*newControllerName = null;
     $.ajax({
         async: false,
         url: "/api/v1/surveysubpage/?format=json&slug=" + $routeParams.subpageSlug,
@@ -14,13 +14,23 @@ angular.module('askApp').controller('SubpageCtrl', function($scope, $rootScope, 
             script.type = "text/javascript";
             script.src = full_path;
             /* BOOM */
-            head.appendChild(script);
+          /*  head.appendChild(script);
             while (typeof(window[newControllerName.replace(".js", "")]) == 'undefined') {
                 // BE SYNCHRONOUS
             }
         }
     });
 
-    return window[newControllerName.replace(".js", "")](arguments);
+    return window[newControllerName.replace(".js", "")](arguments);*/
+
+    var newControllerName = null;
+    $.ajax({
+        async: false,
+        url: "/api/v1/surveysubpage/?format=json&slug=" + $routeParams.subpageSlug,
+    }).success(function(data) {
+        newControllerName = data['objects'][0]['controller'];
+        window[newControllerName.replace(".js", "")](arguments);
+    });
+
 });
 
