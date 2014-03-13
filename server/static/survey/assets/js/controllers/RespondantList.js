@@ -90,6 +90,7 @@ angular.module('askApp')
 
     $scope.goToResponse = function(respondant) {
         window.location = $scope.build_url_for_respondant(respondant);
+    }
 
     // BLACK MAGIC
     $scope.getSubpages = function() {
@@ -126,7 +127,6 @@ angular.module('askApp')
         });
     };
 
-    }
     $scope.market = $location.search().survey_site || "";
     $scope.filter = null;
     $scope.viewPath = app.viewPath;
