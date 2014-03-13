@@ -1,20 +1,5 @@
 
 angular.module('askApp').controller('ReportCtrl', function($scope, $rootScope, $http, $location, $routeParams, reportsCommon, surveyShared) {
-    function build_crosstab_url(sdate, edate, slug, qa, qb) {
-        var url = ['/reports/crosstab', slug, qa, qb].join('/');
-        url = url + '?startdate=' + sdate;
-        url = url + '&enddate=' + edate;
-        url = url + '&group=' + $scope.surveyorTimeFilter;
-
-        if ($scope.market) {
-            url = url + '&market=' + $scope.market;
-        }
-        if ($scope.status_single) {
-            url += '&status=' + $scope.status_single;
-        }
-        return url;
-
-    }
     function fish_weight_by_market(charts, start_date, end_date, slug) {
         var url = build_crosstab_url(start_date, end_date, slug, 'survey-site', 'total-weight');
         return $http.get(url).success(function(data) {

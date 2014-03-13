@@ -1,6 +1,28 @@
 angular.module('askApp').factory('reportsCommon', function($http, $routeParams, $location) {
     var factory = {};
 
+    factory.build_crosstab_url = function (sdate, edate, slug, qa, qb, extra_stuff) {
+        var url = ['/reports/crosstab', slug, qa, qb].join('/');
+        url = url + '?startdate=' + sdate;
+        url = url + '&enddate=' + edate;
+
+        if (typeof(extra_stuff['group']) != 'undefined' && extra_stuff['group'] != null) {
+            //url = url + '&group=' + $extra.surveyorTimeFilter;
+            url += '&group=' + extra_stuff['group'];
+        }
+
+        if (typeof(extra_stuff['market']) != 'undefined' && extra_stuff['market'] != null) {
+            // url = url + '&market=' + $scope.market;
+            url += '&market=' + extra_stuff['market'];
+        }
+        if (typeof(extra_stuff['status']) != 'status' && extra_stuff['status'] != null) {
+            // url += '&status=' + $scope.status_single;
+            url += '&status=' + extra_stuff['status'];
+        }
+
+        return url;
+    }
+
     factory.build_survey_stats_url = function($scope) {
         var start_date = new Date($scope.filter.startDate).toString('yyyy-MM-dd');
         var end_date = new Date($scope.filter.endDate).add(1).day().toString('yyyy-MM-dd');
