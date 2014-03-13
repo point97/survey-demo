@@ -83,7 +83,7 @@ angular.module('askApp')
     .directive('timePicker', function() {
 
         return {
-            template: '<input class="timepicker">',
+            template: '<input class="timepicker" ng-model="answer">',
             restrict: 'EA',
             transclude: true,
             replace: true,
@@ -95,9 +95,9 @@ angular.module('askApp')
                     preset: 'time',
                     mode: 'clickpick',
                     // theme: 'android-ics light',
-                    onSelect: function(date) {
+                    onSelect: function(time) {
                         scope.$apply(function(s) {
-                            s.answer = date;
+                            s.answer = time;
                         });
                     }
                 });
