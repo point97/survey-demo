@@ -1,4 +1,34 @@
 function marketSurveyMarketReportCtrl($scope, $rootScope, $http, $location, $routeParams, reportsCommon, surveyShared) {
+    function price_by_date(charts, start_date, end_date, slug) {
+        var url = reportsCommon.build_crosstab_url(start_date, end_date, slug, 'fish-price-pound', 'date-surveyed', $scope.extra_stuff);
+        return $http.get(url).success(function(data) {
+            var sdate = new Date($scope.filter.startDate);
+            var edate = new Date($scope.filter.endDate);
+
+            var filtered = _.map(data.crosstab, function(answer) {
+                answer.value = _.filter(answer.value, function(x) {
+                    var d = reportsCommon.dateFromISO(x.date);
+                    return (d >= sdate && d <= edate);
+                });
+                return answer;
+            });
+
+            charts.push({
+                title: "Average Price by Date",
+                type: data.type,
+                displayTitle: false,
+                labels: _.pluck(filtered, 'name'),
+                data: filtered,
+                download_url: url.replace("total-weight", "total-weight.csv"),
+                xLabel: 'Date',
+                yLabel: 'Price',
+                order: 2,
+                message: data.message,
+                unit: 'kg'
+            });
+            charts.sort(function (a,b) { return a-b;})
+        });
+    }
     function fish_weight_by_market(charts, start_date, end_date, slug) {
         var url = reportsCommon.build_crosstab_url(start_date, end_date, slug, 'market-surveyed', 'sale-pounds', $scope.extra_stuff);
         return $http.get(url).success(function(data) {
@@ -43,6 +73,7 @@ function marketSurveyMarketReportCtrl($scope, $rootScope, $http, $location, $rou
         var end_date = new Date($scope.filter.endDate).day().toString('yyyyMMdd');
 
         fish_weight_by_market($scope.charts, start_date, end_date, surveySlug);
+        price_by_date($scope.charts, start_date, end_date, surveySlug);
     }
 
     $scope.market = $location.search().survey_site || null;
