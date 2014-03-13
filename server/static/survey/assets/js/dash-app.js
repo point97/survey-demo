@@ -60,14 +60,9 @@ angular.module('askApp', ['ui', 'ui.bootstrap', 'ngGrid'])
         controller: 'RespondantListCtrl',
         reloadOnSearch: false
     })
-        .when('/RespondantList/:surveySlug/market-report', {
-        templateUrl: app.viewPath + 'views/MarketReport.html',
-        controller: 'MarketReportCtrl',
-        reloadOnSearch: false
-    })
-        .when('/RespondantList/:surveySlug/survey-stats', {
-        templateUrl: app.viewPath + 'views/SurveyStats.html',
-        controller: 'SurveyStatsCtrl',
+        .when('/RespondantList/:surveySlug/:subpageSlug', {
+        templateUrl: app.viewPath + 'views/Reports.html',
+        controller: 'SubpageCtrl',
         reloadOnSearch: false
     })
         .when('/RespondantDetail/:surveySlug/:uuidSlug', {

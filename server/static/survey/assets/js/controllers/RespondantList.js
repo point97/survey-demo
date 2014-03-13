@@ -84,12 +84,48 @@ angular.module('askApp')
     }
 
     $scope.build_url_for_respondant = function(respondant) {
-	    return "#/RespondantDetail/" + $scope.survey.slug +
+        return "#/RespondantDetail/" + $scope.survey.slug +
             "/" + respondant.uuid + "?" + $scope.filtered_list_url;
-    } 
+    }
 
     $scope.goToResponse = function(respondant) {
         window.location = $scope.build_url_for_respondant(respondant);
+
+    // BLACK MAGIC
+    $scope.getSubpages = function() {
+        // Synchronously get the name of the controller form the database
+        $.ajax({
+            async: false,
+            url: "/api/v1/surveysubpage/?format=json"
+        }).success(function(data) {
+            var objects = data['objects'];
+            var head = document.getElementsByTagName('head')[0];
+            var needSubpage = function(page) {
+                var need = false;
+                $scope.survey.subpages.some(function(value, index) {
+                    if(page['controller'] == value['controller']) {
+                        need = true;
+                    }
+                });
+                return need;
+            };
+
+            var subpages = _.filter(objects, function(obj) {
+                return needSubpage(obj);
+            });
+            subpages.forEach( function(value, index) {
+                var full_path = app.user.static_url+"survey/assets/js/controllers/SurveySubpages/" + value['controller'];
+                if($("script[src=\""+full_path+"\"]").length == 0) {
+                    var script = document.createElement('script');
+                    script.type = "text/javascript";
+                    script.src = full_path;
+                    /* BOOM */
+                    head.appendChild(script);
+                }
+            });
+        });
+    };
+
     }
     $scope.market = $location.search().survey_site || "";
     $scope.filter = null;
@@ -175,8 +211,8 @@ angular.module('askApp')
 
             }
         });
+        $scope.getSubpages();
     });
-
 
     $scope.getQuestionByUri = function (uri) {
         return _.findWhere($scope.survey.questions, {'resource_uri': uri});

@@ -29,10 +29,9 @@
             <div class="col-md-12 col-sm-12">
                 <ul class="nav">
                     <li><a ng-class="{'active': activePage == 'overview'}" href="#/RespondantList/{{survey.slug}}">OVERVIEW</a></li>
-                    <!-- <li><a ng-class="{'active': activePage == 'survey-stats'}" href="#/RespondantList/{{survey.slug}}/survey-stats">SURVEY STATS</a></li> -->
-                    <li><a ng-class="{'active': activePage == 'economic'}" href="#/survey/{{survey.slug}}/reports/economic">ECONOMIC REPORT</a></li>
-                    <li><a ng-class="{'active': activePage == 'biological'}" href="#/survey/{{survey.slug}}/reports/biological">BIOLOGICAL REPORT</a></li>
-                    <!-- <li><a ng-class="{'active': activePage == 'market-report'}" href="#/RespondantList/{{survey.slug}}/market-report">MARKET REPORT</a></li> -->
+                    <li ng-repeat="subpage in survey.subpages">
+                        <a ng-class="{'active': $routeParams.subpageSlug == subpage.slug}" href="#/RespondantList/{{survey.slug}}/{{subpage.slug}}">{{subpage.name|uppercase}}</a>
+                    </li>
                     <!-- <li><a href="/reports/full-survey-data/{{survey.slug}}">DOWNLOAD</a></li> -->
                 </ul>
             </div>
