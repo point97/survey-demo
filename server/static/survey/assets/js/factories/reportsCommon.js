@@ -89,7 +89,7 @@ angular.module('askApp').factory('reportsCommon', function($http, $routeParams, 
         var encoded_url = escape(b64_url);
         $scope.filtered_list_url = "filtered_list_url=" + encoded_url;
 
-        $http.get(url).success(function(data) {
+        return $http.get(url).success(function(data) {
             $scope.respondentsLoading = false;
             $scope.respondents = data.objects;
             $scope.meta = data.meta;

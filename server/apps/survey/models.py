@@ -47,6 +47,7 @@ class Respondant(caching.base.CachingMixin, models.Model):
     survey_site = models.CharField(max_length=240, null=True, blank=True)
     buy_or_catch = models.CharField(max_length=240, null=True, blank=True)
     how_sold = models.CharField(max_length=240, null=True, blank=True)
+    logbook = models.CharField(max_length=240, null=True, blank=True)
 
     locations = models.IntegerField(null=True, blank=True)
 
@@ -378,7 +379,7 @@ class Question(caching.base.CachingMixin, models.Model):
                 else:
                     answers = answers.filter(respondant__responses__in=filter_question.response_set.filter(answer__in=value))
         if self.type in ['map-multipoint']:
-            return locations.values('answer', 'location__lat', 'location__lng').annotate(locations=Count('answer'), surveys=Count('location__respondant', distinct=True))
+            return locations.values('location__response__respondant', 'answer', 'location__response__ts', 'location__lat', 'location__lng').annotate(locations=Count('answer'), surveys=Count('location__respondant', distinct=True))
         elif self.type in ['multi-select']:
             return (MultiAnswer.objects.filter(response__in=answers)
                                        .values('answer_text')
