@@ -17,19 +17,21 @@ import simplejson
 
 class CustomRegistrationView(RegistrationView):
     form_class = UserRegistrationForm
+    success_url = "dashboard"
 
     def register(self, request, **kwargs):
         email, password = kwargs['email'], kwargs['password1']
         username = email
-        if Site._meta.installed:
-            site = Site.objects.get_current()
-        else:
-            site = RequestSite(request)
-        new_user = RegistrationProfile.objects.create_inactive_user(username, email,
-                                                                    password, site)
+
+        new_user = User.objects.create(username=username, email=email)
+        new_user.set_password(password)
+        new_user.save()
+
         signals.user_registered.send(sender=self.__class__,
                                      user=new_user,
                                      request=request)
+        new_user = authenticate(username=username, password=password)
+        login(request, new_user)
         return new_user
 
 @csrf_exempt
