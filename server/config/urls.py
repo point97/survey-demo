@@ -42,6 +42,7 @@ urlpatterns = patterns('',
     (r'^admin/password_reset/done/$', 'django.contrib.auth.views.password_reset_done'),
     (r'^reset/(?P<uidb36>[0-9A-Za-z]+)-(?P<token>.+)/$', 'django.contrib.auth.views.password_reset_confirm'),
     (r'^reset/done/$', 'django.contrib.auth.views.password_reset_complete'),
+    url(r'^accounts/login/$', 'django.contrib.auth.views.login', {'template_name': 'admin/login.html'}),
     url(r'^admin/', include(admin.site.urls)),
 
     url(r'^grappelli/', include('grappelli.urls')),

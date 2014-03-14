@@ -17,7 +17,6 @@ import simplejson
 
 class CustomRegistrationView(RegistrationView):
     form_class = UserRegistrationForm
-    success_url = "dashboard"
 
     def register(self, request, **kwargs):
         email, password = kwargs['email'], kwargs['password1']
@@ -33,6 +32,9 @@ class CustomRegistrationView(RegistrationView):
         new_user = authenticate(username=username, password=password)
         login(request, new_user)
         return new_user
+
+    def get_success_url(self, request, user):
+        return ('dashboard', (), {})
 
 @csrf_exempt
 def authenticateUser(request):

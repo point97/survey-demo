@@ -1,5 +1,6 @@
 from django.conf import settings
 from django.contrib.admin.views.decorators import staff_member_required
+from django.contrib.auth.decorators import login_required
 from django.core.mail import EmailMultiAlternatives
 from django.http import HttpResponse
 from django.shortcuts import get_object_or_404, redirect, render_to_response
@@ -34,6 +35,7 @@ def survey(request, survey_slug=None, template='survey/survey.html'):
     return render_to_response(template, RequestContext(request, context))
 
 
+@login_required
 def dash(request, survey_slug=None, template='survey/dash.html'):
     if survey_slug is not None:
         survey = get_object_or_404(Survey, slug=survey_slug, anon=True)
