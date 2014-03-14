@@ -70,7 +70,7 @@ urlpatterns = patterns('',
     # (r'^static/(?P<path>.*)$', 'django.views.static.serve', {'document_root': settings.STATIC_ROOT}),
 
     # django-registration urls
-    (r'^accounts/', include('registration.backends.default.urls')),
+    (r'^accounts/', include('apps.account.registration_urls')),
 
 
 )

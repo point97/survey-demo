@@ -2,23 +2,13 @@ function marketSurveyMarketReportCtrl($scope, $rootScope, $http, $location, $rou
     function price_by_date(charts, start_date, end_date, slug) {
         var url = reportsCommon.build_crosstab_url(start_date, end_date, slug, 'fish-price-pound', 'date-surveyed', $scope.extra_stuff);
         return $http.get(url).success(function(data) {
-            var sdate = new Date($scope.filter.startDate);
-            var edate = new Date($scope.filter.endDate);
-
-            var filtered = _.map(data.crosstab, function(answer) {
-                answer.value = _.filter(answer.value, function(x) {
-                    var d = reportsCommon.dateFromISO(x.date);
-                    return (d >= sdate && d <= edate);
-                });
-                return answer;
-            });
 
             charts.push({
                 title: "Average Price by Date",
                 type: data.type,
                 displayTitle: false,
-                labels: _.pluck(filtered, 'name'),
-                data: filtered,
+                labels: _.pluck(data.crosstab, 'name'),
+                data: data.crosstab,
                 download_url: url.replace("total-weight", "total-weight.csv"),
                 xLabel: 'Date',
                 yLabel: 'Price',
@@ -32,23 +22,13 @@ function marketSurveyMarketReportCtrl($scope, $rootScope, $http, $location, $rou
     function fish_weight_by_market(charts, start_date, end_date, slug) {
         var url = reportsCommon.build_crosstab_url(start_date, end_date, slug, 'market-surveyed', 'sale-pounds', $scope.extra_stuff);
         return $http.get(url).success(function(data) {
-            var sdate = new Date($scope.filter.startDate);
-            var edate = new Date($scope.filter.endDate);
-
-            var filtered = _.map(data.crosstab, function(answer) {
-                answer.value = _.filter(answer.value, function(x) {
-                    var d = reportsCommon.dateFromISO(x.date);
-                    return (d >= sdate && d <= edate);
-                });
-                return answer;
-            });
 
             charts.push({
                 title: "Total Fish Weight Over Time",
                 type: data.type,
                 displayTitle: false,
-                labels: _.pluck(filtered, 'name'),
-                data: filtered,
+                labels: _.pluck(data.crosstab, 'name'),
+                data: data.crosstab,
                 download_url: url.replace("total-weight", "total-weight.csv"),
                 xLabel: 'Market',
                 yLabel: 'Weight (kg)',

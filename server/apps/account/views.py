@@ -5,8 +5,13 @@ from django.views.decorators.csrf import csrf_exempt
 from django.core.exceptions import MultipleObjectsReturned
 from django.contrib.auth.forms import PasswordResetForm
 from django.conf import settings
+
+from registration.backends.default.views import RegistrationView
 import simplejson
 
+
+class CustomRegistrationView(RegistrationView):
+    pass
 
 @csrf_exempt
 def authenticateUser(request):
