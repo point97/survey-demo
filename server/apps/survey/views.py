@@ -34,7 +34,6 @@ def survey(request, survey_slug=None, template='survey/survey.html'):
     return render_to_response(template, RequestContext(request, context))
 
 
-@staff_member_required
 def dash(request, survey_slug=None, template='survey/dash.html'):
     if survey_slug is not None:
         survey = get_object_or_404(Survey, slug=survey_slug, anon=True)
