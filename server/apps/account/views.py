@@ -5,13 +5,32 @@ from django.views.decorators.csrf import csrf_exempt
 from django.core.exceptions import MultipleObjectsReturned
 from django.contrib.auth.forms import PasswordResetForm
 from django.conf import settings
+from django.contrib.sites.models import RequestSite, Site
 
+from registration.models import RegistrationProfile
 from registration.backends.default.views import RegistrationView
+from registration import signals
+
+from apps.account.forms import UserRegistrationForm
 import simplejson
 
 
 class CustomRegistrationView(RegistrationView):
-    pass
+    form_class = UserRegistrationForm
+
+    def register(self, request, **kwargs):
+        email, password = kwargs['email'], kwargs['password1']
+        username = email
+        if Site._meta.installed:
+            site = Site.objects.get_current()
+        else:
+            site = RequestSite(request)
+        new_user = RegistrationProfile.objects.create_inactive_user(username, email,
+                                                                    password, site)
+        signals.user_registered.send(sender=self.__class__,
+                                     user=new_user,
+                                     request=request)
+        return new_user
 
 @csrf_exempt
 def authenticateUser(request):
