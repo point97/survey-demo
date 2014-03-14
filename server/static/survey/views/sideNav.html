@@ -32,6 +32,12 @@
                     <li ng-repeat="subpage in survey.subpages">
                         <a ng-class="{'active': $routeParams.subpageSlug == subpage.slug}" href="#/RespondantList/{{survey.slug}}/{{subpage.slug}}">{{subpage.name|uppercase}}</a>
                     </li>
+                    <li>
+                        <a href="http://www.pointnineseven.com/projects/">CASE STUDIES</a>
+                    </li>
+                    <li>
+                        <a href="mailto:hello@pointnineseven.com">CONTACT US</a>
+                    </li>
                     <!-- <li><a href="/reports/full-survey-data/{{survey.slug}}">DOWNLOAD</a></li> -->
                 </ul>
             </div>
