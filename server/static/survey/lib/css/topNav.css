@@ -60,10 +60,10 @@
 }
 .footer .navbar-left {
     margin-left: 2em;
-    margin-top: 3.5em;
+    margin-bottom: 1.5em;
 }
 .footer .navbar-right {
-    margin-bottom: 5em;
+    margin-top: 0.5em;
     margin-right: 5em;
 }
 .footer-border {
