@@ -34,3 +34,50 @@
     border-bottom: solid 2.5em #195d65;
     margin-bottom: 20px;
 }
+
+
+.footer {
+    background-image: -webkit-gradient(linear, right top, left top, color-stop(0, #91CDD7), color-stop(1, #00ABBA));
+    background-image: -o-linear-gradient(left, #91CDD7 0%, #00ABBA 100%);
+    background-image: -moz-linear-gradient(left, #91CDD7 0%, #00ABBA 100%);
+    background-image: -webkit-linear-gradient(left, #91CDD7 0%, #00ABBA 100%);
+    background-image: -ms-linear-gradient(left, #91CDD7 0%, #00ABBA 100%);
+    background-image: linear-gradient(to left, #91CDD7 0%, #00ABBA 100%);
+    border-radius: 0px;
+    height: 9.5em;
+    margin-bottom: 0px;
+    margin-top: 0px;
+}
+.footer p,
+.footer a,
+.footer h3,
+.footer .navbar-brand {
+    color: #fff !important;
+    padding-right: 5em !important;
+}
+.footer img {
+    margin-top: -1.5em;
+}
+.footer .navbar-left {
+    margin-left: 2em;
+    margin-top: 3.5em;
+}
+.footer .navbar-right {
+    margin-bottom: 5em;
+    margin-right: 5em;
+}
+.footer-border {
+    position: relative;
+    z-index: 10;
+    top: 1px;
+    border-top: solid 1em #195d65;
+    margin-top: 20px;
+}
+.ecotrust {
+}
+.copyright {
+    color: #fff;
+    position: absolute;
+    right: 1em;
+    bottom: 1em;
+}
