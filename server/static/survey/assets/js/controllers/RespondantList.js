@@ -2,15 +2,41 @@
 
 angular.module('askApp')
     .controller('RespondantListCtrl', function($scope, $rootScope, $http, $routeParams, $location, reportsCommon, surveyShared) {
+
+    function build_survey_total_data(data) {
+        var new_data = {};
+        for (var i in data.graph_data) {
+            for (var j in data.graph_data[i].data) {
+                var current_date = data.graph_data[i].data[j][0];
+                var surveys_taken = data.graph_data[i].data[j][1];
+                if (!new_data[current_date]) {
+                    new_data[current_date] = {
+                        name: current_date,
+                        data: surveys_taken
+                    }
+                } else {
+                    new_data[current_date].data += surveys_taken;
+                }
+            }
+        }
+        var tuples = _.map(new_data, function(x) { return [parseInt(x.name), x.data]; }).sort();
+        return [
+            {
+                name: "Surveys Taken",
+                data: tuples
+            }
+        ];
+    }
+
     function build_map(url) {
         $http.get(url).success(function(data) {
             $scope.locations = _.map(data.answer_domain, function(x) {
-		var assoc_respondant = _.find($scope.respondents, function(y) {
-		    return x.location__response__respondant == y.uuid; 
+        var assoc_respondant = _.find($scope.respondents, function(y) {
+            return x.location__response__respondant == y.uuid; 
                 });
 
-	        if (typeof assoc_respondant == 'undefined')
-	            return null;
+            if (typeof assoc_respondant == 'undefined')
+                return null;
 
                 var loc_data = {
                     visibility: true,
@@ -28,9 +54,9 @@ angular.module('askApp')
 
                 return loc_data;
             });
-			$scope.locations = _.filter($scope.locations, function(whatever) {
-				return whatever != null;
-			});
+            $scope.locations = _.filter($scope.locations, function(whatever) {
+                return whatever != null;
+            });
         });
     }
     function filters_changed(surveySlug) {
@@ -46,12 +72,28 @@ angular.module('askApp')
             //url = "/report/distribution/" + $routeParams.surveySlug + "/survey-location";
         }
 
-
         if (url) {
             promise.success(function() {
                 build_map(url);
             });
-        }  
+        }
+
+        var survey_stats_url = reportsCommon.build_survey_stats_url($scope);
+        $http.get(survey_stats_url).success(function(data) {
+            var new_data = build_survey_total_data(data);
+            $scope.surveyor_by_time = {
+                yLabel: "Survey Responses",
+                raw_data: data.graph_data,
+                download_url: url.replace($scope.surveyorTimeFilter, $scope.surveyorTimeFilter + '.csv'),
+                unit: "surveys"
+            }
+            // map reduuuuuuce
+            var bar_data = _.map(data.graph_data,
+                function (x) {
+                    return _.reduce(x.data, function (attr, val) { return attr + val[1]; }, 0);
+                }
+            );
+        });
     }
 
     function setup_columns() {
@@ -134,6 +176,7 @@ angular.module('askApp')
     $scope.activePage = 'overview';
     $scope.statuses = [];
     $scope.status_single = $location.search().status || "";
+    $scope.has_map = false;
     if ($routeParams.surveySlug == 'fish-market-survey') {
         /* Fijian islands */
         $scope.map = {
