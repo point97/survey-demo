@@ -47,7 +47,11 @@ class Respondant(caching.base.CachingMixin, models.Model):
     survey_site = models.CharField(max_length=240, null=True, blank=True)
     buy_or_catch = models.CharField(max_length=240, null=True, blank=True)
     how_sold = models.CharField(max_length=240, null=True, blank=True)
+    # Logbook survey
     logbook = models.CharField(max_length=240, null=True, blank=True)
+    trip_date = models.CharField(max_length=240, null=True, blank=True)
+    landing_port = models.CharField(max_length=240, null=True, blank=True)
+    # Market Survey
     market_surveyed = models.CharField(max_length=240, null=True, blank=True)
 
     locations = models.IntegerField(null=True, blank=True)
@@ -184,6 +188,10 @@ class Survey(caching.base.CachingMixin, models.Model):
     @property
     def completes(self):
         return self.respondant_set.filter(complete=True).count()
+
+    @property
+    def has_map(self):
+        return self.questions.filter(type='map-multipoint').exists()
 
     @property
     def reviews_needed(self):

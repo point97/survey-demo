@@ -65,6 +65,7 @@
                                 <span ng-switch-when="time">{{respondent[column.field]|validDate: 'HH:mm'}}</span>
                                 <span ng-switch-when="surveyor">{{respondent[column.field].username}}</span>
                                 <span ng-switch-when="username">{{respondent[column.field].username}}</span>
+                                <span ng-switch-when="fisher">{{respondent[column.field].username}}</span>
                                 <span ng-switch-default>{{respondent[column.field]}}</span>
                             </span>
                         </td>

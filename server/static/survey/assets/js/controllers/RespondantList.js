@@ -258,6 +258,7 @@ angular.module('askApp')
         });
         $scope.getSubpages();
         setup_columns();
+        $scope.has_map = data['has_map']
     });
 
     $scope.getQuestionByUri = function (uri) {

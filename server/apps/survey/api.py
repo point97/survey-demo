@@ -143,6 +143,7 @@ class ReportRespondantResource(AuthSurveyModelResource):
         if flagged.exists():
             bundle.data['meta']['next']['flagged'] = flagged[0].pk
 
+
         not_accepted = base_next.exclude(review_status=REVIEW_STATE_ACCEPTED)
         if not_accepted.exists():
             bundle.data['meta']['next']['not_accepted'] = not_accepted[0].pk
@@ -269,6 +270,9 @@ class SurveyDashResource(BaseSurveyResource):
     subpages = fields.ToManyField(SurveySubpageResource, 'surveysubpage_set', full=True, null=True, blank=True, readonly=True)
     respondant_list_columns = fields.ToManyField(RespondantListColumnResource, 'respondantlistcolumn_set', full=True, null=True, blank=True, readonly=True)
 
+    def alter_detail_data_to_serialize(self, request, bundle):
+        bundle.data['has_map'] = bundle.obj.has_map
+        return bundle
 
 class SurveyReportResource(SurveyDashResource):
     questions = fields.ToManyField(QuestionResource, 'questions', null=True, blank=True, full=True)
