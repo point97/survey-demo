@@ -48,6 +48,7 @@ class Respondant(caching.base.CachingMixin, models.Model):
     buy_or_catch = models.CharField(max_length=240, null=True, blank=True)
     how_sold = models.CharField(max_length=240, null=True, blank=True)
     logbook = models.CharField(max_length=240, null=True, blank=True)
+    market_surveyed = models.CharField(max_length=240, null=True, blank=True)
 
     locations = models.IntegerField(null=True, blank=True)
 
@@ -157,6 +158,14 @@ class SurveySubpage(models.Model):
 
     def __str__(self):
         return "{0} page on {1}".format(self.name, self.survey.name)
+
+class RespondantListColumn(models.Model):
+    column_name = models.CharField(max_length=254, null=False)
+    field_name = models.CharField(max_length=254, null=False)
+    survey = models.ForeignKey('survey.Survey', null=False)
+
+    def __str__(self):
+        return "{0} -> {1} column for {2}".format(self.column_name, self.field_name, self.survey.name)
 
 class Survey(caching.base.CachingMixin, models.Model):
     name = models.CharField(max_length=254)

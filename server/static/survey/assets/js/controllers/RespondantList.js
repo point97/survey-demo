@@ -97,11 +97,14 @@ angular.module('askApp')
     }
 
     function setup_columns() {
-        $scope.columns = [ { name: 'Surveyor', field: 'user' }
-                         , { name: 'Date', field: 'ts' }
-                         , { name: 'Time', field: 'ts' }
-                         , { name: 'Status', field: 'review_status' }
-                         ];
+        //$scope.columns = [ { name: 'Surveyor', field: 'user' }
+        //                 , { name: 'Date', field: 'ts' }
+        //                 , { name: 'Time', field: 'ts' }
+        //                 , { name: 'Status', field: 'review_status' }
+        //                 ];
+        $scope.columns = _.map($scope.survey.respondant_list_columns, function(x) {
+            return { name: x.column_name, field: x.field_name };
+        });
         var order_by = $location.search().order_by;
 
         if (order_by) {
@@ -200,7 +203,6 @@ angular.module('askApp')
             msg: null
         };
     }
-    setup_columns();
 
     $scope.$watch('filter', function (newValue) {
         if (newValue) {
@@ -255,6 +257,7 @@ angular.module('askApp')
             }
         });
         $scope.getSubpages();
+        setup_columns();
     });
 
     $scope.getQuestionByUri = function (uri) {

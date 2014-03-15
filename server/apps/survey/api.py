@@ -5,7 +5,7 @@ from tastypie.authorization import Authorization
 from tastypie.authentication import SessionAuthentication, ApiKeyAuthentication, MultiAuthentication
 from tastypie.resources import ModelResource, ALL, ALL_WITH_RELATIONS
 
-from survey.models import (Survey, SurveySubpage, Question, Option, Respondant, Response,
+from survey.models import (Survey, SurveySubpage, Question, Option, Respondant, Response, RespondantListColumn,
                            Page, Block, REVIEW_STATE_CHOICES, REVIEW_STATE_NEEDED,
                            REVIEW_STATE_FLAGGED, REVIEW_STATE_ACCEPTED)
 
@@ -54,6 +54,10 @@ class SurveySubpageResource(SurveyModelResource):
         filtering = {
             'slug': ALL
         }
+
+class RespondantListColumnResource(SurveyModelResource):
+    class Meta:
+        queryset = RespondantListColumn.objects.all()
 
 class ResponseResource(SurveyModelResource):
     question = fields.ToOneField('apps.survey.api.QuestionResource', 'question', full=True)
@@ -171,6 +175,7 @@ class RespondantResource(AuthSurveyModelResource):
     survey = fields.ToOneField('apps.survey.api.SurveyResource', 'survey', null=True, blank=True, full=True, readonly=True)
     user = fields.ToOneField('apps.account.api.UserResource', 'surveyor', null=True, blank=True, full=True, readonly=True)
     subpages = fields.ToManyField(SurveySubpageResource, 'survey__surveysubpage_set', full=True, null=True, blank=True, readonly=True)
+    respondant_list_columns = fields.ToManyField(RespondantListColumnResource, 'survey__respondantlistcolumn_set', full=True, null=True, blank=True, readonly=True)
 
     class Meta(AuthSurveyModelResource.Meta):
         queryset = Respondant.objects.all().order_by('-ts')
@@ -262,6 +267,7 @@ class SurveyDashResource(BaseSurveyResource):
     flagged = fields.IntegerField(attribute='flagged', readonly=True)
     today = fields.IntegerField(attribute='today', readonly=True, null=True, blank=True)
     subpages = fields.ToManyField(SurveySubpageResource, 'surveysubpage_set', full=True, null=True, blank=True, readonly=True)
+    respondant_list_columns = fields.ToManyField(RespondantListColumnResource, 'respondantlistcolumn_set', full=True, null=True, blank=True, readonly=True)
 
 
 class SurveyReportResource(SurveyDashResource):
