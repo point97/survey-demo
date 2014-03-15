@@ -1,3 +1,4 @@
+{% load survey_tags %}
 Thank you for your interest in the Point 97 Demo. 
 
 When you signed up:
@@ -12,6 +13,10 @@ Outside this demo, our Point 97 tool is used around the world to collect informa
 In the meantime, here’s a simple path to follow:
 
 Take the survey:  To visualize mobile collection, open this email on your smartphone and click any of the survey links below.  You can answer one or both as many times as you’d like.
+
+Market Survey - {% get_survey_link "http://demo.pointnineseven.com" "fish-market-survey" %}
+The Basics - {% get_survey_link "http://demo.pointnineseven.com" "general-applicationmulti-use-survey" %}
+Logbook - {% get_survey_link "http://demo.pointnineseven.com" "fishers-logbook" %}
 
 Visualize your collected information:  When you’ve completed the questionnaire(s), return to a larger screen (e.g., on a laptop or tablet) and either visit the browser window we’ve already opened for you or log in at http://demo.pointnineseven.com/dash/.
 
