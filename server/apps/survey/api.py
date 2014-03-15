@@ -114,9 +114,8 @@ class ReportRespondantResource(AuthSurveyModelResource):
             'review_comment': ['exact'],
             'ts': ['gte', 'lte']
         }
-        ordering = ['ts', 'survey', 'vendor', 'survey_site',
-                    'responses', 'buy_or_catch', 'how_sold', 'user',
-                    'review_status']
+        # Allow ordering by any field:
+        ordering = Respondant._meta.get_all_field_names()
 
     def alter_list_data_to_serialize(self, request, data):
         data['meta']['statuses'] = REVIEW_STATE_CHOICES

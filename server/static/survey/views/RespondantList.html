@@ -38,11 +38,11 @@
         <p ng-show="message">{{message}}</p>
         <div>
             <i ng-show="respondentsLoading" class="icon-spinner icon-spin"></i>
-            <div id="surveyor_by_time_chart">
-                <div time-series chart="surveyor_by_time"></div>
-            </div>
             <span ng-switch on="has_map">
                 <div ng-switch-when="true" ng-include="viewPath + 'views/_overview_map.html'"></div>
+                <div ng-switch-when="false" id="surveyor_by_time_chart">
+                    <div time-series chart="surveyor_by_time"></div>
+                </div>
             </span>
         </div>
         <div class="respondent-table print-hide">

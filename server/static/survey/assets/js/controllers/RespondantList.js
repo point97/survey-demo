@@ -62,14 +62,13 @@ angular.module('askApp')
     function filters_changed(surveySlug) {
         var promise = reportsCommon.getRespondents(null, $scope);
         var url = null;
-        // Depending on what survey we're at the dashboard for, we need to switch
-        // which question we pull the data for.
+        // TODO: Put this in the database.
         if ($routeParams.surveySlug == 'fish-market-survey') {
             url = "/report/distribution/" + $routeParams.surveySlug + "/catch-location";
         } else if ($routeParams.surveySlug == 'general-applicationmulti-use-survey') {
             url = "/report/distribution/" + $routeParams.surveySlug + "/survey-location";
         } else if ($routeParams.surveySlug == 'fishers-logbook') {
-            //url = "/report/distribution/" + $routeParams.surveySlug + "/survey-location";
+            url = "/report/distribution/" + $routeParams.surveySlug + "/fishing-area";
         }
 
         if (url) {
@@ -258,7 +257,11 @@ angular.module('askApp')
         });
         $scope.getSubpages();
         setup_columns();
-        $scope.has_map = data['has_map']
+
+        // TODO: Put this in the database somehow.
+        if (data.name != "Market Survey") {
+            $scope.has_map = data['has_map'];
+        }
     });
 
     $scope.getQuestionByUri = function (uri) {
