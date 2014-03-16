@@ -49,6 +49,11 @@ angular.module('askApp').factory('reportsCommon', function($http, $routeParams, 
         });
     }
 
+    factory.build_url_for_respondant = function($scope, respondant) {
+        return "#/RespondantDetail/" + $scope.survey.slug +
+            "/" + respondant.uuid + "?" + $scope.filtered_list_url;
+    }
+
     factory.getRespondents = function (url, $scope) {
         $scope.respondentsLoading = true;
         if (! url) {

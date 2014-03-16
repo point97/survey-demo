@@ -22,13 +22,16 @@ function marketSurveyCatchReportCtrl($scope, $rootScope, $http, $location, $rout
 
     function build_map(url) {
         $http.get(url).success(function(data) {
+            var i = 0;
             $scope.locations = _.map(data.answer_domain, function(x) {
-        var assoc_respondant = _.find($scope.respondents, function(y) {
-            return x.location__response__respondant == y.uuid; 
+                console.log(i);
+                i++;
+                var assoc_respondant = _.find($scope.respondents, function(y) {
+                    return x.location__response__respondant == y.uuid;
                 });
 
-            if (typeof assoc_respondant == 'undefined')
-                return null;
+                if (typeof assoc_respondant == 'undefined')
+                    return null;
 
                 var loc_data = {
                     visibility: true,
@@ -36,7 +39,7 @@ function marketSurveyCatchReportCtrl($scope, $rootScope, $http, $location, $rout
                     lng: parseFloat(x.location__lng),
                     icon: 'crosshair_white.png',
                     date: x.location__response__ts,
-                    respondant_url:  $scope.build_url_for_respondant(assoc_respondant),
+                    respondant_url:  reportsCommon.build_url_for_respondant($scope, assoc_respondant),
                     respondant: assoc_respondant
                 };
 
@@ -46,6 +49,7 @@ function marketSurveyCatchReportCtrl($scope, $rootScope, $http, $location, $rout
 
                 return loc_data;
             });
+
             $scope.locations = _.filter($scope.locations, function(whatever) {
                 return whatever != null;
             });
@@ -69,6 +73,7 @@ function marketSurveyCatchReportCtrl($scope, $rootScope, $http, $location, $rout
         // Since this controller is associated with a survey at the database 
         // level we can just use the slug. Genius!
         var url = "/report/distribution/" + $routeParams.surveySlug + "/catch-location";
+        var promise = reportsCommon.getRespondents(null, $scope);
         promise.success(function() {
             build_map(url);
         });

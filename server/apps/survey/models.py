@@ -396,7 +396,9 @@ class Question(caching.base.CachingMixin, models.Model):
                 else:
                     answers = answers.filter(respondant__responses__in=filter_question.response_set.filter(answer__in=value))
         if self.type in ['map-multipoint']:
-            return locations.values('location__response__respondant', 'answer', 'location__response__ts', 'location__lat', 'location__lng').annotate(locations=Count('answer'), surveys=Count('location__respondant', distinct=True))
+            all_vals = ['location__response__respondant', 'answer', 'location__response__ts', 'location__lat', 'location__lng']
+            return locations.values(*all_vals)\
+                    .annotate(locations=Count('answer'), surveys=Count('location__respondant', distinct=True))
         elif self.type in ['multi-select']:
             return (MultiAnswer.objects.filter(response__in=answers)
                                        .values('answer_text')

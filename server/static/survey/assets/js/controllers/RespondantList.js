@@ -44,7 +44,7 @@ angular.module('askApp')
                     lng: parseFloat(x.location__lng),
                     icon: 'crosshair_white.png',
                     date: x.location__response__ts,
-                    respondant_url:  $scope.build_url_for_respondant(assoc_respondant),
+                    respondant_url:  reportsCommon.build_url_for_respondant(assoc_respondant),
                     respondant: assoc_respondant
                 };
 
@@ -128,13 +128,8 @@ angular.module('askApp')
         };
     }
 
-    $scope.build_url_for_respondant = function(respondant) {
-        return "#/RespondantDetail/" + $scope.survey.slug +
-            "/" + respondant.uuid + "?" + $scope.filtered_list_url;
-    }
-
     $scope.goToResponse = function(respondant) {
-        window.location = $scope.build_url_for_respondant(respondant);
+        window.location = reportsCommon.build_url_for_respondant($scope, respondant);
     }
 
     // BLACK MAGIC
