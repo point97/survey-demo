@@ -20,13 +20,36 @@ function marketSurveyCatchReportCtrl($scope, $rootScope, $http, $location, $rout
             charts.sort(function (a,b) { return a-b;})
         });
     }
+    function fish_weight_by_province_bar(charts, start_date, end_date, slug) {
+        var url = reportsCommon.build_crosstab_url(start_date, end_date, slug, 'province-caught', 'sale-pounds', $scope.extra_stuff);
+        return $http.get(url).success(function(data) {
+            var bar_data = _.map(data.crosstab,
+                function (x) {
+                    return _.reduce(x.value, function (attr, val) { return attr + parseInt(val.average); }, 0);
+                }
+            );
+
+            charts.push({
+                title: "Total Fish Pounds by Province",
+                type: "column",
+                displayTitle: false,
+                labels: _.pluck(data.crosstab, 'name'),
+                data: bar_data,
+                categories: [""],
+                download_url: url.replace("sale-pounds", "sale-pounds" + '.csv'),
+                xLabel: 'Province',
+                yLabel: 'Weight (lbs)',
+                order: 3,
+                message: data.message,
+                unit: 'kg'
+            });
+            charts.sort(function (a,b) { return a-b;})
+        });
+    }
 
     function build_map(url) {
         $http.get(url).success(function(data) {
-            var i = 0;
             $scope.locations = _.map(data.answer_domain, function(x) {
-                console.log(i);
-                i++;
                 var assoc_respondant = _.find($scope.respondents, function(y) {
                     return x.location__response__respondant == y.uuid;
                 });
@@ -70,6 +93,7 @@ function marketSurveyCatchReportCtrl($scope, $rootScope, $http, $location, $rout
         var end_date = new Date($scope.filter.endDate).day().toString('yyyyMMdd');
 
         fish_pounds_by_province($scope.charts, start_date, end_date, surveySlug);
+        fish_weight_by_province_bar($scope.charts, start_date, end_date, surveySlug);
 
         // Since this controller is associated with a survey at the database 
         // level we can just use the slug. Genius!
