@@ -45,7 +45,7 @@ function marketSurveyCatchReportCtrl($scope, $rootScope, $http, $location, $rout
         $scope.getRespondents();
         $scope.extra_stuff = {
             'group': $scope.surveyorTimeFilter,
-            'market': $scope.market,
+            'extra_dropdown': $scope.extra_dropdown,
             'status': $scope.status_single,
         }
 
@@ -56,7 +56,7 @@ function marketSurveyCatchReportCtrl($scope, $rootScope, $http, $location, $rout
         price_by_date($scope.charts, start_date, end_date, surveySlug);
     }
 
-    $scope.market = $location.search().survey_site || null;
+    //$scope.market = $location.search().survey_site || null;
     $scope.surveyorTimeFilter = 'week';
     $scope.filter = null;
     $scope.charts = [];
@@ -70,7 +70,7 @@ function marketSurveyCatchReportCtrl($scope, $rootScope, $http, $location, $rout
     surveyShared.getSurvey(function(data) {
         data.questions.reverse();
         $scope.survey = data;
-        reportsCommon.setup_market_dropdown($scope);
+        reportsCommon.setup_arbitrary_dropdown($scope, "fish-types");
         var start_date = $location.search().ts__gte ?
             new Date(parseInt($location.search().ts__gte, 10)) :
             reportsCommon.dateFromISO($scope.survey.response_date_start);
@@ -102,7 +102,7 @@ function marketSurveyCatchReportCtrl($scope, $rootScope, $http, $location, $rout
         }
     }, false);
 
-    $scope.$watch('market', function (newValue) {
+    $scope.$watch('extra_dropdown', function (newValue) {
         if ($scope.filter) {
             filters_changed($routeParams.surveySlug);
         }

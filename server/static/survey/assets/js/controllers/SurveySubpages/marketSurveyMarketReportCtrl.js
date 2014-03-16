@@ -70,7 +70,6 @@ function marketSurveyMarketReportCtrl($scope, $rootScope, $http, $location, $rou
     surveyShared.getSurvey(function(data) {
         data.questions.reverse();
         $scope.survey = data;
-        reportsCommon.setup_market_dropdown($scope);
         var start_date = $location.search().ts__gte ?
             new Date(parseInt($location.search().ts__gte, 10)) :
             reportsCommon.dateFromISO($scope.survey.response_date_start);

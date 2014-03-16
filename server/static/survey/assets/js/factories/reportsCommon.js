@@ -13,7 +13,7 @@ angular.module('askApp').factory('reportsCommon', function($http, $routeParams, 
 
         if (typeof(extra_stuff['market']) != 'undefined' && extra_stuff['market'] != null) {
             // url = url + '&market=' + $scope.market;
-            url += '&market=' + extra_stuff['market'];
+            url += '&' + $scope.extra_dropdown_str + '=' + extra_stuff['market'];
         }
         if (typeof(extra_stuff['status']) != 'status' && extra_stuff['status'] != null) {
             // url += '&status=' + $scope.status_single;
@@ -39,11 +39,13 @@ angular.module('askApp').factory('reportsCommon', function($http, $routeParams, 
         }
         return url;
     }
-    factory.setup_market_dropdown = function($scope) {
-        var url = "/report/distribution/" + $routeParams.surveySlug + "/survey-site"
+    factory.setup_arbitrary_dropdown = function($scope, questionSlug) {
+        var url = "/report/distribution/" + $routeParams.surveySlug + "/" + questionSlug
 
         $http.get(url).success(function(data) {
-            $scope.markets = _.pluck(data.answer_domain, "answer");
+            $scope.extra_dropdown_str = questionSlug;
+            $scope.extra_dropdown_filter = true;
+            $scope.extra_dropdown_items = _.pluck(data.answer_domain, "answer");
         });
     }
 

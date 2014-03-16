@@ -174,7 +174,6 @@ angular.module('askApp')
     surveyShared.getSurvey(function(data) {
         data.questions.reverse();
         $scope.survey = data;
-        reportsCommon.setup_market_dropdown($scope);
         var start_date = $location.search().ts__gte ?
             new Date(parseInt($location.search().ts__gte)) :
             reportsCommon.dateFromISO($scope.survey.response_date_start);
