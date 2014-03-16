@@ -30,7 +30,7 @@
                 <ul class="nav">
                     <li><a ng-class="{'active': activePage == 'overview'}" href="#/RespondantList/{{survey.slug}}">OVERVIEW</a></li>
                     <li ng-repeat="subpage in survey.subpages">
-                        <a ng-class="{'active': $routeParams.subpageSlug == subpage.slug}" href="#/RespondantList/{{survey.slug}}/{{subpage.slug}}">{{subpage.name|uppercase}}</a>
+                        <a ng-class="{'active': activePage == subpage.slug}" href="#/RespondantList/{{survey.slug}}/{{subpage.slug}}">{{subpage.name|uppercase}}</a>
                     </li>
                     <li>
                         <a href="http://www.pointnineseven.com/projects/">CASE STUDIES</a>
