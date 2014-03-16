@@ -113,7 +113,8 @@ angular.module('askApp')
                 _.find($scope.columns, function (x) { return x.field == order_by; }) || $scope.columns[1];
         } else {
             $scope.sortDescending = true;
-            $scope.currentColumn = $scope.columns[1];
+            var found = _.find($scope.columns, function(x) { return x.name.toLowerCase() == 'time'; });;
+            $scope.currentColumn = typeof(found) != 'undefined' ? found : $scope.columns[0];
         }
 
         $scope.changeSorting = function (column) {

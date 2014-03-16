@@ -115,7 +115,7 @@ class ReportRespondantResource(AuthSurveyModelResource):
             'ts': ['gte', 'lte']
         }
         # Allow ordering by any field:
-        ordering = Respondant._meta.get_all_field_names()
+        ordering = Respondant._meta.get_all_field_names() + ['user']
 
     def alter_list_data_to_serialize(self, request, data):
         data['meta']['statuses'] = REVIEW_STATE_CHOICES
