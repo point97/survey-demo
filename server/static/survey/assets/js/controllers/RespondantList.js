@@ -102,7 +102,7 @@ angular.module('askApp')
         //                 , { name: 'Status', field: 'review_status' }
         //                 ];
         $scope.columns = _.map($scope.survey.respondant_list_columns, function(x) {
-            return { name: x.column_name, field: x.field_name };
+            return { name: x.column_name, field: x.field_name.replace("-", "_") };
         });
         var order_by = $location.search().order_by;
 
