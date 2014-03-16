@@ -45,7 +45,7 @@ angular.module('askApp').factory('reportsCommon', function($http, $routeParams, 
         $http.get(url).success(function(data) {
             $scope.extra_dropdown_str = questionSlug;
             $scope.extra_dropdown_filter = true;
-            $scope.extra_dropdown_items = _.pluck(data.answer_domain, "answer");
+            $scope.extra_dropdown_items = _.pluck(data.answer_domain, "answer_text");
         });
     }
 
