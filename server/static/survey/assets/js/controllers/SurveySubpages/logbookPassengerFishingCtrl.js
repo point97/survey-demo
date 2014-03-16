@@ -95,11 +95,11 @@ function logbookPassengerFishingCtrl($scope, $rootScope, $http, $location, $rout
     $scope.extra_dropdown_text = "All Species";
     $scope.map = {
         center: {
-            lat: -17.4624892,
-            lng: 179.2583049
+            lat: 45.382076,
+            lng: -123.8025571
         },
         marker: {},
-        zoom: 8,
+        zoom: 9,
         msg: null
     };
 

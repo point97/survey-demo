@@ -26,6 +26,47 @@ function logbookDiveCtrl($scope, $rootScope, $http, $location, $routeParams, rep
         });
     }
 
+    function pounds_caught_by_depth(charts, start_date, end_date, slug) {
+        var url = reportsCommon.build_crosstab_url(start_date, end_date, slug, 'avg-dive-depth', 'dive-pounds-harvested', $scope.extra_stuff);
+        return $http.get(url).success(function(data) {
+            labels = {};
+            _.each(data.crosstab, function(iter, val) {
+                _.each(iter.value, function(iter2, val2) {
+                    if (typeof(labels[iter2.row_text]) == 'undefined') {
+                        labels[iter2.row_text] = [];
+                    }
+                    labels[iter2.row_text].push(iter2.average);
+                });
+            });
+            to_graph = _.map(_.keys(labels), function(item) {
+                return {
+                    name: item,
+                    data: labels[item]
+                }
+            });
+
+            charts.push({
+                title: "Pounds Caught by Depth",
+                type: "time-series",
+                labels: _.keys(to_graph),
+                seriesNames: _.keys(to_graph),
+                download_url: url.replace('harvested', 'harvested.csv'),
+                raw_data: _.values(to_graph),
+                tooltipFormatter: function() {
+                    return '<b>' + this.series.name + '</b>' + ': ' + this.y + " lbs";
+                },
+                categories: _.map(data.crosstab, function(item) { return item.name}),
+                xLabel: 'Depth',
+                yLabel: 'Pounds',
+                xaxis_type: 'category',
+                xaxis_formatter: function() { return "<b>" + this.value + "</b>"; },
+                order: 1,
+                message: data.message
+            });
+            charts.sort(function (a,b) { return a-b;})
+        });
+    }
+
     function build_map(url) {
         $http.get(url).success(function(data) {
             $scope.locations = _.map(data.answer_domain, function(x) {
@@ -72,6 +113,7 @@ function logbookDiveCtrl($scope, $rootScope, $http, $location, $routeParams, rep
         var end_date = new Date($scope.filter.endDate).day().toString('yyyyMMdd');
 
         pounds_caught_by_species($scope.charts, start_date, end_date, surveySlug);
+        pounds_caught_by_depth($scope.charts, start_date, end_date, surveySlug);
 
         // Since this controller is associated with a survey at the database 
         // level we can just use the slug. Genius!
@@ -96,11 +138,11 @@ function logbookDiveCtrl($scope, $rootScope, $http, $location, $routeParams, rep
     $scope.extra_dropdown_text = "All Species";
     $scope.map = {
         center: {
-            lat: -17.4624892,
-            lng: 179.2583049
+            lat: 45.382076,
+            lng: -123.8025571
         },
         marker: {},
-        zoom: 8,
+        zoom: 9,
         msg: null
     };
 
