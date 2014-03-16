@@ -64,6 +64,7 @@ function logbookTrapCtrl($scope, $rootScope, $http, $location, $routeParams, rep
     $scope.activePage = $routeParams.subpageSlug;
     $scope.statuses = [];
     $scope.status_single = $location.search().status || null;
+    $scope.extra_dropdown_text = "All Species";
     $scope.map = {
         center: {
             lat: -17.4624892,

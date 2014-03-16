@@ -39,7 +39,7 @@
         </div>
         <div id="market_status_filters" class="col-md-3">
             <select class="form-control" ng-model="extra_dropdown" ng-options="item for item in extra_dropdown_items">
-                <option value="">All Items</option>
+                <option value="">{{extra_dropdown_text}}</option>
             </select>
             <select class="form-control" ng-model="status_single" ng-options="i[0] as i[1] for i in statuses">
                 <option value="">All Statuses</option>

@@ -115,6 +115,7 @@ function marketSurveyCatchReportCtrl($scope, $rootScope, $http, $location, $rout
     $scope.activePage = $routeParams.subpageSlug;
     $scope.statuses = [];
     $scope.status_single = $location.search().status || null;
+    $scope.extra_dropdown_text = "All Fish Types";
     $scope.map = {
         center: {
             lat: -17.4624892,
