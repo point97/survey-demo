@@ -474,6 +474,10 @@ class Response(caching.base.CachingMixin, models.Model):
             elif self.question.type in ('currency', 'integer', 'number'):
                 flat[self.question.slug] = str(self.answer_number)
             elif self.question.type == 'datepicker':
+                if not self.answer_date:
+                    self.answer = simplejson.loads(self.answer_raw)
+                    self.answer_date = datetime.datetime.strptime(self.answer, '%d/%m/%Y')
+                    self.save()
                 flat[self.question.slug] = self.answer_date.strftime('%d/%m/%Y')
             elif self.question.type == 'grid':
                 for answer in self.gridanswer_set.all():
