@@ -1,24 +1,4 @@
 function marketSurveyCatchReportCtrl($scope, $rootScope, $http, $location, $routeParams, reportsCommon, surveyShared) {
-    function price_by_date(charts, start_date, end_date, slug) {
-        var url = reportsCommon.build_crosstab_url(start_date, end_date, slug, 'fish-price-pound', 'date-surveyed', $scope.extra_stuff);
-        return $http.get(url).success(function(data) {
-
-            charts.push({
-                title: "Average Price by Date",
-                type: data.type,
-                displayTitle: false,
-                labels: _.pluck(data.crosstab, 'name'),
-                data: data.crosstab,
-                download_url: url.replace("total-weight", "total-weight.csv"),
-                xLabel: 'Date',
-                yLabel: 'Price',
-                order: 2,
-                message: data.message,
-                unit: 'kg'
-            });
-            charts.sort(function (a,b) { return a-b;})
-        });
-    }
     function fish_weight_by_market(charts, start_date, end_date, slug) {
         var url = reportsCommon.build_crosstab_url(start_date, end_date, slug, 'market-surveyed', 'sale-pounds', $scope.extra_stuff);
         return $http.get(url).success(function(data) {
@@ -40,6 +20,38 @@ function marketSurveyCatchReportCtrl($scope, $rootScope, $http, $location, $rout
         });
     }
 
+    function build_map(url) {
+        $http.get(url).success(function(data) {
+            $scope.locations = _.map(data.answer_domain, function(x) {
+        var assoc_respondant = _.find($scope.respondents, function(y) {
+            return x.location__response__respondant == y.uuid; 
+                });
+
+            if (typeof assoc_respondant == 'undefined')
+                return null;
+
+                var loc_data = {
+                    visibility: true,
+                    lat: parseFloat(x.location__lat),
+                    lng: parseFloat(x.location__lng),
+                    icon: 'crosshair_white.png',
+                    date: x.location__response__ts,
+                    respondant_url:  $scope.build_url_for_respondant(assoc_respondant),
+                    respondant: assoc_respondant
+                };
+
+                if($routeParams.surveySlug == "fishers-market-survey") {
+                    loc_data.catch_load = 25;
+                }
+
+                return loc_data;
+            });
+            $scope.locations = _.filter($scope.locations, function(whatever) {
+                return whatever != null;
+            });
+        });
+    }
+
     function filters_changed(surveySlug) {
         $scope.charts = [];
         $scope.getRespondents();
@@ -53,11 +65,18 @@ function marketSurveyCatchReportCtrl($scope, $rootScope, $http, $location, $rout
         var end_date = new Date($scope.filter.endDate).day().toString('yyyyMMdd');
 
         fish_weight_by_market($scope.charts, start_date, end_date, surveySlug);
-        price_by_date($scope.charts, start_date, end_date, surveySlug);
+
+        // Since this controller is associated with a survey at the database 
+        // level we can just use the slug. Genius!
+        var url = "/report/distribution/" + $routeParams.surveySlug + "/catch-location";
+        promise.success(function() {
+            build_map(url);
+        });
     }
 
     //$scope.market = $location.search().survey_site || null;
     $scope.surveyorTimeFilter = 'week';
+    $scope.has_map = true;
     $scope.filter = null;
     $scope.charts = [];
     $scope.sectioned_charts = {};

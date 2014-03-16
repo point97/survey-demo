@@ -51,8 +51,12 @@
         <div>
             <i ng-show="respondentsLoading" class="icon-spinner icon-spin"></i>
         </div>
-    </div>
-    <div class="{{viewport_size}}">
+            <span ng-switch on="has_map">
+                <div ng-switch-when="true" ng-include="viewPath + 'views/_overview_map.html'"></div>
+                <div ng-switch-when="false" id="surveyor_by_time_chart">
+                    <div time-series chart="surveyor_by_time"></div>
+                </div>
+            </span>
         <div ng-repeat="chart in charts" class="dash-chart">
             <h2>{{ chart.title }}</h2>
             <div class="error">{{ chart.message }}</div>
