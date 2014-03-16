@@ -4,7 +4,7 @@ function marketSurveyCatchReportCtrl($scope, $rootScope, $http, $location, $rout
         return $http.get(url).success(function(data) {
 
             charts.push({
-                title: "Total Fish Pounds by Province",
+                title: "Fish type (lbs.) caught by Province ",
                 type: data.type,
                 displayTitle: false,
                 labels: _.pluck(data.crosstab, 'name'),
