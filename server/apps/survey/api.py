@@ -109,9 +109,12 @@ class ReportRespondantResource(AuthSurveyModelResource):
         filtering = {
             'survey': ALL_WITH_RELATIONS,
             'responses': ALL_WITH_RELATIONS,
-            'survey_site': ['exact'],
+            'market_surveyed': ['exact'],
             'review_status': ['exact'],
             'review_comment': ['exact'],
+            'logbook': ['exact'],
+            'trip_date': ['exact'],
+            'landing_port': ['exact'],
             'ts': ['gte', 'lte']
         }
         # Allow ordering by any field:

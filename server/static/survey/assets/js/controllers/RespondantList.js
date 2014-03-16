@@ -257,6 +257,12 @@ angular.module('askApp')
         if (data.name != "Market Survey") {
             $scope.has_map = data['has_map'];
         }
+
+        // TODO: Put this in the database somehow.
+        if (data.name == "Logbook") {
+            reportsCommon.setup_arbitrary_dropdown($scope, "logbook");
+            $scope.extra_dropdown_text = "All Logbook Types";
+        }
     });
 
     $scope.getQuestionByUri = function (uri) {
@@ -270,4 +276,10 @@ angular.module('askApp')
         // Higher order function to make the next/prve buttons work.
         return reportsCommon.getRespondents(url, $scope);
     }
+    $scope.$watch('extra_dropdown', function (newValue) {
+        if ($scope.filter) {
+            filters_changed($routeParams.surveySlug);
+        }
+    }, true);
+
 });

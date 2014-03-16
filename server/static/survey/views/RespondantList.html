@@ -25,9 +25,9 @@
                 <div class="form-control date-range-picker" date-range-picker min="filter.min" max="filter.max" start="filter.startDate" end="filter.endDate"></div>
             </div>
             <div id="market_status_filters" class="col-md-3">
-                <!-- <select class="form-control" ng-model="market" ng-options="m for m in markets">
-                    <option value="">All Markets</option>
-                </select> -->
+                <select class="form-control" ng-model="extra_dropdown" ng-options="item for item in extra_dropdown_items">
+                    <option value="">{{extra_dropdown_text}}</option>
+                </select>
                 <select class="form-control" ng-model="status_single" ng-options="i[0] as i[1] for i in statuses">
                     <option value="">All Statuses</option>
                 </select>
