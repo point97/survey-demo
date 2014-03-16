@@ -1,19 +1,20 @@
 function marketSurveyCatchReportCtrl($scope, $rootScope, $http, $location, $routeParams, reportsCommon, surveyShared) {
-    function fish_weight_by_market(charts, start_date, end_date, slug) {
-        var url = reportsCommon.build_crosstab_url(start_date, end_date, slug, 'market-surveyed', 'sale-pounds', $scope.extra_stuff);
+    function fish_pounds_by_province(charts, start_date, end_date, slug) {
+        var url = reportsCommon.build_crosstab_url(start_date, end_date, slug, 'province-caught', 'sale-pounds', $scope.extra_stuff);
         return $http.get(url).success(function(data) {
 
             charts.push({
-                title: "Total Fish Weight Over Time",
+                title: "Total Fish Pounds by Province",
                 type: data.type,
                 displayTitle: false,
                 labels: _.pluck(data.crosstab, 'name'),
                 data: data.crosstab,
-                download_url: url.replace("total-weight", "total-weight.csv"),
-                xLabel: 'Market',
-                yLabel: 'Weight (kg)',
+                download_url: url.replace("sale-pounds", "sale-pounds"),
+                xLabel: 'Province',
+                yLabel: 'Sale Pounds',
                 order: 2,
                 message: data.message,
+                seriesNames: data.seriesNames,
                 unit: 'kg'
             });
             charts.sort(function (a,b) { return a-b;})
@@ -68,7 +69,7 @@ function marketSurveyCatchReportCtrl($scope, $rootScope, $http, $location, $rout
         var start_date = new Date($scope.filter.startDate).toString('yyyyMMdd');
         var end_date = new Date($scope.filter.endDate).day().toString('yyyyMMdd');
 
-        fish_weight_by_market($scope.charts, start_date, end_date, surveySlug);
+        fish_pounds_by_province($scope.charts, start_date, end_date, surveySlug);
 
         // Since this controller is associated with a survey at the database 
         // level we can just use the slug. Genius!

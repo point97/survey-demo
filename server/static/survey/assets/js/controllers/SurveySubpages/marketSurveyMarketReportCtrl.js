@@ -14,6 +14,7 @@ function marketSurveyMarketReportCtrl($scope, $rootScope, $http, $location, $rou
                 yLabel: 'Price',
                 order: 2,
                 message: data.message,
+                seriesNames: data.seriesNames,
                 unit: 'kg'
             });
             charts.sort(function (a,b) { return a-b;})
@@ -34,6 +35,7 @@ function marketSurveyMarketReportCtrl($scope, $rootScope, $http, $location, $rou
                 yLabel: 'Weight (kg)',
                 order: 2,
                 message: data.message,
+                seriesNames: data.seriesNames,
                 unit: 'kg'
             });
             charts.sort(function (a,b) { return a-b;})

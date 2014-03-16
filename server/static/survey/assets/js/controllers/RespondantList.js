@@ -186,7 +186,7 @@ angular.module('askApp')
             zoom: 8,
             msg: null
         };
-    } else if ($routeParams.surveySlug == 'general-applicationmulti-use-survey') {
+    } else {
         /* Newport up to Astoria */
         $scope.map = {
             center: {
