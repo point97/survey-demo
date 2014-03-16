@@ -27,12 +27,47 @@ function basicSurveyReportCtrl($scope, $rootScope, $http, $location, $routeParam
             charts.sort(function (a,b) { return a-b;})
         });
     }
+
+    function collected_methods(charts, start_date, end_date, slug) {
+        var url = "/report/distribution/" + $routeParams.surveySlug + "/collection-methods";
+        var whitelist = [ "paper", "mailed", "telephone", "in-person", "laptop",
+            "online", "mobile"];
+
+        return $http.get(url).success(function(data) {
+            var total_answers = _.reduce(data.answer_domain, function(accum, val) {
+                return accum + val.surveys;
+            }, 0);
+
+            var filtered = _.filter(data.answer_domain, function(x) {
+                return whitelist.indexOf(x.answer_text) != -1;
+            });
+
+            charts.push({
+                title: "Reported Collection Methods",
+                type: "column",
+                displayTitle: false,
+                labels: _.map(filtered, function(x) { return x.answer_text; }),
+                data: _.map(filtered, function(x) { return x.surveys; }),
+                categories: [""],
+                xLabel: 'Collection Method',
+                yLabel: 'Answers',
+                order: 3,
+                message: data.message,
+                formatter: function() {
+                    return '<b>' + this.series.name + '</b>: ' + this.y + "/" + total_answers +
+                        ", " + ((this.y/total_answers)*100).toFixed(0) + "%";
+                },
+                unit: ''
+            });
+            charts.sort(function (a,b) { return a-b;})
+        });
+    }
     function filters_changed(surveySlug) {
         $scope.charts = [];
         $scope.getRespondents();
         $scope.extra_stuff = {
             'group': $scope.surveyorTimeFilter,
-            'extra_dropdown': $scope.extra_dropdown,
+            //'extra_dropdown': $scope.extra_dropdown,
             'status': $scope.status_single,
         }
 
@@ -40,6 +75,7 @@ function basicSurveyReportCtrl($scope, $rootScope, $http, $location, $routeParam
         var end_date = new Date($scope.filter.endDate).day().toString('yyyyMMdd');
 
         survey_use($scope.charts, start_date, end_date, surveySlug);
+        collected_methods($scope.charts, start_date, end_date, surveySlug);
 
         // Since this controller is associated with a survey at the database 
         // level we can just use the slug. Genius!
@@ -56,7 +92,7 @@ function basicSurveyReportCtrl($scope, $rootScope, $http, $location, $routeParam
     $scope.activePage = $routeParams.subpageSlug;
     $scope.statuses = [];
     $scope.status_single = $location.search().status || null;
-    $scope.extra_dropdown_text = "All Species";
+    //$scope.extra_dropdown_text = "All Species";
     $scope.map = {
         center: {
             lat: 45.382076,
