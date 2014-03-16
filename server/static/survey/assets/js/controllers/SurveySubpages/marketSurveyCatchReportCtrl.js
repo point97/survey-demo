@@ -91,6 +91,15 @@ function marketSurveyCatchReportCtrl($scope, $rootScope, $http, $location, $rout
     $scope.activePage = $routeParams.subpageSlug;
     $scope.statuses = [];
     $scope.status_single = $location.search().status || null;
+    $scope.map = {
+        center: {
+            lat: -17.4624892,
+            lng: 179.2583049
+        },
+        marker: {},
+        zoom: 8,
+        msg: null
+    };
 
     surveyShared.getSurvey(function(data) {
         data.questions.reverse();
