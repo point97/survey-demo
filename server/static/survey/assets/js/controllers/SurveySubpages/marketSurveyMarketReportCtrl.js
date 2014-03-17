@@ -25,14 +25,14 @@ function marketSurveyMarketReportCtrl($scope, $rootScope, $http, $location, $rou
         return $http.get(url).success(function(data) {
 
             charts.push({
-                title: "Total Fish Weight Over Time",
+                title: "Pounds of Fish by Market",
                 type: data.type,
                 displayTitle: false,
                 labels: _.pluck(data.crosstab, 'name'),
                 data: data.crosstab,
-                download_url: url.replace("total-weight", "total-weight.csv"),
+                download_url: url.replace("sale-pounds", "sale-pounds.csv"),
                 xLabel: 'Market',
-                yLabel: 'Weight (kg)',
+                yLabel: 'Weight (lbs)',
                 order: 2,
                 message: data.message,
                 seriesNames: data.seriesNames,
