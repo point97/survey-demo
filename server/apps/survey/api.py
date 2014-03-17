@@ -1,13 +1,14 @@
 from django.conf.urls import url
 
 from tastypie import fields
-from tastypie.authorization import Authorization
+from tastypie.authorization import DjangoAuthorization, Authorization
 from tastypie.authentication import SessionAuthentication, ApiKeyAuthentication, MultiAuthentication
 from tastypie.resources import ModelResource, ALL, ALL_WITH_RELATIONS
 
 from survey.models import (Survey, SurveySubpage, Question, Option, Respondant, Response, RespondantListColumn,
                            Page, Block, REVIEW_STATE_CHOICES, REVIEW_STATE_NEEDED,
                            REVIEW_STATE_FLAGGED, REVIEW_STATE_ACCEPTED)
+from survey.custom_tastyauth import UserObjectsOnlyAuthorization
 
 
 class SurveyModelResource(ModelResource):
@@ -106,6 +107,7 @@ class ReportRespondantResource(AuthSurveyModelResource):
     class Meta(AuthSurveyModelResource.Meta):
         ALLOWED_METHODS = ['get', 'post', 'put', 'delete', 'patch']
         queryset = Respondant.objects.all().order_by('-ts')
+        authorization = UserObjectsOnlyAuthorization()
         filtering = {
             'survey': ALL_WITH_RELATIONS,
             'responses': ALL_WITH_RELATIONS,

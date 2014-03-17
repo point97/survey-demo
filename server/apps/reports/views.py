@@ -18,7 +18,7 @@ from .forms import APIFilterForm, GridStandardDeviationForm, SurveyorStatsForm
 from .utils import SlugCSVWriter
 
 
-@api_user_passes_test(lambda u: u.is_staff or u.is_superuser)
+#@api_user_passes_test(lambda u: u.is_staff or u.is_superuser)
 def get_geojson(request, survey_slug, question_slug):
     survey = get_object_or_404(Survey, slug=survey_slug)
     locations = LocationAnswer.objects.filter(location__response__respondant__survey=survey,
@@ -58,7 +58,7 @@ def get_geojson(request, survey_slug, question_slug):
     return HttpResponse(json.dumps({'success': "true", 'geojson': geojson}))
 
 
-@api_user_passes_test(lambda u: u.is_staff or u.is_superuser)
+#@api_user_passes_test(lambda u: u.is_staff or u.is_superuser)
 def get_distribution(request, survey_slug, question_slug):
     survey = get_object_or_404(Survey, slug=survey_slug)
     question = get_object_or_404(Question, slug=question_slug, survey=survey)
@@ -204,7 +204,7 @@ def _create_csv_response(filename):
     return response
 
 
-@api_user_passes_test(lambda u: u.is_staff or u.is_superuser)
+#@api_user_passes_test(lambda u: u.is_staff or u.is_superuser)
 def get_crosstab_csv(request, survey_slug, question_a_slug, question_b_slug):
     obj = _get_crosstab(request.GET, survey_slug, question_a_slug, question_b_slug)
     if isinstance(obj, HttpResponse):
@@ -241,7 +241,7 @@ def get_crosstab_csv(request, survey_slug, question_a_slug, question_b_slug):
     return response
 
 
-@api_user_passes_test(lambda u: u.is_staff or u.is_superuser)
+#@api_user_passes_test(lambda u: u.is_staff or u.is_superuser)
 def get_crosstab_json(request, survey_slug, question_a_slug, question_b_slug):
     obj = _get_crosstab(request.GET, survey_slug, question_a_slug, question_b_slug)
     if isinstance(obj, HttpResponse):
@@ -265,7 +265,7 @@ def _get_fullname(data):
             .strip())
 
 
-@api_user_passes_test(lambda u: u.is_staff or u.is_superuser)
+#@api_user_passes_test(lambda u: u.is_staff or u.is_superuser)
 def surveyor_stats_json(request, survey_slug, interval):
     form = SurveyorStatsForm(request.GET)
     if not form.is_valid():
@@ -303,7 +303,7 @@ def surveyor_stats_json(request, survey_slug, interval):
     }, cls=CustomJSONEncoder), content_type='application/json')
 
 
-@api_user_passes_test(lambda u: u.is_staff or u.is_superuser)
+#@api_user_passes_test(lambda u: u.is_staff or u.is_superuser)
 def surveyor_stats_csv(request, survey_slug, interval):
     form = SurveyorStatsForm(request.GET)
     if not form.is_valid():
@@ -326,7 +326,7 @@ def surveyor_stats_csv(request, survey_slug, interval):
     return response
 
 
-@api_user_passes_test(lambda u: u.is_staff or u.is_superuser)
+#@api_user_passes_test(lambda u: u.is_staff or u.is_superuser)
 def surveyor_stats_raw_data_csv(request, survey_slug):
     form = SurveyorStatsForm(request.GET)
     if not form.is_valid():
@@ -374,7 +374,7 @@ def _grid_standard_deviation(interval, question_slug, row=None, market=None,
     return rows, labels
 
 
-@api_user_passes_test(lambda u: u.is_staff or u.is_superuser)
+#@api_user_passes_test(lambda u: u.is_staff or u.is_superuser)
 def grid_standard_deviation_json(request, question_slug, interval):
     form = GridStandardDeviationForm(request.GET)
     if not form.is_valid():
@@ -393,7 +393,7 @@ def grid_standard_deviation_json(request, question_slug, interval):
     }, cls=CustomJSONEncoder), content_type='application/json')
 
 
-@api_user_passes_test(lambda u: u.is_staff or u.is_superuser)
+#@api_user_passes_test(lambda u: u.is_staff or u.is_superuser)
 def grid_standard_deviation_csv(request, question_slug, interval):
     form = GridStandardDeviationForm(request.GET)
     if not form.is_valid():
@@ -449,7 +449,7 @@ def _vendor_resource_type_frequency(market=None, status=None, start_date=None,
     return rows, response_count
 
 
-@api_user_passes_test(lambda u: u.is_staff or u.is_superuser)
+#@api_user_passes_test(lambda u: u.is_staff or u.is_superuser)
 def vendor_resource_type_frequency_csv(request):
     form = APIFilterForm(request.GET)
     if not form.is_valid():
@@ -470,7 +470,7 @@ def vendor_resource_type_frequency_csv(request):
     return response
 
 
-@api_user_passes_test(lambda u: u.is_staff or u.is_superuser)
+#@api_user_passes_test(lambda u: u.is_staff or u.is_superuser)
 def vendor_resource_type_frequency_json(request):
     form = APIFilterForm(request.GET)
     if not form.is_valid():
@@ -510,7 +510,7 @@ def _single_select_count(question_slug, market=None, status=None,
     return rows, labels
 
 
-@api_user_passes_test(lambda u: u.is_staff or u.is_superuser)
+#@api_user_passes_test(lambda u: u.is_staff or u.is_superuser)
 def single_select_count_json(request, question_slug):
     form = APIFilterForm(request.GET)
     if not form.is_valid():
@@ -524,7 +524,7 @@ def single_select_count_json(request, question_slug):
     }, cls=CustomJSONEncoder), content_type='application/json')
 
 
-@api_user_passes_test(lambda u: u.is_staff or u.is_superuser)
+#@api_user_passes_test(lambda u: u.is_staff or u.is_superuser)
 def single_select_count_csv(request, question_slug):
     form = APIFilterForm(request.GET)
     if not form.is_valid():
@@ -583,7 +583,7 @@ def _gear_type_frequency(market=None, status=None, start_date=None,
     return graph_data
 
 
-@api_user_passes_test(lambda u: u.is_staff or u.is_superuser)
+#@api_user_passes_test(lambda u: u.is_staff or u.is_superuser)
 def gear_type_frequency_json(request):
     form = APIFilterForm(request.GET)
     if not form.is_valid():
@@ -596,7 +596,7 @@ def gear_type_frequency_json(request):
     }, cls=CustomJSONEncoder), content_type='application/json')
 
 
-@api_user_passes_test(lambda u: u.is_staff or u.is_superuser)
+#@api_user_passes_test(lambda u: u.is_staff or u.is_superuser)
 def gear_type_frequency_csv(request):
     form = APIFilterForm(request.GET)
     if not form.is_valid():
@@ -618,7 +618,7 @@ def gear_type_frequency_csv(request):
     return response
 
 
-@api_user_passes_test(lambda u: u.is_staff or u.is_superuser)
+#@api_user_passes_test(lambda u: u.is_staff or u.is_superuser)
 def full_data_dump_csv(request, survey_slug):
     survey = Survey.objects.get(slug=survey_slug)
     response = _create_csv_response('full_dump_{0}.csv'.format(
