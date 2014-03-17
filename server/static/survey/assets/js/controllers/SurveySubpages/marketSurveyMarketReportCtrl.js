@@ -1,21 +1,43 @@
 function marketSurveyMarketReportCtrl($scope, $rootScope, $http, $location, $routeParams, reportsCommon, surveyShared) {
     function price_by_date(charts, start_date, end_date, slug) {
-        var url = reportsCommon.build_crosstab_url(start_date, end_date, slug, 'fish-price-pound', 'date-surveyed', $scope.extra_stuff);
+        var url = reportsCommon.build_crosstab_url(start_date, end_date, slug, 'date-surveyed', 'fish-price-pound', $scope.extra_stuff);
         return $http.get(url).success(function(data) {
+            labels = {};
+            _.each(data.crosstab, function(iter, val) {
+                _.each(iter.value, function(iter2, val2) {
+                    if (typeof(labels[iter2.row_text]) == 'undefined') {
+                        labels[iter2.row_text] = [];
+                    }
+                    // TODO: This is probably pretty fragile.
+                    var conv_date = reportsCommon.dateFromISO(new Date(iter.name.split("/").reverse()));
+                    var timestamp = Date.UTC(conv_date.getYear() + 1900, conv_date.getMonth(), conv_date.getDay());
+                    if (isNaN(timestamp))
+                        debugger;
+                    labels[iter2.row_text].push([timestamp, iter2.average]);
+                    labels[iter2.row_text].sort();
+                });
+            });
+            to_graph = _.map(_.keys(labels), function(item) {
+                return {
+                    name: item,
+                    data: labels[item]
+                }
+            });
 
             charts.push({
                 title: "Average Price by Date",
-                type: data.type,
-                displayTitle: false,
-                labels: _.pluck(data.crosstab, 'name'),
-                data: data.crosstab,
-                download_url: url.replace("total-weight", "total-weight.csv"),
-                xLabel: 'Date',
-                yLabel: 'Price',
-                order: 2,
-                message: data.message,
-                seriesNames: data.seriesNames,
-                unit: 'kg'
+                type: "time-series",
+                labels: _.map(to_graph, function(x) { return x.name; }),
+                seriesNames: _.map(to_graph, function(x) { return x.name; }),
+                download_url: url.replace('fish-price-pound', 'fish-price-pound.csv'),
+                raw_data: to_graph,
+                tooltipFormatter: function() {
+                    return '<b>' + this.series.name + '</b>' + ': ' + this.y + " lbs";
+                },
+                xLabel: 'Depth',
+                yLabel: 'Pounds',
+                order: 1,
+                message: data.message
             });
             charts.sort(function (a,b) { return a-b;})
         });

@@ -13,7 +13,7 @@ angular.module('askApp').factory('reportsCommon', function($http, $routeParams, 
 
         if (typeof(extra_stuff['extra_dropdown']) != 'undefined' && extra_stuff['extra_dropdown'] != null) {
             // url = url + '&market=' + $scope.market;
-            url += '&' + $scope.extra_dropdown_str + '=' + extra_stuff['extra_dropdown'];
+            url += '&' + extra_stuff['extra_dropdown_str'] + '=' + extra_stuff['extra_dropdown'];
         }
         if (typeof(extra_stuff['status']) != 'status' && extra_stuff['status'] != null) {
             // url += '&status=' + $scope.status_single;
