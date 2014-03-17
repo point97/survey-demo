@@ -88,25 +88,28 @@ addListener(downloadLink, 'click', function() {
 <div class="row">
     <h2>Create a free test account</h2>
     <p>We will send you a secure email with links to the surveys. For the mobile experience, open your email on an iOS or Android device.</p>
-    <button type="button" data-toggle="modal" data-target=".signup">Signup!</button>
+    <button class="btn btn-primary" type="button" data-toggle="modal" data-target=".signup">Signup!</button>
     <div class="modal signup" role="dialog">
         <div class="modal-dialog">
             <div class="modal-content">
-                <div class="modal-header">Sign up</div>
+                <div class="modal-header header">
+                    <img src="{{STATIC_URL}}/survey/assets/img/point97.png"/>
+                    <h2>sign up</h2>
+                </div>
                 <div class="modal-body">
                     <form action="" method="post">{% csrf_token %}
                         <div class="form-group row signup-form">
-                            <div class="col-md-3">
-                                {% if form.email.errors %}<p>{{form.email.errors}}</p>{%endif%}
+                            <div class="col-md-4">
                                 {{ form.email }}
+                                {% if form.email.errors %}<p>{{form.email.errors}}</p>{%endif%}
                             </div>
-                            <div class="col-md-3">
-                                {% if form.password1.errors %}<p>{{form.password1.errors}}</p>{%endif%}
+                            <div class="col-md-4">
                                 {{ form.password1 }}
+                                {% if form.password1.errors %}<p>{{form.password1.errors}}</p>{%endif%}
                             </div>
-                            <div class="col-md-3">
-                                {% if form.password2.errors %}<p>{{form.password2.errors}}</p>{%endif%}
+                            <div class="col-md-4">
                                 {{ form.password2 }}
+                                {% if form.password2.errors %}<p>{{form.password2.errors}}</p>{%endif%}
                             </div>
                         </div>
                         <div class="submit-row">

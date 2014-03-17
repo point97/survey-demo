@@ -443,3 +443,25 @@ header.bar-title, header .button {
 #mobile_navigator .clickable {
     cursor: pointer;
 }
+
+
+/* Styling for modal registration form
+ * */
+.modal-header {
+    border-top-left-radius: 6px;
+    border-top-right-radius: 6px;
+}
+.modal-header h2, .modal-header img {
+    margin: 0.5em;
+    vertical-align: middle;
+    color: white;
+    text-align: left;
+    display: inline-block;
+}
+.input-error {
+    border-color: red;
+}
+ul.errorlist {
+    padding-left: 1em;
+    color: red;
+}
