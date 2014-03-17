@@ -6,6 +6,7 @@ from django.core.exceptions import MultipleObjectsReturned
 from django.contrib.auth.forms import PasswordResetForm
 from django.conf import settings
 from django.contrib.sites.models import RequestSite, Site
+from django.template.loader import render_to_string
 
 from registration.models import RegistrationProfile
 from registration.backends.default.views import RegistrationView
@@ -29,8 +30,23 @@ class CustomRegistrationView(RegistrationView):
         signals.user_registered.send(sender=self.__class__,
                                      user=new_user,
                                      request=request)
+
+        # Authenticate and log the user in
         new_user = authenticate(username=username, password=password)
         login(request, new_user)
+
+        # TODO: This was ripped out of the dark heart of django-registration. We
+        # can't go back, not after what we've done.
+        subject = render_to_string('registration/activation_email_subject.txt',
+                                   {})
+        # Email subject *must not* contain newlines
+        subject = ''.join(subject.splitlines())
+
+        message = render_to_string('registration/activation_email.txt',
+                                   {})
+
+        # Send them an email
+        new_user.email_user(subject, message, settings.DEFAULT_FROM_EMAIL)
         return new_user
 
     def get_success_url(self, request, user):

@@ -44,7 +44,7 @@ angular.module('askApp')
                             tooltip: {
                                 formatter: scope.chart.formatter ? scope.chart.formatter :
                                     function() {
-                                        return '<b>' + this.series.name + '</b>' + ': ' + this.y + " " +
+                                        return '<b>' + this.series.name + '</b>: ' + this.y + " " +
                                             (scope.chart.unit ? scope.chart.unit : "");
                                     }
                             },
@@ -227,13 +227,17 @@ angular.module('askApp')
                             title: scope.chart.displayTitle ? { text: scope.chart.title } : false,
                             subtitle: false,
                             xAxis: {
-                                type: 'datetime',
+                                categories: scope.chart.categories || null,
+                                type: scope.chart.xaxis_type || 'datetime',
                                 dateTimeLabelFormats: { // don't display the dummy year
                                     month: '%d/%m/%y',
                                     year: '%d/%m/%y'
                                 },
+                                title: {
+                                    text: scope.chart.xLabel || null,
+                                },
                                 labels: {
-                                    formatter: function() {
+                                    formatter: scope.chart.xaxis_formatter || function() {
                                         return Highcharts.dateFormat('%d/%m/%y', this.value);
                                     }
                                 }

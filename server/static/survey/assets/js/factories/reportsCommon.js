@@ -11,9 +11,9 @@ angular.module('askApp').factory('reportsCommon', function($http, $routeParams, 
             url += '&group=' + extra_stuff['group'];
         }
 
-        if (typeof(extra_stuff['market']) != 'undefined' && extra_stuff['market'] != null) {
+        if (typeof(extra_stuff['extra_dropdown']) != 'undefined' && extra_stuff['extra_dropdown'] != null) {
             // url = url + '&market=' + $scope.market;
-            url += '&market=' + extra_stuff['market'];
+            url += '&' + extra_stuff['extra_dropdown_str'] + '=' + extra_stuff['extra_dropdown'];
         }
         if (typeof(extra_stuff['status']) != 'status' && extra_stuff['status'] != null) {
             // url += '&status=' + $scope.status_single;
@@ -39,12 +39,22 @@ angular.module('askApp').factory('reportsCommon', function($http, $routeParams, 
         }
         return url;
     }
-    factory.setup_market_dropdown = function($scope) {
-        var url = "/report/distribution/" + $routeParams.surveySlug + "/survey-site"
+    factory.setup_arbitrary_dropdown = function($scope, questionSlug) {
+        var url = "/report/distribution/" + $routeParams.surveySlug + "/" + questionSlug
 
         $http.get(url).success(function(data) {
-            $scope.markets = _.pluck(data.answer_domain, "answer");
+            $scope.extra_dropdown_str = questionSlug;
+            $scope.extra_dropdown_filter = true;
+            var items = _.pluck(data.answer_domain, "answer_text");
+            if (typeof(items[0]) == 'undefined')
+                items = _.pluck(data.answer_domain, "answer");
+            $scope.extra_dropdown_items = items;
         });
+    }
+
+    factory.build_url_for_respondant = function($scope, respondant) {
+        return "#/RespondantDetail/" + $scope.survey.slug +
+            "/" + respondant.uuid + "?" + $scope.filtered_list_url;
     }
 
     factory.getRespondents = function (url, $scope) {
@@ -76,6 +86,10 @@ angular.module('askApp').factory('reportsCommon', function($http, $routeParams, 
         if (status_single && url.indexOf("&status=") == -1) {
             location_obj.status = status_single;
             url = url + '&review_status=' + status_single;
+        }
+        if ($scope.extra_dropdown && url.indexOf("&" + + "=") == -1) {
+            location_obj.extra_dropdown_str = $scope.extra_dropdown;
+            url = url + '&' + $scope.extra_dropdown_str + '=' + $scope.extra_dropdown;
         }
         if ($scope.currentColumn && url.indexOf("&order_by=") == -1) {
             var str = $scope.sortDescending ? "-" + $scope.currentColumn.field : $scope.currentColumn.field;

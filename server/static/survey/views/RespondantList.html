@@ -25,9 +25,9 @@
                 <div class="form-control date-range-picker" date-range-picker min="filter.min" max="filter.max" start="filter.startDate" end="filter.endDate"></div>
             </div>
             <div id="market_status_filters" class="col-md-3">
-                <!-- <select class="form-control" ng-model="market" ng-options="m for m in markets">
-                    <option value="">All Markets</option>
-                </select> -->
+                <select class="form-control" ng-model="extra_dropdown" ng-options="item for item in extra_dropdown_items">
+                    <option value="">{{extra_dropdown_text}}</option>
+                </select>
                 <select class="form-control" ng-model="status_single" ng-options="i[0] as i[1] for i in statuses">
                     <option value="">All Statuses</option>
                 </select>
@@ -38,27 +38,12 @@
         <p ng-show="message">{{message}}</p>
         <div>
             <i ng-show="respondentsLoading" class="icon-spinner icon-spin"></i>
-            <div id="overview_map">
-                <div leaflet
-                    center="map.center"
-                    zoom="map.zoom"
-                    requiredzoom="question.min_zoom"
-                    marker="map.marker"
-                    multimarkers="locations"
-                    popupfield="'answers'"
-                    iscrosshairalerting="isCrosshairAlerting"
-                    multimarkersedit="true"
-                    editmarker="editMarker"
-                    deletemarker="removeLocation"
-                    zoomtoresult="zoomModel.zoomToResult"></div>
-                <!-- <div time-series chart="total_surveys"></div> -->
-            </div>
-            <!-- <div id="surveyor_total_chart">
-                <div bar-chart chart="surveyor_total"></div>
-            </div>
-            <div id="surveyor_by_time_chart">
-                <div time-series chart="surveyor_by_time"></div>
-            </div> -->
+            <span ng-switch on="has_map">
+                <div ng-switch-when="true" ng-include="viewPath + 'views/_overview_map.html'"></div>
+                <div ng-switch-when="false" id="surveyor_by_time_chart">
+                    <div time-series chart="surveyor_by_time"></div>
+                </div>
+            </span>
         </div>
         <div class="respondent-table print-hide">
             <table class="table" ng-class="{ 'loading': respondentsLoading }">
@@ -68,11 +53,26 @@
                             <i ng-show="currentColumn == column && sortDescending" class="icon-caret-down"></i>
                             <i ng-show="currentColumn == column && !sortDescending" class="icon-caret-up"></i>
                         </th>
+                        <th class="sortable_table" ng-click="changeSorting({name: 'Status', field: 'review_status'})">STATUS
+                            <i ng-show="currentColumn == column && sortDescending" class="icon-caret-down"></i>
+                            <i ng-show="currentColumn == column && !sortDescending" class="icon-caret-up"></i>
+                        </th>
                     </tr>
                     <tr ng-click="goToResponse(respondent)" ng-class="{'table-stripe': ($index % 2 == 0)}" class="highlightable_row" ng-repeat="respondent in respondents">
+                        <td ng-repeat="column in columns" >
+                            <span ng-switch on="column.name">
+                                <span ng-switch-when="date">{{respondent[column.field]|validDate: 'dd-MM-yyyy'}}</span>
+                                <span ng-switch-when="time">{{respondent[column.field]|validDate: 'HH:mm'}}</span>
+                                <span ng-switch-when="surveyor">{{respondent[column.field].username}}</span>
+                                <span ng-switch-when="username">{{respondent[column.field].username}}</span>
+                                <span ng-switch-when="fisher">{{respondent[column.field].username}}</span>
+                                <span ng-switch-default>{{respondent[column.field]}}</span>
+                            </span>
+                        </td>
+                        <!--
                         <td>{{ respondent.user.username }}</td>
                         <td>{{ respondent.ts|validDate: 'dd-MM-yyyy' }}</td>
-                        <td>{{ respondent.ts|validDate: 'HH:mm' }}</td>
+                        <td>{{ respondent.ts|validDate: 'HH:mm' }}</td> -->
                         <td>
                             <span class="label" ng-class="{ 'label-success': respondent.review_status == 'accepted', 'label-danger': respondent.review_status == 'flagged', 'label-warning': respondent.review_status == 'needs review' }">
                                 {{ respondent.review_status }}

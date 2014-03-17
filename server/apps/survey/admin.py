@@ -1,7 +1,7 @@
 from django.contrib import admin
 from survey.models import Survey, SurveySubpage, Question, Option, Response,\
         Respondant, Page, Location, LocationAnswer, MultiAnswer, GridAnswer,\
-        Block
+        Block, RespondantListColumn
 
 
 class ResponseAdmin(admin.ModelAdmin):
@@ -43,6 +43,7 @@ class OptionAdmin(admin.ModelAdmin):
 admin.site.register(Respondant, RespondantAdmin)
 admin.site.register(Question, QuestionAdmin)
 admin.site.register(Survey, SurveyAdmin)
+admin.site.register(RespondantListColumn)
 admin.site.register(SurveySubpage)
 admin.site.register(Option, OptionAdmin)
 admin.site.register(Response, ResponseAdmin)

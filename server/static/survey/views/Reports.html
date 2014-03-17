@@ -38,9 +38,9 @@
             <div class="form-control date-range-picker" date-range-picker min="filter.min" max="filter.max" start="filter.startDate" end="filter.endDate"></div>
         </div>
         <div id="market_status_filters" class="col-md-3">
-            <!-- <select class="form-control" ng-model="market" ng-options="m for m in markets">
-                <option value="">All Markets</option>
-            </select> -->
+            <select class="form-control" ng-model="extra_dropdown" ng-options="item for item in extra_dropdown_items">
+                <option value="">{{extra_dropdown_text}}</option>
+            </select>
             <select class="form-control" ng-model="status_single" ng-options="i[0] as i[1] for i in statuses">
                 <option value="">All Statuses</option>
             </select>
@@ -51,8 +51,12 @@
         <div>
             <i ng-show="respondentsLoading" class="icon-spinner icon-spin"></i>
         </div>
-    </div>
-    <div class="{{viewport_size}}">
+            <span ng-switch on="has_map">
+                <div ng-switch-when="true" ng-include="viewPath + 'views/_overview_map.html'"></div>
+                <div ng-switch-when="false" id="surveyor_by_time_chart">
+                    <div time-series chart="surveyor_by_time"></div>
+                </div>
+            </span>
         <div ng-repeat="chart in charts" class="dash-chart">
             <h2>{{ chart.title }}</h2>
             <div class="error">{{ chart.message }}</div>

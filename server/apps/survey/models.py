@@ -47,7 +47,12 @@ class Respondant(caching.base.CachingMixin, models.Model):
     survey_site = models.CharField(max_length=240, null=True, blank=True)
     buy_or_catch = models.CharField(max_length=240, null=True, blank=True)
     how_sold = models.CharField(max_length=240, null=True, blank=True)
+    # Logbook survey
     logbook = models.CharField(max_length=240, null=True, blank=True)
+    trip_date = models.CharField(max_length=240, null=True, blank=True)
+    landing_port = models.CharField(max_length=240, null=True, blank=True)
+    # Market Survey
+    market_surveyed = models.CharField(max_length=240, null=True, blank=True)
 
     locations = models.IntegerField(null=True, blank=True)
 
@@ -158,6 +163,14 @@ class SurveySubpage(models.Model):
     def __str__(self):
         return "{0} page on {1}".format(self.name, self.survey.name)
 
+class RespondantListColumn(models.Model):
+    column_name = models.CharField(max_length=254, null=False)
+    field_name = models.CharField(max_length=254, null=False)
+    survey = models.ForeignKey('survey.Survey', null=False)
+
+    def __str__(self):
+        return "{0} -> {1} column for {2}".format(self.column_name, self.field_name, self.survey.name)
+
 class Survey(caching.base.CachingMixin, models.Model):
     name = models.CharField(max_length=254)
     slug = models.SlugField(max_length=254, unique=True)
@@ -175,6 +188,10 @@ class Survey(caching.base.CachingMixin, models.Model):
     @property
     def completes(self):
         return self.respondant_set.filter(complete=True).count()
+
+    @property
+    def has_map(self):
+        return self.questions.filter(type='map-multipoint').exists()
 
     @property
     def reviews_needed(self):
@@ -379,7 +396,10 @@ class Question(caching.base.CachingMixin, models.Model):
                 else:
                     answers = answers.filter(respondant__responses__in=filter_question.response_set.filter(answer__in=value))
         if self.type in ['map-multipoint']:
-            return locations.values('location__response__respondant', 'answer', 'location__response__ts', 'location__lat', 'location__lng').annotate(locations=Count('answer'), surveys=Count('location__respondant', distinct=True))
+            all_vals = ['location__response__respondant', 'answer', 'location__response__ts',
+                'location__lat', 'location__lng', 'location__response__question__block__name']
+            return locations.values(*all_vals)\
+                    .annotate(locations=Count('answer'), surveys=Count('location__respondant', distinct=True))
         elif self.type in ['multi-select']:
             return (MultiAnswer.objects.filter(response__in=answers)
                                        .values('answer_text')
@@ -457,6 +477,10 @@ class Response(caching.base.CachingMixin, models.Model):
             elif self.question.type in ('currency', 'integer', 'number'):
                 flat[self.question.slug] = str(self.answer_number)
             elif self.question.type == 'datepicker':
+                if not self.answer_date:
+                    self.answer = simplejson.loads(self.answer_raw)
+                    self.answer_date = datetime.datetime.strptime(self.answer, '%d/%m/%Y')
+                    self.save()
                 flat[self.question.slug] = self.answer_date.strftime('%d/%m/%Y')
             elif self.question.type == 'grid':
                 for answer in self.gridanswer_set.all():

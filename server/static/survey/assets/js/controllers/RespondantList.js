@@ -2,15 +2,41 @@
 
 angular.module('askApp')
     .controller('RespondantListCtrl', function($scope, $rootScope, $http, $routeParams, $location, reportsCommon, surveyShared) {
+
+    function build_survey_total_data(data) {
+        var new_data = {};
+        for (var i in data.graph_data) {
+            for (var j in data.graph_data[i].data) {
+                var current_date = data.graph_data[i].data[j][0];
+                var surveys_taken = data.graph_data[i].data[j][1];
+                if (!new_data[current_date]) {
+                    new_data[current_date] = {
+                        name: current_date,
+                        data: surveys_taken
+                    }
+                } else {
+                    new_data[current_date].data += surveys_taken;
+                }
+            }
+        }
+        var tuples = _.map(new_data, function(x) { return [parseInt(x.name), x.data]; }).sort();
+        return [
+            {
+                name: "Surveys Taken",
+                data: tuples
+            }
+        ];
+    }
+
     function build_map(url) {
         $http.get(url).success(function(data) {
             $scope.locations = _.map(data.answer_domain, function(x) {
-		var assoc_respondant = _.find($scope.respondents, function(y) {
-		    return x.location__response__respondant == y.uuid; 
+        var assoc_respondant = _.find($scope.respondents, function(y) {
+            return x.location__response__respondant == y.uuid; 
                 });
 
-	        if (typeof assoc_respondant == 'undefined')
-	            return null;
+            if (typeof assoc_respondant == 'undefined')
+                return null;
 
                 var loc_data = {
                     visibility: true,
@@ -18,7 +44,7 @@ angular.module('askApp')
                     lng: parseFloat(x.location__lng),
                     icon: 'crosshair_white.png',
                     date: x.location__response__ts,
-                    respondant_url:  $scope.build_url_for_respondant(assoc_respondant),
+                    respondant_url:  reportsCommon.build_url_for_respondant(assoc_respondant),
                     respondant: assoc_respondant
                 };
 
@@ -28,38 +54,56 @@ angular.module('askApp')
 
                 return loc_data;
             });
-			$scope.locations = _.filter($scope.locations, function(whatever) {
-				return whatever != null;
-			});
+            $scope.locations = _.filter($scope.locations, function(whatever) {
+                return whatever != null;
+            });
         });
     }
     function filters_changed(surveySlug) {
         var promise = reportsCommon.getRespondents(null, $scope);
         var url = null;
-        // Depending on what survey we're at the dashboard for, we need to switch
-        // which question we pull the data for.
+        // TODO: Put this in the database.
         if ($routeParams.surveySlug == 'fish-market-survey') {
             url = "/report/distribution/" + $routeParams.surveySlug + "/catch-location";
         } else if ($routeParams.surveySlug == 'general-applicationmulti-use-survey') {
             url = "/report/distribution/" + $routeParams.surveySlug + "/survey-location";
         } else if ($routeParams.surveySlug == 'fishers-logbook') {
-            //url = "/report/distribution/" + $routeParams.surveySlug + "/survey-location";
+            url = "/report/distribution/" + $routeParams.surveySlug + "/fishing-area";
         }
-
 
         if (url) {
             promise.success(function() {
                 build_map(url);
             });
-        }  
+        }
+
+        var survey_stats_url = reportsCommon.build_survey_stats_url($scope);
+        $http.get(survey_stats_url).success(function(data) {
+            var new_data = build_survey_total_data(data);
+            $scope.surveyor_by_time = {
+                yLabel: "Survey Responses",
+                raw_data: data.graph_data,
+                download_url: url.replace($scope.surveyorTimeFilter, $scope.surveyorTimeFilter + '.csv'),
+                unit: "surveys"
+            }
+            // map reduuuuuuce
+            var bar_data = _.map(data.graph_data,
+                function (x) {
+                    return _.reduce(x.data, function (attr, val) { return attr + val[1]; }, 0);
+                }
+            );
+        });
     }
 
     function setup_columns() {
-        $scope.columns = [ { name: 'Surveyor', field: 'user' }
-                         , { name: 'Date', field: 'ts' }
-                         , { name: 'Time', field: 'ts' }
-                         , { name: 'Status', field: 'review_status' }
-                         ];
+        //$scope.columns = [ { name: 'Surveyor', field: 'user' }
+        //                 , { name: 'Date', field: 'ts' }
+        //                 , { name: 'Time', field: 'ts' }
+        //                 , { name: 'Status', field: 'review_status' }
+        //                 ];
+        $scope.columns = _.map($scope.survey.respondant_list_columns, function(x) {
+            return { name: x.column_name, field: x.field_name.replace("-", "_") };
+        });
         var order_by = $location.search().order_by;
 
         if (order_by) {
@@ -69,7 +113,8 @@ angular.module('askApp')
                 _.find($scope.columns, function (x) { return x.field == order_by; }) || $scope.columns[1];
         } else {
             $scope.sortDescending = true;
-            $scope.currentColumn = $scope.columns[1];
+            var found = _.find($scope.columns, function(x) { return x.name.toLowerCase() == 'time'; });;
+            $scope.currentColumn = typeof(found) != 'undefined' ? found : $scope.columns[0];
         }
 
         $scope.changeSorting = function (column) {
@@ -83,13 +128,8 @@ angular.module('askApp')
         };
     }
 
-    $scope.build_url_for_respondant = function(respondant) {
-        return "#/RespondantDetail/" + $scope.survey.slug +
-            "/" + respondant.uuid + "?" + $scope.filtered_list_url;
-    }
-
     $scope.goToResponse = function(respondant) {
-        window.location = $scope.build_url_for_respondant(respondant);
+        window.location = reportsCommon.build_url_for_respondant($scope, respondant);
     }
 
     // BLACK MAGIC
@@ -134,6 +174,7 @@ angular.module('askApp')
     $scope.activePage = 'overview';
     $scope.statuses = [];
     $scope.status_single = $location.search().status || "";
+    $scope.has_map = false;
     if ($routeParams.surveySlug == 'fish-market-survey') {
         /* Fijian islands */
         $scope.map = {
@@ -145,7 +186,7 @@ angular.module('askApp')
             zoom: 8,
             msg: null
         };
-    } else if ($routeParams.surveySlug == 'general-applicationmulti-use-survey') {
+    } else {
         /* Newport up to Astoria */
         $scope.map = {
             center: {
@@ -157,7 +198,6 @@ angular.module('askApp')
             msg: null
         };
     }
-    setup_columns();
 
     $scope.$watch('filter', function (newValue) {
         if (newValue) {
@@ -186,7 +226,6 @@ angular.module('askApp')
     surveyShared.getSurvey(function(data) {
         data.questions.reverse();
         $scope.survey = data;
-        reportsCommon.setup_market_dropdown($scope);
         var start_date = $location.search().ts__gte ?
             new Date(parseInt($location.search().ts__gte, 10)) :
             reportsCommon.dateFromISO($scope.survey.response_date_start);
@@ -212,6 +251,18 @@ angular.module('askApp')
             }
         });
         $scope.getSubpages();
+        setup_columns();
+
+        // TODO: Put this in the database somehow.
+        if (data.name != "Market Survey") {
+            $scope.has_map = data['has_map'];
+        }
+
+        // TODO: Put this in the database somehow.
+        if (data.name == "Logbook") {
+            reportsCommon.setup_arbitrary_dropdown($scope, "logbook");
+            $scope.extra_dropdown_text = "All Logbook Types";
+        }
     });
 
     $scope.getQuestionByUri = function (uri) {
@@ -225,4 +276,10 @@ angular.module('askApp')
         // Higher order function to make the next/prve buttons work.
         return reportsCommon.getRespondents(url, $scope);
     }
+    $scope.$watch('extra_dropdown', function (newValue) {
+        if ($scope.filter) {
+            filters_changed($routeParams.surveySlug);
+        }
+    }, true);
+
 });

@@ -1,13 +1,14 @@
 from django.conf.urls import url
 
 from tastypie import fields
-from tastypie.authorization import Authorization
+from tastypie.authorization import DjangoAuthorization, Authorization
 from tastypie.authentication import SessionAuthentication, ApiKeyAuthentication, MultiAuthentication
 from tastypie.resources import ModelResource, ALL, ALL_WITH_RELATIONS
 
-from survey.models import (Survey, SurveySubpage, Question, Option, Respondant, Response,
+from survey.models import (Survey, SurveySubpage, Question, Option, Respondant, Response, RespondantListColumn,
                            Page, Block, REVIEW_STATE_CHOICES, REVIEW_STATE_NEEDED,
                            REVIEW_STATE_FLAGGED, REVIEW_STATE_ACCEPTED)
+from survey.custom_tastyauth import UserObjectsOnlyAuthorization
 
 
 class SurveyModelResource(ModelResource):
@@ -54,6 +55,10 @@ class SurveySubpageResource(SurveyModelResource):
         filtering = {
             'slug': ALL
         }
+
+class RespondantListColumnResource(SurveyModelResource):
+    class Meta:
+        queryset = RespondantListColumn.objects.all()
 
 class ResponseResource(SurveyModelResource):
     question = fields.ToOneField('apps.survey.api.QuestionResource', 'question', full=True)
@@ -102,17 +107,20 @@ class ReportRespondantResource(AuthSurveyModelResource):
     class Meta(AuthSurveyModelResource.Meta):
         ALLOWED_METHODS = ['get', 'post', 'put', 'delete', 'patch']
         queryset = Respondant.objects.all().order_by('-ts')
+        authorization = UserObjectsOnlyAuthorization()
         filtering = {
             'survey': ALL_WITH_RELATIONS,
             'responses': ALL_WITH_RELATIONS,
-            'survey_site': ['exact'],
+            'market_surveyed': ['exact'],
             'review_status': ['exact'],
             'review_comment': ['exact'],
+            'logbook': ['exact'],
+            'trip_date': ['exact'],
+            'landing_port': ['exact'],
             'ts': ['gte', 'lte']
         }
-        ordering = ['ts', 'survey', 'vendor', 'survey_site',
-                    'responses', 'buy_or_catch', 'how_sold', 'user',
-                    'review_status']
+        # Allow ordering by any field:
+        ordering = Respondant._meta.get_all_field_names() + ['user']
 
     def alter_list_data_to_serialize(self, request, data):
         data['meta']['statuses'] = REVIEW_STATE_CHOICES
@@ -138,6 +146,7 @@ class ReportRespondantResource(AuthSurveyModelResource):
         flagged = base_next.filter(review_status=REVIEW_STATE_FLAGGED)
         if flagged.exists():
             bundle.data['meta']['next']['flagged'] = flagged[0].pk
+
 
         not_accepted = base_next.exclude(review_status=REVIEW_STATE_ACCEPTED)
         if not_accepted.exists():
@@ -171,6 +180,7 @@ class RespondantResource(AuthSurveyModelResource):
     survey = fields.ToOneField('apps.survey.api.SurveyResource', 'survey', null=True, blank=True, full=True, readonly=True)
     user = fields.ToOneField('apps.account.api.UserResource', 'surveyor', null=True, blank=True, full=True, readonly=True)
     subpages = fields.ToManyField(SurveySubpageResource, 'survey__surveysubpage_set', full=True, null=True, blank=True, readonly=True)
+    respondant_list_columns = fields.ToManyField(RespondantListColumnResource, 'survey__respondantlistcolumn_set', full=True, null=True, blank=True, readonly=True)
 
     class Meta(AuthSurveyModelResource.Meta):
         queryset = Respondant.objects.all().order_by('-ts')
@@ -262,7 +272,11 @@ class SurveyDashResource(BaseSurveyResource):
     flagged = fields.IntegerField(attribute='flagged', readonly=True)
     today = fields.IntegerField(attribute='today', readonly=True, null=True, blank=True)
     subpages = fields.ToManyField(SurveySubpageResource, 'surveysubpage_set', full=True, null=True, blank=True, readonly=True)
+    respondant_list_columns = fields.ToManyField(RespondantListColumnResource, 'respondantlistcolumn_set', full=True, null=True, blank=True, readonly=True)
 
+    def alter_detail_data_to_serialize(self, request, bundle):
+        bundle.data['has_map'] = bundle.obj.has_map
+        return bundle
 
 class SurveyReportResource(SurveyDashResource):
     questions = fields.ToManyField(QuestionResource, 'questions', null=True, blank=True, full=True)
