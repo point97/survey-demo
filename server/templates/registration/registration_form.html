@@ -147,29 +147,5 @@ addListener(downloadLink, 'click', function() {
   document.getElementById('id_password1').setAttribute('class', 'form-control')
   document.getElementById('id_password2').setAttribute('placeholder', 'Password (again)')
   document.getElementById('id_password2').setAttribute('class', 'form-control')
-    var e = document.getElementById('id_email');
-    console.log(document.querySelector(e.parentNode.className + " .input-error"));
-    if(document.querySelector(e.parentNode.className + " .input-error") != null) {
-        e.className = e.className + " input-error";
-    }
-    else {
-        e.className.replace('input-error', '');
-    }
-
-    var p1 = document.getElementById('id_password1');
-    if(document.querySelector(p1.parentNode.className + " .input-error") != null) {
-        p1.className = p1.className + " input-error";
-    }
-    else {
-        p1.className.replace('input-error', '');
-    }
-
-    var p2 = document.getElementById('id_password2');
-    if(document.querySelector(p2.parentNode.className + " .input-error") != null) {
-        p2.className = p2.className + " input-error";
-    }
-    else {
-        p2.className.replace('input-error', '');
-    }
 </script>
 {% endblock %}
