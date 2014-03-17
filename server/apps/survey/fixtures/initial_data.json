@@ -1,0 +1,92 @@
+[
+{
+    "pk": 1, 
+    "model": "survey.respondantlistcolumn", 
+    "fields": {
+        "survey": 1, 
+        "field_name": "ts", 
+        "column_name": "date"
+    }
+},
+{
+    "pk": 2, 
+    "model": "survey.respondantlistcolumn", 
+    "fields": {
+        "survey": 1, 
+        "field_name": "ts", 
+        "column_name": "time"
+    }
+},
+{
+    "pk": 4, 
+    "model": "survey.respondantlistcolumn", 
+    "fields": {
+        "survey": 1, 
+        "field_name": "user", 
+        "column_name": "surveyor"
+    }
+},
+{
+    "pk": 5, 
+    "model": "survey.respondantlistcolumn", 
+    "fields": {
+        "survey": 1, 
+        "field_name": "market-surveyed", 
+        "column_name": "Market"
+    }
+},
+{
+    "pk": 6, 
+    "model": "survey.respondantlistcolumn", 
+    "fields": {
+        "survey": 2, 
+        "field_name": "ts", 
+        "column_name": "date"
+    }
+},
+{
+    "pk": 8, 
+    "model": "survey.respondantlistcolumn", 
+    "fields": {
+        "survey": 2, 
+        "field_name": "user", 
+        "column_name": "username"
+    }
+},
+{
+    "pk": 9, 
+    "model": "survey.respondantlistcolumn", 
+    "fields": {
+        "survey": 3, 
+        "field_name": "logbook", 
+        "column_name": "Logbook"
+    }
+},
+{
+    "pk": 10, 
+    "model": "survey.respondantlistcolumn", 
+    "fields": {
+        "survey": 3, 
+        "field_name": "trip_date", 
+        "column_name": "Trip date"
+    }
+},
+{
+    "pk": 11, 
+    "model": "survey.respondantlistcolumn", 
+    "fields": {
+        "survey": 3, 
+        "field_name": "landing_port", 
+        "column_name": "Landing Port"
+    }
+},
+{
+    "pk": 12, 
+    "model": "survey.respondantlistcolumn", 
+    "fields": {
+        "survey": 3, 
+        "field_name": "user", 
+        "column_name": "fisher"
+    }
+}
+]
