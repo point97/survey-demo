@@ -35,6 +35,8 @@ angular.module('askApp')
             function (accum, val) { return accum[0] == data.review_status ? accum : val; }, "");
         $scope.last_status = $scope.current_status;
         $scope.review_comment = data.review_comment;
+
+        $scope.map_coordinates = $scope.mapCoords($scope.respondent.responses);
     });
 
     $http.get('/api/v1/surveydash/' + $routeParams.surveySlug + '/?format=json').success(function(data) {
@@ -57,6 +59,19 @@ angular.module('askApp')
         },
         zoom: 7
     }
+
+    $scope.mapCoords = function(responses) {
+        var arr = [];
+        responses.forEach( function(value, index) {
+            if(value.question.type == "map-multipoint") {
+                var val = eval(value.answer_parsed);
+                val.forEach( function(v, i) {
+                    arr.push(v);
+                });
+            }
+        });
+        return arr;
+    };
 
     $scope.updateStatus = function() {
         $http({

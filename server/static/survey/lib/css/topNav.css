@@ -53,18 +53,12 @@
 .footer h3,
 .footer .navbar-brand {
     color: #fff !important;
-    padding-right: 5em !important;
-}
-.footer img {
-    margin-top: -1.5em;
+    padding-right: 4em !important;
 }
 .footer .navbar-left {
-    margin-left: 2em;
-    margin-bottom: 1em;
-}
-.footer .navbar-right {
-    margin-top: 0.5em;
-    margin-right: 5em;
+    position: absolute;
+    bottom: 1em;
+    left: 2em;
 }
 .footer-border {
     position: relative;
@@ -74,10 +68,14 @@
     margin-top: 20px;
 }
 .ecotrust {
+    width: 15em;
+    margin: 1em;
+    padding: 1em;
+    background-color: white;
 }
 .copyright {
     color: #fff;
     position: absolute;
-    right: 1em;
-    bottom: 1em;
+    right: 3em;
+    bottom: 2em;
 }
