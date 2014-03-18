@@ -94,20 +94,24 @@ addListener(downloadLink, 'click', function() {
             <div class="modal-content">
                 <div class="modal-header header">
                     <img src="{{STATIC_URL}}/survey/assets/img/point97.png"/>
-                    <h2>sign up</h2>
+                    <h2>Sign Up</h2>
                 </div>
                 <div class="modal-body">
                     <form action="" method="post">{% csrf_token %}
                         <div class="form-group row signup-form">
-                            <div class="col-md-4">
+                            <div class="form-element">
+                                <label>Enter an email address</label>
                                 {{ form.email }}
                                 {% if form.email.errors %}<p>{{form.email.errors}}</p>{%endif%}
+                                <i>Note: Use this as your login username</i>
                             </div>
-                            <div class="col-md-4">
+                            <div class="form-element">
+                                <label>Enter a password</label>
                                 {{ form.password1 }}
                                 {% if form.password1.errors %}<p>{{form.password1.errors}}</p>{%endif%}
                             </div>
-                            <div class="col-md-4">
+                            <div class="form-element">
+                                <label>Please re-enter your password</label>
                                 {{ form.password2 }}
                                 {% if form.password2.errors %}<p>{{form.password2.errors}}</p>{%endif%}
                             </div>

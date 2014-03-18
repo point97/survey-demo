@@ -447,16 +447,30 @@ header.bar-title, header .button {
 
 /* Styling for modal registration form
  * */
+.modal.signup  .modal-dialog {
+    width: 40%;
+    max-width: 30em;
+    min-width: 20em;
+}
 .modal-header.header {
     border-top-left-radius: 6px;
     border-top-right-radius: 6px;
 }
 .modal-header h2, .modal-header.header img {
-    margin: 0.5em;
+    margin: 2em;
     vertical-align: middle;
     color: white;
-    text-align: left;
     display: inline-block;
+}
+.modal-header.header img {
+    position: absolute;
+    width: 8em;
+    top: 1.5em;;
+    left: 0;
+    margin: auto 1.5em;
+}
+.modal-header {
+    text-align: center;
 }
 .input-error {
     border-color: red;
@@ -464,4 +478,29 @@ header.bar-title, header .button {
 ul.errorlist {
     padding-left: 1em;
     color: red;
+}
+.form-element {
+    width: 100%;
+    margin: 1em auto;
+}
+.form-element input {
+    width: 75%;
+    min-width: 15em;
+    margin: auto;
+}
+.form-element label {
+    text-align: left;
+    margin: 0.5em 2em;
+}
+.form-element i {
+    float: right;
+    font-size: 0.9em;
+    margin: 0.5em 2em;
+}
+.signup .submit-row {
+    padding: 0;
+    margin: auto;
+    width: 100%;
+}
+.signup-form .submit-row #sign_up_button {
 }
