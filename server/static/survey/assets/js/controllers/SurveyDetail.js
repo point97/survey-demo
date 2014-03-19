@@ -1648,6 +1648,9 @@ angular.module('askApp')
 
         };
         $scope.viewPath = app.viewPath;
+        if ($location.path().split("/").length >= 6 && $location.path().split("/")[5] == "online") {
+            app.offline = false;
+        }
         if ($routeParams.uuidSlug && $routeParams.uuidSlug !== 'online' && !_.string.startsWith($routeParams.uuidSlug, 'offline') && app.offline) {
             $http.get(app.server + '/api/v1/survey/' + $routeParams.surveySlug + '/?format=json').success(function(data) {
                 var responses = [];
