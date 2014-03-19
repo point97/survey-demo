@@ -20,6 +20,9 @@ ADMINS = (
     # ('Your Name', 'your_email@example.com'),
 )
 
+DEFAULT_FROM_EMAIL = "Point97-demo@pointnineseven.com"
+ROOT_EMAIL = "Point97-demo@pointnineseven.com"
+
 MANAGERS = ADMINS
 
 # Local time zone for this installation. Choices can be found here:
