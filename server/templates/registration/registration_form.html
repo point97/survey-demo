@@ -89,6 +89,7 @@ addListener(downloadLink, 'click', function() {
     <h2>Create a free test account</h2>
     <p>We will send you a secure email with links to the surveys. For the mobile experience, open your email on an iOS or Android device.</p>
     <button class="btn btn-primary" type="button" data-toggle="modal" data-target=".signup">Signup!</button>
+    <p>Already have an account? <a href="{% url "auth_login" %}">Sign in.</a><p>
     <div class="modal signup" role="dialog">
         <div class="modal-dialog">
             <div class="modal-content">
