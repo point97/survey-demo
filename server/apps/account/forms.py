@@ -6,7 +6,7 @@ class Email(forms.EmailField):
     def clean(self, value):
         super(Email, self).clean(value)
         if User.objects.filter(email=value).exists():
-            raise forms.ValidationError("This email is already registered. Use the 'forgot password' link on the login page")
+            raise forms.ValidationError("Email address already registed. <a href=\"/admin/password_reset/\">Forgot password?</a>")
         return value
 
 

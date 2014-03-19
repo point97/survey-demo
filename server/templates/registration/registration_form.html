@@ -103,7 +103,13 @@ addListener(downloadLink, 'click', function() {
                         <div class="form-group row signup-form">
                             <div class="col-md-4">
                                 {{ form.email }}
-                                {% if form.email.errors %}<p>{{form.email.errors}}</p>{%endif%}
+                                {% if form.email.errors %}
+                                <p>
+                                <ul class="errorlist">{% for error in form.email.errors %}
+                                        {{error|safe}}
+                                        {% endfor %}
+                                    </ul>
+                                </p>{%endif%}
                             </div>
                             <div class="col-md-4">
                                 {{ form.password1 }}
