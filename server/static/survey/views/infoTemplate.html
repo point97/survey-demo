@@ -1,0 +1,14 @@
+<div class="modal info-modal" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header header">
+                <img src="static/survey/assets/img/point97.png"/>
+                <h2>Information for your information</h2>
+            </div>
+            <div class="modal-body" style="overflow: hidden;">
+                <div ng-if="surveySlug == undefined" ng-include="viewPath + 'views/info/dash.html'"></div>
+                <div ng-if="surveySlug != undefined" ng-include="viewPath + 'views/info/' + surveySlug + '.html'"></div>
+            </div>
+        </div>
+    </div>
+</div>

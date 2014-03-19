@@ -81,9 +81,27 @@
 .section_title {
     border-bottom: solid 5px #195d65;
     margin-bottom: 4em;
+    color: #195d65;
 }
 .section_title h2 {
-    color: #195d65;
+    float: left;
+}
+.info_title {
+    position: absolute;
+    top: 0;
+    right: 1em;
+    margin: 1em;
+    height: 4em;
+    border-bottom: solid 5px transparent;
+    background-color: transparent;
+    border: none;
+    color: #f6c431;
+}
+.info_title i {
+    font-size: 3em;
+    width: 2em;
+    height: 2em;
+    color: #f6c431;
 }
 .download_cog {
     position: absolute;
@@ -478,6 +496,7 @@ header.bar-title, header .button {
 ul.errorlist {
     padding-left: 1em;
     color: red;
+    margin: 0.5em 2em;
 }
 .form-element {
     width: 100%;

@@ -3,6 +3,7 @@
 angular.module('askApp')
     .controller('RespondantListCtrl', function($scope, $rootScope, $http, $routeParams, $location, reportsCommon, surveyShared) {
 
+    $scope.surveySlug = $routeParams.surveySlug;
     function build_survey_total_data(data) {
         var new_data = {};
         for (var i in data.graph_data) {
