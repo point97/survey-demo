@@ -15,6 +15,7 @@ angular.module('askApp')
     $scope.path = $location.path().slice(1,5);
     $scope.loaded=false;
     $scope.width = 0;
+    $scope.viewPath = app.viewPath;
     $scope.updateSurveys = function () {
         $scope.hideSurveys = true;
         $scope.width = 0;

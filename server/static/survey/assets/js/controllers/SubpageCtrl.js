@@ -1,4 +1,5 @@
 angular.module('askApp').controller('SubpageCtrl', function($scope, $rootScope, $http, $location, $routeParams, reportsCommon, surveyShared) {
+    $scope.surveySlug = $routeParams.surveySlug;
     // BLACK MAGIC
     var newControllerName = null;
     $.ajax({
