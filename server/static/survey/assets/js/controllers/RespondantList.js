@@ -82,16 +82,10 @@ angular.module('askApp')
             var new_data = build_survey_total_data(data);
             $scope.surveyor_by_time = {
                 yLabel: "Survey Responses",
-                raw_data: data.graph_data,
+                raw_data: new_data,
                 download_url: url.replace($scope.surveyorTimeFilter, $scope.surveyorTimeFilter + '.csv'),
                 unit: "surveys"
             }
-            // map reduuuuuuce
-            var bar_data = _.map(data.graph_data,
-                function (x) {
-                    return _.reduce(x.data, function (attr, val) { return attr + val[1]; }, 0);
-                }
-            );
         });
     }
 
