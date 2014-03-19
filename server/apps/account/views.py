@@ -49,8 +49,8 @@ class CustomRegistrationView(RegistrationView):
         new_user.email_user(subject, message, settings.DEFAULT_FROM_EMAIL)
         return new_user
 
-    def get_success_url(self, request, user):
-        return ('dashboard', (), {})
+    #def get_success_url(self, request, user):
+    #    return ('dashboard', (), {})
 
 @csrf_exempt
 def authenticateUser(request):
