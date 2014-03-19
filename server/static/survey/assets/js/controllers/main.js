@@ -62,7 +62,7 @@ angular.module('askApp')
                     next = app.next;
                     console.log(next);
                     delete app.next;
-                    $location.path(app.next);
+                    $location.path(next);
                 } else {
                     $location.path('/surveys');
                 }
@@ -84,5 +84,4 @@ angular.module('askApp')
                 $scope.showInfo = err;
             });
     };
-
   });
