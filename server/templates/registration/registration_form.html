@@ -90,6 +90,7 @@ addListener(downloadLink, 'click', function() {
     <p>We will send you a secure email with links to the surveys. For the mobile experience, open your email on an iOS or Android device.</p>
     <button class="btn btn-primary" type="button" data-toggle="modal" data-target=".signup">Signup!</button>
     <p>Already have an account? <a href="{% url "auth_login" %}">Sign in.</a><p>
+    <p>Forgot your password? <a href="{% url "auth_password_reset" %}">Reset my password.</a><p>
     <div class="modal signup" role="dialog">
         <div class="modal-dialog">
             <div class="modal-content">
