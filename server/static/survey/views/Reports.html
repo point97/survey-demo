@@ -5,6 +5,10 @@
             {{ subtitle | uppercase }}
             <small class="print-show">{{ filter.startDate|validDate: 'dd-MM-yyyy'  }} to {{ filter.endDate|validDate: 'dd-MM-yyyy' }}</small>
         </h2>
+        <button type="button" class="info_title" data-toggle="modal" data-target=".info-modal">
+            <i class="icon-info-sign"></i>
+        </button>
+        <div ng-include="viewPath + 'views/infoTemplate.html'"></div>
         <!-- <div class="print-hide col-md-2">
             <button print-button></button>
         </div> -->
