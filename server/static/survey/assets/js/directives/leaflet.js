@@ -344,7 +344,7 @@ angular.module('askApp')
                                         popup = "<h1>Basics</h1>";
                                     }
 
-                                    popup += "<p>" + markDat.date + "</p>";
+                                    popup += "<p>" + new Date(markDat.date).toDateString() + "</p>";
 
                                     if($routeParams.surveySlug == "fish-market-survey")
                                         popup += "<p>Total pounds caught: " + markDat.respondant.total_catch + "</p>";
