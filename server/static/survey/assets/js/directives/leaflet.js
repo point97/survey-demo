@@ -306,23 +306,33 @@ angular.module('askApp')
 
                     var markersDict = [];
                     scope.$watch('multiMarkers.length', function(newMarkerList) {
-  
+
                         for (var mkey in scope.multiMarkers) {
                             (function(mkey) {
                                 var markDat = scope.multiMarkers[mkey];
                                 if (markDat.lat && markDat.lng) {
 
                                     var color = markDat.color;
-                                    var marker = new L.marker(
-                                    scope.multiMarkers[mkey], {
-                                        draggable: markDat.draggable ? true : false,
-                                        title: 'click for details',
-                                        icon: L.AwesomeMarkers.icon({
-                                            icon: 'icon-circle',
-                                            color: color
-                                        })
-                                    });
-                                    markDat.color = color;    
+                                    var marker = (scope.multiMarkers[mkey].respondant.user.username == app.user.username) ?
+                                        new L.marker(
+                                            scope.multiMarkers[mkey], {
+                                            draggable: markDat.draggable ? true : false,
+                                            title: 'click for details',
+                                            icon: L.AwesomeMarkers.icon({
+                                                    icon: 'icon-circle',
+                                                    color: color
+                                            })
+                                        }) :
+                                        new L.circleMarker(
+                                            scope.multiMarkers[mkey], {
+                                            draggable: markDat.draggable ? true : false,
+                                            title: 'click for details',
+                                            opacity: 0,
+                                            color: '#f0ad4e',
+                                            fillOpacity: 0.8,
+                                            fillColor: '#f0ad4e'
+                                        });
+                                    markDat.color = color;
                                     marker.closePopup();
 
                                     scope.$watch('multiMarkers.' + mkey, function() {
