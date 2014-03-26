@@ -18,7 +18,7 @@
             <h2>{{meta.total_count}}</h2>
             <P>RESPONSES FOUND</P>
         </div>
-        <div class="col-md-3">
+        <div class="col-md-3" ng-class="{ 'hidden': !has_date }">
             <div id="time_units" class="btn-group print-hide">
                 <!-- <button ng-class="{'active': surveyorTimeFilter == 'hour'}"
                     type="button"
@@ -38,7 +38,7 @@
                     ng-click="surveyorTimeFilter='month'">Month</button>
             </div>
         </div>
-        <div class="col-md-4">
+        <div class="col-md-4" ng-class="{ 'col-md-offset-3': !has_date }">
             <div class="form-control date-range-picker" date-range-picker min="filter.min" max="filter.max" start="filter.startDate" end="filter.endDate"></div>
         </div>
         <div id="market_status_filters" class="col-md-3">

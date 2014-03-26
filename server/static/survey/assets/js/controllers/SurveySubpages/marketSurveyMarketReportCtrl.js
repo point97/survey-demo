@@ -81,6 +81,7 @@ function marketSurveyMarketReportCtrl($scope, $rootScope, $http, $location, $rou
     }
 
     $scope.market = $location.search().survey_site || null;
+    $scope.has_date = true;
     $scope.surveyorTimeFilter = 'week';
     $scope.filter = null;
     $scope.charts = [];
