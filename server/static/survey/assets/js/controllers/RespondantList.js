@@ -36,18 +36,16 @@ angular.module('askApp')
                     return x.location__response__respondant == y.uuid; 
                 });
 
-                if (typeof assoc_respondant == 'undefined')
-                    return null;
-
                 var loc_data = {
                     visibility: true,
                     lat: parseFloat(x.location__lat),
                     lng: parseFloat(x.location__lng),
                     icon: 'crosshair_white.png',
                     date: x.location__response__ts,
-                    respondant_url:  reportsCommon.build_url_for_respondant($scope, assoc_respondant),
                     respondant: assoc_respondant
                 };
+                if (typeof(assoc_respondant) != 'undefined')
+                    loc_data[respondant_url] = reportsCommon.build_url_for_respondant($scope, assoc_respondant);
 
                 if($routeParams.surveySlug == "fishers-market-survey") {
                     loc_data.catch_load = 25;

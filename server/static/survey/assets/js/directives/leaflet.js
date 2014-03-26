@@ -313,7 +313,7 @@ angular.module('askApp')
                                 if (markDat.lat && markDat.lng) {
 
                                     var color = markDat.color;
-                                    var marker = (scope.multiMarkers[mkey].respondant.user.username == app.user.username) ?
+                                    var marker = (typeof(scope.multiMarkers[mkey].respondant) != 'undefined' && scope.multiMarkers[mkey].respondant.user.username == app.user.username) ?
                                         new L.marker(
                                             scope.multiMarkers[mkey], {
                                             draggable: markDat.draggable ? true : false,
@@ -361,7 +361,8 @@ angular.module('askApp')
                                     if($routeParams.surveySlug == "fishers-logbook")
                                         popup += "<p>Logbook: " + markDat.respondant.logbook + "</p>";
                                     if($routeParams.surveySlug == "fish-market-survey" || $routeParams.surveySlug == "fishers-logbook")
-                                        popup += '<a href="' + markDat.respondant_url + '">Details</a>';
+                                        if (!!markDat.respondant_url == true)
+                                            popup += '<a href="' + markDat.respondant_url + '">Details</a>';
                                 }
 
                                 if (scope.popupField) {
