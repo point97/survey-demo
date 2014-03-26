@@ -141,7 +141,7 @@ angular.module('askApp')
 
     $scope.goToResponse = function(respondent) {
         window.location = "#/RespondantDetail/" + $scope.survey.slug +
-            "/" + respondent.uuid + "?" + $scope.filtered_list_url;
+            "/" + respondent.uuid;// + "?" + $scope.filtered_list_url;
     }
     $scope.market = $location.search().survey_site || null;
     $scope.filter = null;

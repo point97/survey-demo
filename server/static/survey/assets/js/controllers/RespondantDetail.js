@@ -87,13 +87,13 @@ angular.module('askApp')
     $scope.goToNext = function() {
         if ($scope.review_next_uuid) {
             window.location = "#/RespondantDetail/" + $scope.surveySlug +
-                "/" + $scope.review_next_uuid + "?filtered_list_url=" + $location.search().filtered_list_url;
+                "/" + $scope.review_next_uuid;// + "?filtered_list_url=" + $location.search().filtered_list_url;
         }
     }
     $scope.goToPrevious = function() {
         if ($scope.review_previous_uuid) {
             window.location = "#/RespondantDetail/" + $scope.surveySlug +
-                "/" + $scope.review_previous_uuid + "?filtered_list_url=" + $location.search().filtered_list_url;
+                "/" + $scope.review_previous_uuid;// + "?filtered_list_url=" + $location.search().filtered_list_url;
         }
     }
 
