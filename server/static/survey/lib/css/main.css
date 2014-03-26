@@ -6,6 +6,13 @@
     width: 1240px;
   }
 }
+html {
+    position: relative;
+    min-height: 100%;
+}
+body {
+    margin: 0 0 11em;;
+}
 .survey_manage_icons {
     padding: 0px !important;
 }

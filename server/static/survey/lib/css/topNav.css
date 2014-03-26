@@ -35,7 +35,14 @@
     margin-bottom: 20px;
 }
 
-
+.footer-container {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    height: 10.5em;
+    margin-top: 0.5em;
+    width: 100%;
+}
 .footer {
     background-image: -webkit-gradient(linear, right top, left top, color-stop(0, #91CDD7), color-stop(1, #00ABBA));
     background-image: -o-linear-gradient(left, #91CDD7 0%, #00ABBA 100%);
@@ -65,7 +72,6 @@
     z-index: 10;
     top: 1px;
     border-top: solid 1em #195d65;
-    margin-top: 20px;
 }
 .ecotrust {
     width: 15em;
