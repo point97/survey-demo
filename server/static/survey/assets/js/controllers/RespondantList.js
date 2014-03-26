@@ -45,7 +45,7 @@ angular.module('askApp')
                     respondant: assoc_respondant
                 };
                 if (typeof(assoc_respondant) != 'undefined')
-                    loc_data[respondant_url] = reportsCommon.build_url_for_respondant($scope, assoc_respondant);
+                    loc_data['respondant_url'] = reportsCommon.build_url_for_respondant($scope, assoc_respondant);
 
                 if($routeParams.surveySlug == "fishers-market-survey") {
                     loc_data.catch_load = 25;

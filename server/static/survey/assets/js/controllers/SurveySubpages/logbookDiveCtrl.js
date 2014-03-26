@@ -2,18 +2,23 @@ function logbookDiveCtrl($scope, $rootScope, $http, $location, $routeParams, rep
     function pounds_caught_by_species(charts, start_date, end_date, slug) {
         var url = reportsCommon.build_crosstab_url(start_date, end_date, slug, 'dive-species', 'dive-pounds-harvested', $scope.extra_stuff);
         return $http.get(url).success(function(data) {
-            var bar_data = _.map(data.crosstab,
-                function (x) {
-                    return _.reduce(x.value, function (attr, val) { return attr + parseInt(val.average); }, 0);
-                }
-            );
+            var bar_data = {};
+            _.each(data.crosstab, function (x) {
+                _.each(x.value, function (y) {
+                    if (typeof(bar_data[y.row_text]) == 'undefined') {
+                        bar_data[y.row_text] = parseInt(y.average);
+                    } else {
+                        bar_data[y.row_text] += parseInt(y.average);
+                    }
+                });
+            });
 
             charts.push({
                 title: "Pounds Caught by Species",
                 type: "column",
                 displayTitle: false,
-                labels: _.pluck(data.crosstab, 'name'),
-                data: bar_data,
+                labels: _.keys(bar_data),
+                data: _.values(bar_data),
                 categories: [""],
                 download_url: url.replace("harvested", "harvested" + '.csv'),
                 xLabel: 'Species',
