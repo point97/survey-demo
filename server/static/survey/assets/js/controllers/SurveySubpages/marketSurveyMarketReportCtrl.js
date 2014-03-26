@@ -70,6 +70,7 @@ function marketSurveyMarketReportCtrl($scope, $rootScope, $http, $location, $rou
         $scope.extra_stuff = {
             'group': $scope.surveyorTimeFilter,
             'extra_dropdown': $scope.extra_dropdown,
+            'extra_dropdown_str': 'respondant__fish-types',
             'status': $scope.status_single,
         }
 

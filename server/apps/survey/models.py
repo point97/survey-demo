@@ -53,6 +53,7 @@ class Respondant(caching.base.CachingMixin, models.Model):
     landing_port = models.CharField(max_length=240, null=True, blank=True)
     # Market Survey
     market_surveyed = models.CharField(max_length=240, null=True, blank=True)
+    fish_types = models.CharField(max_length=240, null=True, blank=True)
 
     locations = models.IntegerField(null=True, blank=True)
 

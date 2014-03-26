@@ -84,6 +84,7 @@ def _get_crosstab(filters, survey_slug, question_a_slug, question_b_slug):
     group = filters.get('group', None)
     market = filters.get('market', None)
     status = filters.get('status', None)
+    extra_filters = dict([(k,v) for k,v in filters.iteritems() if k not in ['startdate', 'enddate', 'group']])
     try:
         if start_date is not None:
             start_date = datetime.datetime.strptime(start_date, '%Y%m%d') - datetime.timedelta(days=1)
@@ -105,6 +106,9 @@ def _get_crosstab(filters, survey_slug, question_a_slug, question_b_slug):
 
         if status is not None:
             question_a_responses = question_a_responses.filter(respondant__review_status=status)
+
+        if len(extra_filters) != 0:
+            question_a_responses = question_a_responses.filter(**extra_filters)
 
         crosstab = []
         obj = {

@@ -2,14 +2,20 @@
 {% load i18n admin_static %}
 {% block title %}Register{%endblock%}
 {% block extrahead %}{{ block.super }}
+<script src="{{ STATIC_URL }}survey/components/flatui/js/jquery-1.8.2.min.js"></script>
 <script type="text/javascript">
-function addListener(element, type, callback) {
-    if (element.addEventListener) element.addEventListener(type, callback);
-    else if (element.attachEvent) element.attachEvent('on' + type, callback);
-}
-var downloadLink = document.getElementById('sign_up_button');
-addListener(downloadLink, 'click', function() {
-    ga('send', 'event', 'demo', 'click', 'SignUp Button');
+$(function() {
+    function addListener(element, type, callback) {
+        if (element.addEventListener) element.addEventListener(type, callback);
+        else if (element.attachEvent) element.attachEvent('on' + type, callback);
+    }
+    var downloadLink = document.getElementById('sign_up_button');
+    addListener(downloadLink, 'click', function() {
+        ga('send', 'event', 'demo', 'click', 'SignUp Button');
+    });
+    {% if request.POST %}
+        $("#modal_button").trigger("click");
+    {% endif %}
 });
 </script>
 {% endblock %}
@@ -94,7 +100,7 @@ addListener(downloadLink, 'click', function() {
 <div class="row">
     <h2>Create your free demo account</h2>
     <p>We will send you a secure email with links to trial and visualize. Open your email on an iOS or Android device for the mobile experience.</p>
-    <button class="btn btn-primary" type="button" data-toggle="modal" data-target=".signup">Signup!</button>
+    <button id="modal_button" class="btn btn-primary" type="button" data-toggle="modal" data-target=".signup">Signup!</button>
     <p>Already have an account? <a href="{% url "auth_login" %}">Sign in.</a><p>
     <p>Forgot your password? <a href="{% url "auth_password_reset" %}">Reset my password.</a><p>
     <div class="modal signup" role="dialog" tabindex="-1">

@@ -135,7 +135,7 @@
         is_staff: {{user.is_staff|lower}},
         is_superuser: {{user.is_superuser|lower}},
         admin_url: "{% url "admin:index" %}",
-        logout_url: "{% url "admin:logout" %}",
+        logout_url: "{% url "auth_logout" %}",
         static_url: "{{STATIC_URL}}",
         api_key: "{{api_key}}"
       }
