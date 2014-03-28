@@ -53,26 +53,25 @@ $(function() {
 <div class="row"></div> <!-- Hack for chrome. -->
 <div class="row">
     <div class="col-md-8">
-        <h2>Explore Our Demo</h2>
-        <p>Point 97 helps communities and clients build understanding through mobile, online-compatible data management tools. Our clients learn more about fishing habits and harvets, economic impacts and recreational use habits and patterns. The options are as unlimited as your questions.</p>
-        <p>Create a FREE account to demo examples.</p>
+        <h2>Explore Our Demos</h2>
+        <p>Point 97 helps communities and clients build understanding through mobile and online data management tools. Our clients learn more about fishing habits and harvets, economic impacts, and recreational use habits and patterns. The options are as unlimited as your questions.</p>
+        <h3>Create an account to trial our mobile-friendly, spatial information collection and management solution.</h3>
     </div>
     <div class="col-md-4">
         <h2>Projects in Action</h2>
         <ul>
-            <li><a href="http://www.pointnineseven.com/projects/full_story/hapi_fis_hapi_pipol" title="Hapi Fis Hapi Pipol" target="_blank">Solomon Islands Hapi-Fis Market Survey</a></li>
-            <li><a href="http://www.pointnineseven.com/projects/full_story/digital_deck" title="Digital Deck USVI/Puerto Rico" target="_blank">USVI/Puerto Rico Digital Deck Catch Report</a></li>
-            <li><a href="http://www.pointnineseven.com/resources/full_story/data_collection_analysis_and_synthesis" title="Data collection" target="_blank">Data Collection and Synthesis</a></li>
+            <li><img src="{{STATIC_URL}}survey/assets/img/DigDeck_StThomas_fish.png" height="50" width="50"></img><a href="http://www.pointnineseven.com/projects/full_story/hapi_fis_hapi_pipol" title="Hapi Fis Hapi Pipol" target="_blank">Solomon Islands Hapi-Fis Market Survey</a></li>
+            <li><img src="{{STATIC_URL}}survey/assets/img/DigDeck_StThomas_fish.png" height="50" width="50"></img><a href="http://www.pointnineseven.com/projects/full_story/digital_deck" title="Digital Deck USVI/Puerto Rico" target="_blank">USVI/Puerto Rico Digital Deck Catch Report</a></li>
+            <li><img src="{{STATIC_URL}}survey/assets/img/DigDeck_StThomas_fish.png" height="50" width="50"></img><a href="http://www.pointnineseven.com/resources/full_story/data_collection_analysis_and_synthesis" title="Data collection" target="_blank">Data Collection and Synthesis</a></li>
         </ul>
     </div>
 </div>
 <div clas="row">
   <div class="col-md-8">
     <h2>Create a Free Account</h2>
-    <p>We will send you a secure email with links to trial and visualize. Open your email on an iOS or Android device for the mobile experience.</p>
-    <p align="center"><button id="modal_button" class="btn btn-primary" type="button" data-toggle="modal" data-target=".signup">Signup!</button></p>
-    <p>Already have an account? <a href="{% url "auth_login" %}">Sign in.</a><p>
-    <p>Forgot your password? <a href="{% url "auth_password_reset" %}">Reset my password.</a><p>
+    <p>We will send you a secure email with links to trial and visualize. <strong>Open your email on an iOS or Android device for the mobile experience.</strong></p>
+    <p align="center"><button id="modal_button" class="btn btn-primary" type="button" data-toggle="modal" data-target=".signup">START TRIAL</button></p>
+    <p>Already have an account? <a href="{% url "auth_login" %}">Sign in.</a>  Forgot your password? <a href="{% url "auth_password_reset" %}">Reset my password.</a><p>
     <div class="modal signup" role="dialog" tabindex="-1">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -130,15 +129,15 @@ $(function() {
 </div>
 <div class="row">
     <div class="col-md-8">
-        <div class="col-md-4">
+        <!--<div class="col-md-4">
             <img src="{{STATIC_URL}}survey/assets/img/DigDeck_OR_seaurchin.png" height="250"></img>
             <h4>Logbook</h4>
             <p>Fill your logbook while you fish and file it before you hit the dock. This trial version of our compliant, fishing logbook showcases how location, catch weights, fishing conditions, and receipt totals are tracked, quickly and accurately.</p>
-        </div>    
+        </div>-->    
         <div class="col-md-4">
-            <img src="{{STATIC_URL}}survey/assets/img/DigDeck_StThomas_fish.png" height="250"></img>
-            <h4>View Point</h4>
-            <p>This robust and versatile product collects real-time coastal data vital for ocean planning. Our trial version showcases how surveyors in a coastal market might collect market location, catch weights, prices, and numbers. Our full-feature product can be adapted to collect and manage data on any ocean issue, including coastal recreation patterns, marine debris sitings, or marine life activity.  
+            <img src="{{STATIC_URL}}survey/assets/img/DigDeck_OR_seaurchin.png" height="250"></img>
+            <h4>Market Survey</h4>
+            <p>This robust and versatile survey product collects real-time data vital for making management decisions. Our trial version showcases how fish market surveyors in a region might collect market location, catch weights, prices, and counts. Our full-feature product can be adapted to collect and manage data on any issue, including recreation use patterns, marine life activity, ???.  
 </p>
         </div>
         <div class="col-md-4">
