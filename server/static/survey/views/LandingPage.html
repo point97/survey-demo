@@ -1,7 +1,7 @@
 <div class="container">
     <div class="row" style="position:relative;">
         <div class="col-md-3 section_title">
-            <h2>SURVEYS HOME</h2>
+            <h2>DEMO OPTIONS</h2>
         </div>
         <button type="button" class="info_title" data-toggle="modal" data-target=".info-modal">
             <i class="icon-info-sign"></i>
@@ -30,10 +30,10 @@
                             <p>FLAGGED</p>
                         </td>
                         <td class="survey_manage_icons" ng-hide="confirmDelete">
-                            <a style="width: 100%;" title="Take Survey" target="_blank" class="btn icon-plus" href="/static/survey/mobile.html#/survey/{{survey.slug}}/online"></a>
+                            <a style="width: 100%;" title="Try it out" target="_blank" class="btn icon-plus" href="/static/survey/mobile.html#/survey/{{survey.slug}}/online"></a>
                             <!-- <a title="Take Mobile Survey" target="_blank" class="btn icon-mobile-phone" href="/static/survey/mobile.html#/survey/{{survey.slug}}/online"></a> -->
-                            <a ng-show="user.is_superuser" title="Edit Survey" class="btn icon-edit" href="#/author/{{ survey.slug }}"></a>
-                            <a ng-show="user.is_staff" class="btn icon-remove" title="Delete Survey" ng-click="confirmDelete = true"></a>
+                            <a ng-show="user.is_superuser" title="Edit" class="btn icon-edit" href="#/author/{{ survey.slug }}"></a>
+                            <a ng-show="user.is_staff" class="btn icon-remove" title="Delete" ng-click="confirmDelete = true"></a>
                         </td>
                         <td ng-show="confirmDelete && user.is_staff">
                             <a class="btn btn-red" ng-click="delete_survey(survey)">Delete</a>
@@ -44,7 +44,7 @@
             </table>
         </div>
         <div ng-show="user.is_superuser" class="col-md-2">
-            <a href="#/author" class="btn btn-yellow"><i class="icon-plus"></i>  CREATE NEW SURVEY</a>
+            <a href="#/author" class="btn btn-yellow"><i class="icon-plus"></i>  CREATE NEW FORM</a>
         </div>
     </div>
 </div>
